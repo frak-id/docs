@@ -1,0 +1,8 @@
+# Vocs build folder
+src/dist
+
+# SST folder
+.sst/
+
+# node_modules folder
+node_modules/
