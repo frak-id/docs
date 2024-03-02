@@ -10,6 +10,29 @@ export const walletSdkSidebar = [
         link: "/wallet-sdk",
     },
     {
+        text: "How to use it?",
+        collapsable: true,
+        link: "/wallet-sdk/how-to",
+        items: [
+            {
+                text: "React client",
+                link: "/wallet-sdk/how-to/client-react",
+            },
+            {
+                text: "Core client",
+                link: "/wallet-sdk/how-to/client-core",
+            },
+            {
+                text: "Server side",
+                link: "/wallet-sdk/how-to/server",
+            },
+        ],
+    },
+    {
+        text: "How does it works?",
+        link: "/wallet-sdk",
+    },
+    {
         text: "Graphs",
         link: "/wallet-sdk/graphs",
     },
