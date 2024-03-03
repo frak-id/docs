@@ -1,0 +1,174 @@
+---
+title: How does it work?
+description: How the nexus wallet work under the hood?
+date: 2024-03-01
+---
+
+import { Callout } from 'vocs/components'
+
+# How does it work?
+
+In this section, we will go through the different technologies and smart contracts used by the Nexus Wallet, and how they are working together.
+
+## Knowledge base
+
+Before deep diving into the Nexus Wallet, it is important to understand a few blockchain technologies.
+
+### Account Abstraction
+
+The nexus wallet is using the [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337) standard, which is a standard for account abstraction on EVM blockchain.
+
+If you are not familiar with this standard, here is a few great resources to get started:
+ - [Awesome account abstraction](https://github.com/4337Mafia/awesome-account-abstraction)
+ - [Stackup intro to account abstraction](https://docs.stackup.sh/docs/account-abstraction)
+ - The EIP itself: [EIP-4337](https://eips.ethereum.org/EIPS/eip-4337)
+
+A few key takeaways from the account abstraction standard:
+ - It permit to execute transaction without having to pay for the gas fees directly
+ - It can be used with any type of validation (password, biometric, etc.)
+
+### WebAuthN
+
+Then, the Nexus wallet is using the [WebAuthN](https://w3c.github.io/webauthn/) standard for the authentication and the signing of the transactions.
+
+If you are not familiar with this standard, here is a few great resources to get started:
+ - [Awesome WebAuthN](https://github.com/herrjemand/awesome-webauthn)
+ - [Detailed WebAuthN demo by Auth0](https://webauthn.me/)
+ - [WebAuthN demo by Matthew Miller](https://webauthn.io/)
+ - [WebAuthN official documentation](https://w3c.github.io/webauthn/)
+ - [WebAuthN on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API)
+
+A few key takeaways from the WebAuthN standard:
+ - It's a standard for **passwordless** authentication
+ - It's a standard for **secure message signing**
+ - The authentication is bounded to a **specific domain**.
+
+### P-256 Signature
+
+WebAuthN rely on the [secp256r1](https://neuromancer.sk/std/secg/secp256r1) signature algorithm (or in short *P-256*) to sign the transaction.
+
+This signature curve isn't supported on EVM chain by default.
+
+The [RIP-7212](https://github.com/ethereum/RIPs/blob/master/RIPS/rip-7212.md) is here to provide native support of this curve on rollup chains, but it's now live yet on any chains.
+
+For chain that doesn't support this curve, we are using the [FreshCryptoLib](https://github.com/rdubois-crypto/FreshCryptoLib) to verify the signature.
+
+
+## SmartWallet side
+
+In this section we will go through the smart contract related to the Smart wallet side of the Nexus Wallet.
+
+We are using the [Kernel Smart Wallet](https://github.com/zerodevapp/kernel) by the [ZeroDev](https://zerodev.app/) team for core logic of the Smart Wallet.
+
+It's audited, battle tested, and has a lot of features that we can leverage (for example the [ERC-7579](https://erc7579.com/) support)
+
+Since kernel wallet support modular validation, we are mainly using two type of validator for the Nexus Wallet:
+ 1. The main one being the [FCL WebAuthN validator](https://github.com/zerodevapp/kernel/blob/dev/src/validator/webauthn/WebAuthnFclValidator.sol), custom validator developed by us, and using the [FreshCryptoLib](https://github.com/rdubois-crypto/FreshCryptoLib) to verify P-256 signature on chain that doesn't support the RIP-7212 standard.
+ 2. The second one being the [ECDSAValidator](https://github.com/zerodevapp/kernel/blob/dev/src/validator/ECDSAValidator.sol), for user that setup recovery options, they can setup an EOA as recovery wallet, and then it's enabling an ECDSAValidator. This will permit them to execute transaction via either the webAuthN Validator, or the ECDSA one.
+
+On the infrastructure side, we are using the [Pimlico bundler](https://www.pimlico.io/) to manage the smart wallet transactions and data fetching.
+
+If you want to use the smart wallet to sponsor your user transaction, you will need to provide us a paymaster endpoint, or function, following this documentation.
+
+#TODO: Link to custom paymaster documentation
+
+## Communication side
+
+Since the WebAuthN standard is bounded to a specific domain, we are using two principal way of communication:
+ 1. An iFrame, to have a bidirectional communication flow between the Nexus Wallet and the implementing website.
+ 2. Classical http redirection, with supplementary arguments in the URL, when the user input is required.
+
+Working this way, with a **client first** approach, provide us a few key benefits:
+ - We are not relying on third parties cookies (since it will be kill soon by chrome)
+ - We don't rely on a centralised server to manage the communication, so you don't have to trust us with up-time, server provisioning, db going down or anything.
+ - Your app can communication with the client storage, even if the client is offline (so you can still fetch wallet address, transaction history etc. even if the client is offline)
+ - All the nexus related storage is stored on the client storage, in a secure way, and is only accessible by the nexus wallet and allowed dApps.
+
+<Callout type="note">
+    On the centralisation side, yeah you are not relying on a centralised server, but you are relying on the nexus website, **how is that different?**
+
+    Firstly, the website hosting the Nexus wallet is a PWA, meaning that user can install it on their devices (if compatible), and enjoy it everytime (even if our website come down for whatever reason).
+
+    Secondly, it's all open source, meaning that you can easily redeploy it on your own infrastructure if you want to.
+</Callout>
+
+### iFrame communication
+
+The iFrame communication side isn't that complex really. We are basically using an iFrame with a two-way communication (using regular `window.on('message', handler)`).
+
+The init flow is as follows:
+ 1. The dApp create an iFrame with the right URL (can be built using an SDK helper or react component directly)
+ 2. When the iFrame is loaded, it should be loaded on the **Nexus query listener** page no UI, juste handling incoming message request.
+ 3. Once the nexus query listener is loaded, and have warmed up a few key storage slots, it will send a `ready` message to the dApp.
+ 4. Once the dApp receive the `ready` message, it can start sending message to the Nexus Wallet, and receive message from it.
+
+On top of the classical postMessage communication, we added some abstraction around all of that, helping to have:
+ - a `createIFrameFrakClient` method, that will build a `transport` (similar to [Viem transports](https://viem.sh/docs/clients/intro.html)) used for the communication
+ - The `IFrameTransport` can handle every data types specified in the `IFrameRpcSchema`,
+ - To query data via that transport directly, you can either:
+    - Use the `request` method, returning a Promise of the expected `ReturnType` of the given request
+    - Use the `listenerRequest` method, and passing a `callback` args, that will be invoked with the expected `ReturnType` of the given request, and every time the `ReturnType` change.
+
+Under the hood, both `request` and `listenerRequest` are using a small abstraction around `postMessage`, building a notification system, and a request/response system, on both sides.
+
+### Redirect communication
+
+When a user action is needed, the flow with redirection is pretty straightforward:
+ 1. The dApp build the URL with the right arguments using the SDK
+ 2. The dApp redirect the user to the Nexus Wallet URL
+ 3. The Nexus Wallet handle the user input, ask him to perform the action
+ 4. Once Ok, or KO, it's redirect the user back to the dApp with the right query arguments in the URL, that can be decoded using the SDK.
+
+### Embedded flow
+
+Cross-origin usage of WebAuthN validator via iFrame is currently a WIP on the w3c (checkout [this discussion](https://github.com/w3c/webauthn/issues/1656) for more details).
+Here is a few trackers per browsers of this feature:
+ - [Chromium](https://issues.chromium.org/issues/40258856)
+ - [Mozilla](https://github.com/mozilla/standards-positions/issues/964)
+ - [WebKit](https://github.com/WebKit/standards-positions/issues/304)
+
+We are currently working to provide a new transport flow using this embedded flow, and we will update this documentation as soon as it's live (targeting end Q2/Q3 2024).
+
+### Communication security
+
+Since, some sensitive data can be shared between the dApp and the Nexus Wallet, we built our own secured communication layer.
+
+But, how does this double hash mechanism work exactly?
+
+For **every** message (so either request, response):
+ 1. The user generate the message he wants to send with the right methods
+ 2. On the SDK side, we generate a secure **sha256** hash of the primordial message keys (can be different depending on the message type)
+ 3. Then, the data + validation hash are compressed using the [Lempel-Ziv-Welch](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch) algorithm
+ 4. Another **sha256** hash is generated from the compressed data
+ 5. The compressed data + the compression hash are sent to the right recipient
+ 6. The recipient firstly check the compressed data integrity with the compression hash
+ 7. If valid, the recipient then decompress the data
+ 8. Then, he check the decompressed data integrity with the validation hash
+ 9. If all good, he can proceed with the data
+
+
+<Callout type="note">
+    This double hash mechanism is used ob both **iFrame** communication and **redirect** communication.
+</Callout>
+
+
+<Callout type="info">
+    For now, simple **sha256** hash of the data is enough.
+
+    We are currently working on the [HMAC](https://www.okta.com/fr/identity-101/hmac/) implementation for the validation hash, and we will update this documentation as soon as it's live.
+
+    This **HMAC** integration will provide another layer of security, proving that the one sending the message is the one that should be sending it. And same wise for the response.
+</Callout>
+
+## Transaction side
+
+Now, how does the transaction process work exactly?
+
+We won't enter in depth with the account abstraction way of working, since it's a bit out of the scope of this documentation, and samewise for the WebAuthN signing standard.
+
+Here is the flow when a user want to execute a transaction:
+ 1. Build the transaction data
+ 2. Prepare a `userOperation` bundle
+ 3. Sign the `userOperation.hash` via the current webAuthN validator
+ 4. Send the `userOperation` to the pimlico bundler, and receive the `userOpHash`
+ 5. Wait for the `userOpHash` to be bundled in a transaction, and then wait for the `txHash` to be executed

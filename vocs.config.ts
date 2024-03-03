@@ -30,7 +30,7 @@ export const walletSdkSidebar = [
     },
     {
         text: "How does it works?",
-        link: "/wallet-sdk",
+        link: "/wallet-sdk/under-the-hood",
     },
     {
         text: "Graphs",
