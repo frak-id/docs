@@ -1,5 +1,51 @@
-# Hello, World! [This is my first page]
+---
+title: Nexus Wallet SDK
+description: What is the Nexus Wallet SDK?
+date: 2024-03-01
+---
 
-Welcome to my docs.
+# Overview
 
-Checkout some graphs:
+Welcome on the Nexus SDK documentation!
+
+## Nexus Wallet
+
+The Nexus Wallet is a EVM compliant wallet, developed from the ground up with user experience in mind.
+
+It's built using [Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337), [WebAuthN](https://w3c.github.io/webauthn/), to ease your user onboarding and content related experiences.
+
+In short, your users can create an account via biometry (fingerprint, faceID, etc.) and then use it to interact with your dApps.
+
+No need to save this painful recovery phrase, no need to load your wallet with a few ETH to start performing transaction, and no funcky extension to install.
+
+Ofc, the wallet is fully compatible with the WalletConnect standard, so it's usable on any type of wallet you want.
+
+## Nexus Wallet SDK
+
+The Nexus Wallet SDK is here to help you, fellow developers. This SDK provide a set of tools to ease the implementation with the Nexus wallet, and also provide you with a few perks depending on the app you are building and your need.
+
+### You are a Content publisher
+
+You can use the Nexus Wallet SDK to do some nice stuff:
+
+ - Provide an alternative paywall solution (or a simpler login wall), exploiting all the latest blockchain tech, here is a few possible use-cases:
+    - **Subscription gating**, unlocking access to all of your content for a given duration.
+    - **Pay per view** where the user pay for each content he wants to access.
+    - **VIP access**, where the user pay for a special access to a specific content.
+    - **NFT gating**, where if the user own a given NFT, he can access your content
+    - **Consumption gating**, if the user already consumed 15 articles of your content, he can access 1 paid article.
+
+ - Track the consumption of your users, **deduplicate** his consumption across multiple providers, and propose him a **better experience** based on his usage.
+
+ - **Reward** your users for their consumptions (or for their engagement), with a **custom token**, **NFT**, or access to paid content.
+
+ - Engage your users by proposing them even more reward or perks using **mouth to mouth referral program**, etc.
+
+And all of this, with a **smoother UX** for your user, a **simpler setup** for you, a **better tracking** of your user's consumption, a **better engagement** with your users, and of curse **fully decentralized** and **trustless**.
+
+### You are a dApp developer
+
+You can use the Nexus Wallet SDK to onboard your user with a smoother experience, and pay their gas fees for them (if you want to).
+
+Implementing account abstraction has never been so easy, we basically do all the heavy lifting for you, and proposing you a simple interface to customise the smart wallet.
+Then, you can easily use the Nexus Wallet as a regular wallet, with your current Wagmi setup.

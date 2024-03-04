@@ -75,11 +75,7 @@ export default defineConfig({
         {
             text: "Wallet client SDK",
             link: "/wallet-sdk",
-        },
-        {
-            text: "Dashboard",
-            link: "https://dashboard.frak.id/",
-        },
+        }
     ],
     // The sidebar per pages
     sidebar: {
