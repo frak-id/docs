@@ -6,22 +6,14 @@
     "lint": "biome lint .",
     "format:check": "biome check .",
     "format": "biome check --apply .",
-    "dev": "vocs dev",
-    "build": "vocs build",
-    "preview": "vocs preview",
-    "update-deps": "npm-check-updates -uis"
-  },
-  "dependencies": {
-    "@types/react": "^18.2.61",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5.3.3",
-    "remark-mermaidjs": "^6.0.0",
-    "vocs": "^1.0.0-alpha.41"
+    "update-deps": "pnpm upgrade -r --latest --interactive",
+    "deploy": "sst deploy --stage prod",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@frak-labs/nexus-sdk": "^0.0.3-alpha",
-    "npm-check-updates": "^16.14.15"
-  }
+    "typescript": "^5.3.3",
+    "sst": "^2.40.6"
+  },
+  "workspaces": ["web/"]
 }

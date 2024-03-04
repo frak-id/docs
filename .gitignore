@@ -1,8 +1,9 @@
 # Vocs build folder
-src/dist
+web/src/dist
 
-# SST folder
+# SST related
 .sst/
+cdk.context.json
 
 # node_modules folder
 node_modules/
