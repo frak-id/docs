@@ -22,7 +22,7 @@ Before proceeding to the usage of the Nexus Wallet SDK, you will need to have a 
 First, you will need to install the dependencies:
 
 ```bash
-npm install viem @nexus-wallet/sdk
+npm install viem @frak-labs/nexus-sdk
 ```
 
 ## Creating the client
@@ -35,8 +35,8 @@ import { nexusConfig } from './config'
 import {
     createIframe,
     createIFrameNexusClient,
-} from "@nexus-wallet/sdk/core";
-import type { NexusClient } from "@nexus-wallet/sdk/core";
+} from "@frak-labs/nexus-sdk/core";
+import type { NexusClient } from "@frak-labs/nexus-sdk/core";
 
 // Create the iFrame and the associated FrakClient
 async function createClient(): Promise<NexusClient> {
@@ -47,7 +47,7 @@ async function createClient(): Promise<NexusClient> {
     const client = createIFrameNexusClient(nexusConfig, iframe);
 
     // Wait for it to be ready
-    await client.waitForConnection();
+    await client.waitForConnection;
 
     // And then return it
     return client;
@@ -60,7 +60,7 @@ export const nexusClient = await createClient();
 ```ts [config.ts] filename="config.ts"
 import type {
     NexusWalletSdkConfig
-} from "@nexus-wallet/sdk/core";
+} from "@frak-labs/nexus-sdk/core";
 
 // Create the config for the Nexus Wallet SDK
 export const nexusConfig: NexusWalletSdkConfig = {
@@ -81,8 +81,8 @@ By watching the wallet status, you will be able to know if the wallet is connect
 
 ```ts
 import { nexusClient } from "./client";
-import { watchWalletStatus } from "@nexus-wallet/sdk/actions";
-import type { WalletStatusReturnType } from "@nexus-wallet/sdk/core";
+import { watchWalletStatus } from "@frak-labs/nexus-sdk/actions";
+import type { WalletStatusReturnType } from "@frak-labs/nexus-sdk/core";
 
 // Watch the wallet status
 watchWalletStatus(nexusClient, (walletStatus: WalletStatusReturnType) => {
@@ -98,8 +98,8 @@ When opening a gated content, you will need to watch the unlock status to know i
 
 ```ts
 import { nexusClient } from "./client";
-import { watchUnlockStatus } from "@nexus-wallet/sdk/actions";
-import type { ArticleUnlockStatusReturnType } from "@nexus-wallet/sdk/core";
+import { watchUnlockStatus } from "@frak-labs/nexus-sdk/actions";
+import type { ArticleUnlockStatusReturnType } from "@frak-labs/nexus-sdk/core";
 
 // Watch the unlock status
 watchUnlockStatus(
@@ -134,8 +134,8 @@ If a content is locked, you will need to display the unlock options to your user
 
 ```ts
 import { nexusClient } from "./client";
-import { getArticleUnlockOptions } from "@nexus-wallet/sdk/actions";
-import type { UnlockOptionsReturnType } from "@nexus-wallet/sdk/core";
+import { getArticleUnlockOptions } from "@frak-labs/nexus-sdk/actions";
+import type { UnlockOptionsReturnType } from "@frak-labs/nexus-sdk/core";
 
 // Get the unlock options
 const options: UnlockOptionsReturnType = await getArticleUnlockOptions(nexusClient, {
@@ -153,8 +153,8 @@ Once your user has picked an unlock option, you will need to start the unlock fl
 
 ```ts
 import { nexusClient } from "./client";
-import { getStartArticleUnlockUrl } from "@nexus-wallet/sdk/actions";
-import type { UnlockOptionsReturnType } from "@nexus-wallet/sdk/core";
+import { getStartArticleUnlockUrl } from "@frak-labs/nexus-sdk/actions";
+import type { UnlockOptionsReturnType } from "@frak-labs/nexus-sdk/core";
 
 // Start the unlock flow
 async function launchUnlock(pickedOption: UnlockOptionsReturnType["prices"][number]) {
