@@ -75,7 +75,7 @@ export default defineConfig({
         {
             text: "Wallet client SDK",
             link: "/wallet-sdk",
-        }
+        },
     ],
     // The sidebar per pages
     sidebar: {
