@@ -6,46 +6,38 @@ date: 2024-03-01
 
 # Overview
 
-Welcome on the Nexus SDK documentation!
+Welcome to the Nexus Wallet SDK documentation!
+
+This SDK provides a set of tools and features to help developers integrate the Nexus Wallet, a user-friendly and EVM-compliant blockchain wallet, into their applications.
 
 ## Nexus Wallet
 
-The Nexus Wallet is a EVM compliant wallet, developed from the ground up with user experience in mind.
+The Nexus Wallet is a cutting-edge cryptocurrency wallet designed with a strong emphasis on user experience. Built from the ground up using the latest technologies, including [Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337) and [WebAuthn](https://w3c.github.io/webauthn/), the Nexus Wallet simplifies the onboarding process and enhances content-related experiences.
 
-It's built using [Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337), [WebAuthN](https://w3c.github.io/webauthn/), to ease your user onboarding and content related experiences.
+![](/wallet-on-phone.webp)
 
-In short, your users can create an account via biometry (fingerprint, faceID, etc.) and then use it to interact with your dApps.
+With the Nexus Wallet, users can create an account using biometric authentication (fingerprint, facial recognition, etc.) and then seamlessly interact with decentralized applications (dApps). Gone are the days of memorizing recovery phrases or loading wallets with ETH to perform transactions. The Nexus Wallet also eliminates the need for clunky browser extensions, providing a smooth and intuitive experience.
 
-No need to save this painful recovery phrase, no need to load your wallet with a few ETH to start performing transaction, and no funcky extension to install.
-
-Ofc, the wallet is fully compatible with the WalletConnect standard, so it's usable on any type of wallet you want.
+Furthermore, the Nexus Wallet is fully compatible with the WalletConnect standard, ensuring compatibility with a wide range of wallets and dApps.
 
 ## Nexus Wallet SDK
 
-The Nexus Wallet SDK is here to help you, fellow developers. This SDK provide a set of tools to ease the implementation with the Nexus wallet, and also provide you with a few perks depending on the app you are building and your need.
+The Nexus Wallet SDK is designed to streamline the integration of the Nexus Wallet into your applications, providing a comprehensive set of tools and features tailored for different use cases.
 
-### You are a Content publisher
+### For Content Publishers
 
-You can use the Nexus Wallet SDK to do some nice stuff:
+The Nexus Wallet SDK enables content publishers to implement advanced paywall solutions leveraging the latest blockchain technologies. Here are some potential use cases:
 
- - Provide an alternative paywall solution (or a simpler login wall), exploiting all the latest blockchain tech, here is a few possible use-cases:
-    - **Subscription gating**, unlocking access to all of your content for a given duration.
-    - **Pay per view** where the user pay for each content he wants to access.
-    - **VIP access**, where the user pay for a special access to a specific content.
-    - **NFT gating**, where if the user own a given NFT, he can access your content
-    - **Consumption gating**, if the user already consumed 15 articles of your content, he can access 1 paid article.
+- **Subscription Gating**: Unlock access to your entire content catalog for a specified duration.
+- **Pay-per-View**: Allow users to pay for individual pieces of content they wish to access.
+- **VIP Access**: Provide exclusive access to premium content for paying users.
+- **NFT Gating**: Grant access to content based on the user's ownership of specific non-fungible tokens (NFTs).
+- **Consumption Gating**: Offer paid content after a user has consumed a certain amount of free content.
 
- - Track the consumption of your users, **deduplicate** his consumption across multiple providers, and propose him a **better experience** based on his usage.
+Additionally, the SDK allows you to track user consumption, deduplicate consumption across multiple providers, and offer a personalized experience based on usage patterns. You can also reward users for their engagement through custom tokens, NFTs, or access to paid content, further enhancing user loyalty and retention.
 
- - **Reward** your users for their consumptions (or for their engagement), with a **custom token**, **NFT**, or access to paid content.
+### For dApp Developers
 
- - Engage your users by proposing them even more reward or perks using **mouth to mouth referral program**, etc.
+The Nexus Wallet SDK simplifies the integration of Account Abstraction, allowing you to onboard users with a smoother experience and optionally cover their gas fees. With the heavy lifting handled by the SDK, you can easily incorporate the Nexus Wallet into your existing Web3 setup, utilizing popular libraries like Wagmi.
 
-And all of this, with a **smoother UX** for your user, a **simpler setup** for you, a **better tracking** of your user's consumption, a **better engagement** with your users, and of curse **fully decentralized** and **trustless**.
-
-### You are a dApp developer
-
-You can use the Nexus Wallet SDK to onboard your user with a smoother experience, and pay their gas fees for them (if you want to).
-
-Implementing account abstraction has never been so easy, we basically do all the heavy lifting for you, and proposing you a simple interface to customise the smart wallet.
-Then, you can easily use the Nexus Wallet as a regular wallet, with your current Wagmi setup.
+By leveraging the Nexus Wallet SDK, you can provide a decentralized, trustless, and user-friendly experience while taking advantage of the latest blockchain technologies.

@@ -17,11 +17,97 @@ We assume that your react dApps is already set up and running.
 First, you will need to install the dependencies:
 
 ```bash
-npm install viem @frak-labs/nexus-sdk
+npm install viem @tanstack/react-query @frak-labs/nexus-sdk
 ```
 
-## Creating the client
+## Setup
 
-Then, to be able to access and use the nexus wallet, you will need to configure the SDK with the following code:
+Once you got the dependency, you need to create the context and config that will be used by Nexus.
 
-Coming soon!
+### Config provider
+
+
+First, you need to add the config provider for the Nexus Wallet
+
+:::code-group
+```ts [app.tsx]
+import { NexusConfigProvider } from "@frak-labs/nexus-sdk/react";
+import { nexusConfig } from "./config";
+
+function App() {
+  return (
+    <NexusConfigProvider config={nexusConfig}> // [!code focus]
+      {/** ... */}
+    </NexusConfigProvider> // [!code focus]
+  )
+}
+```
+```ts [config.ts]
+// [!include ~/snippets/config.ts]
+```
+:::
+
+### IFrame client provider
+
+If you need to interact directly with the nexus wallet, within your app (checking gated content access, wallet status or other), you need to add an IFrame client provider:
+
+:::code-group
+```ts [app.tsx]
+import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
+import { nexusConfig } from "./config";
+
+function App() {
+  return (
+    <NexusConfigProvider config={nexusConfig}>
+        <NexusIFrameClientProvider> // [!code focus]
+            {/** ... */}
+        </NexusIFrameClientProvider> // [!code focus]
+    </NexusConfigProvider>
+  )
+}
+```
+```ts [config.ts]
+// [!include ~/snippets/config.ts]
+```
+:::
+
+This provider will automatically add an iframe to your app, that will be used to communicate with the nexus wallet securly.
+
+### Setup TanStack Query
+
+In any case (using either just the config provider, or also using the IFrame client provider), you will need to setup the TanStack Query client.
+
+The TanStack query client will help with data fetching, caching, and states.
+
+Here is a very basic example, using a default query client and provider. For more information, checkout [their documentation](https://tanstack.com/query/v5/docs/react)
+
+:::code-group
+```ts [app.tsx]
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
+import { nexusConfig } from "./config";
+
+const queryClient = new QueryClient()  // [!code focus]
+
+function App() {
+  return (
+    <NexusConfigProvider config={nexusConfig}>
+        <NexusIFrameClientProvider>
+            <QueryClientProvider client={queryClient}>  // [!code focus]
+                { /** ... */}
+             </QueryClientProvider>  // [!code focus]
+        </NexusIFrameClientProvider>
+    </NexusConfigProvider>
+  )
+}
+```
+```ts [config.ts]
+// [!include ~/snippets/config.ts]
+```
+:::
+
+## Usage
+
+Now that the client is setup and available everywhere in your react app, let's check what you can do with it
+
+// TODO: List of the hooks available with permalinks

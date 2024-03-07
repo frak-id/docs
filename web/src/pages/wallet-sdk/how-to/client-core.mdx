@@ -28,58 +28,27 @@ npm install viem @frak-labs/nexus-sdk
 ## Creating the client
 
 The SDK will use an iFrame to communicate with the Nexus Wallet. So first, we need to create our iFrame and the associated transport.
+
 :::code-group
-
 ```ts [client.ts]
-import { nexusConfig } from './config'
-import {
-    createIframe,
-    createIFrameNexusClient,
-} from "@frak-labs/nexus-sdk/core";
-import type { NexusClient } from "@frak-labs/nexus-sdk/core";
-
-// Create the iFrame and the associated FrakClient
-async function createClient(): Promise<NexusClient> {
-    // Create the iFrame that will be used for the communication with the nexus wallet
-    const iframe = await createIframe(nexusConfig);
-
-    // Build the client
-    const client = createIFrameNexusClient(nexusConfig, iframe);
-
-    // Wait for it to be ready
-    await client.waitForConnection;
-
-    // And then return it
-    return client;
-}
-
-// Create the client and use it
-export const nexusClient = await createClient();
+// [!include ~/snippets/core/client.ts]
 ```
-
-```ts [config.ts] filename="config.ts"
-import type {
-    NexusWalletSdkConfig
-} from "@frak-labs/nexus-sdk/core";
-
-// Create the config for the Nexus Wallet SDK
-export const nexusConfig: NexusWalletSdkConfig = {
-    // The current url for the wallet sdk
-    walletUrl: "https://wallet.frak.id",
-    // The content id on which this sdk will be used
-    contentId: "0xdeadbeef",
-    // The content title, this will be displayed to the user during a few registration steps
-    contentTitle: "My content dApp title"
-}
+```ts [config.ts]
+// [!include ~/snippets/config.ts]
 ```
-
 :::
 
-## Watch the current wallet status
+## Using the client
+
+Now that you got a client up and running, you can start using the SDK to interact with the Nexus Wallet.
+
+Let's explore a few use cases:
+
+### Watch the current wallet status
 
 By watching the wallet status, you will be able to know if the wallet is connected, and if he is connected, you will be able to get his wallet address.
-
-```ts
+:::code-group
+```ts [app.ts]
 import { nexusClient } from "./client";
 import { watchWalletStatus } from "@frak-labs/nexus-sdk/actions";
 import type { WalletStatusReturnType } from "@frak-labs/nexus-sdk/core";
@@ -90,13 +59,18 @@ watchWalletStatus(nexusClient, (walletStatus: WalletStatusReturnType) => {
     // You can now use the status to update your UI
 });
 ```
+```ts [client.ts]
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
 
 
-## Watch the article unlock status
+### Watch the article unlock status
 
 When opening a gated content, you will need to watch the unlock status to know if the user has unlocked the content or not.
 
-```ts
+:::code-group
+```ts [app.ts]
 import { nexusClient } from "./client";
 import { watchUnlockStatus } from "@frak-labs/nexus-sdk/actions";
 import type { ArticleUnlockStatusReturnType } from "@frak-labs/nexus-sdk/core";
@@ -126,13 +100,18 @@ watchUnlockStatus(
     }
 );
 ```
+```ts [client.ts]
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
 
 
-## Get the unlock options for an article
+### Get the unlock options for an article
 
 If a content is locked, you will need to display the unlock options to your user, so he can choose how he wants to unlock the content.
 
-```ts
+:::code-group
+```ts [app.ts]
 import { nexusClient } from "./client";
 import { getArticleUnlockOptions } from "@frak-labs/nexus-sdk/actions";
 import type { UnlockOptionsReturnType } from "@frak-labs/nexus-sdk/core";
@@ -147,12 +126,17 @@ const options: UnlockOptionsReturnType = await getArticleUnlockOptions(nexusClie
 // Display the options to the user
 console.log("Unlock options", { options });
 ```
+```ts [client.ts]
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
 
-## Start an unlock flow
+### Start an unlock flow
 
 Once your user has picked an unlock option, you will need to start the unlock flow.
 
-```ts
+:::code-group
+```ts [app.ts]
 import { nexusClient } from "./client";
 import { getStartArticleUnlockUrl } from "@frak-labs/nexus-sdk/actions";
 import type { UnlockOptionsReturnType } from "@frak-labs/nexus-sdk/core";
@@ -173,3 +157,7 @@ async function launchUnlock(pickedOption: UnlockOptionsReturnType["prices"][numb
     window.location.href = url;
 }
 ```
+```ts [client.ts]
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
