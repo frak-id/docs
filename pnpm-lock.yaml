@@ -43,8 +43,8 @@ importers:
         specifier: 1.5.3
         version: 1.5.3
       '@frak-labs/nexus-sdk':
-        specifier: ^0.0.3-alpha
-        version: 0.0.3-alpha(viem@2.7.19)
+        specifier: ^0.0.4
+        version: 0.0.4(@tanstack/react-query@5.25.0)(react@18.2.0)(viem@2.7.19)
 
 packages:
 
@@ -2180,13 +2180,17 @@ packages:
     requiresBuild: true
     dev: false
 
-  /@frak-labs/nexus-sdk@0.0.3-alpha(viem@2.7.19):
-    resolution: {integrity: sha512-5D1Kaz6bOmNI7PQcMGcxaDw+2uwQHszVNAUiypuF6m5y6fPkb6rkLdKsUDEk95k/wyo88oWOwqV5mV7q7XhCPw==}
+  /@frak-labs/nexus-sdk@0.0.4(@tanstack/react-query@5.25.0)(react@18.2.0)(viem@2.7.19):
+    resolution: {integrity: sha512-CQQ/Xk8pA6HK9RySx6JFCm9iOotuEFGT7nBY2tdVquEbC5PZzUGhlR47yM83t6zDxaL/M9bR1L6Z7HAgK0sNLg==}
     peerDependencies:
-      viem: ^2.7.10
+      '@tanstack/react-query': '>=5.0.0'
+      react: '>=18'
+      viem: ^2.x
     dependencies:
+      '@tanstack/react-query': 5.25.0(react@18.2.0)
       async-lz-string: 1.1.0
       js-sha256: 0.11.0
+      react: 18.2.0
       viem: 2.7.19(typescript@5.3.3)
     dev: true
 
@@ -3905,6 +3909,19 @@ packages:
       '@smithy/abort-controller': 2.1.3
       '@smithy/types': 2.10.1
       tslib: 2.6.2
+    dev: true
+
+  /@tanstack/query-core@5.25.0:
+    resolution: {integrity: sha512-vlobHP64HTuSE68lWF1mEhwSRC5Q7gaT+a/m9S+ItuN+ruSOxe1rFnR9j0ACWQ314BPhBEVKfBQ6mHL0OWfdbQ==}
+    dev: true
+
+  /@tanstack/react-query@5.25.0(react@18.2.0):
+    resolution: {integrity: sha512-u+n5R7mLO7RmeiIonpaCRVXNRWtZEef/aVZ/XGWRPa7trBIvGtzlfo0Ah7ZtnTYfrKEVwnZ/tzRCBcoiqJ/tFw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.25.0
+      react: 18.2.0
     dev: true
 
   /@trpc/server@9.16.0:

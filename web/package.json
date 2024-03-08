@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@frak-labs/nexus-sdk": "^0.0.3-alpha"
+    "@frak-labs/nexus-sdk": "^0.0.4"
   }
 }
