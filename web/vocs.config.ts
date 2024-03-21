@@ -56,6 +56,21 @@ export const walletSdkSidebar = [
         ],
     },
     {
+        text: "Providers",
+        collapsable: true,
+        link: "/wallet-sdk/api/react/providers",
+        items: [
+            {
+                text: "NexusConfigProvider",
+                link: "/wallet-sdk/api/react/providers/nexusConfigProvider",
+            },
+            {
+                text: "NexusIFrameClientProvider",
+                link: "/wallet-sdk/api/react/providers/nexusIFrameClientProvider",
+            },
+        ],
+    },
+    {
         text: "How does it works?",
         link: "/wallet-sdk/under-the-hood",
     },
