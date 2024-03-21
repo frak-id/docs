@@ -1,0 +1,47 @@
+# useNexusConfig
+
+Hook that returns the Nexus configuration object.
+
+## Import
+
+```tsx
+import { useNexusConfig } from "@frak-labs/nexus-sdk/react";
+```
+
+## Usage
+
+```tsx [index.tsx]
+import { useNexusConfig } from "@frak-labs/nexus-sdk/react";
+
+function App() {
+  const config = useNexusConfig();
+
+  return (
+    <div>Current wallet sdk url: {config.walletUrl}</div>
+  );
+}
+```
+
+## Return type
+
+```tsx
+import type { NexusWalletSdkConfig } from "@frak-labs/nexus-sdk/core";
+```
+
+### walletUrl
+
+`string`
+
+The current url for the wallet sdk.
+
+### contentId
+
+`Hex`
+
+The content id on which this sdk will be used.
+
+### contentTitle
+
+`string`
+
+The content title.

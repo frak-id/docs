@@ -1,0 +1,59 @@
+# useArticleUnlockOptions
+
+Hook used to get the unlock options for an article.
+
+## Import
+
+```tsx
+import { useArticleUnlockOptions } from "@frak-labs/nexus-sdk/react";
+```
+
+## Usage
+
+```tsx [index.tsx]
+import { useArticleUnlockOptions } from "@frak-labs/nexus-sdk/react";
+import type { Hex } from "viem";
+
+function App({ article }: { id: Hex; }) {
+  const { data: unlockOptions } = useArticleUnlockOptions({
+    articleId: article.id
+  });
+
+  return (
+    <div>
+    </div>
+  );
+}
+```
+
+## Parameters
+
+```ts
+import type {
+  GetUnlockOptionsParams
+} from "@frak-labs/nexus-sdk/core";
+```
+
+### articleId
+
+`Hex`
+
+The article id to get the unlock options.
+
+## Return type
+
+```ts
+import type {
+  UnlockOptionsReturnType
+} from "@frak-labs/nexus-sdk/core";
+```
+
+### TanStack Query `useQuery` return types.
+
+[See all return types](https://tanstack.com/query/latest/docs/framework/react/reference/useQuery)
+
+### data
+
+`{ prices: { index: number; unlockDurationInSec: number; frkAmount: Hex; isUserAccessible: boolean | null; }[];`
+
+The prices for unlocking the article.
