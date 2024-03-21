@@ -1,0 +1,77 @@
+# useArticleUnlockStatus
+
+Hooks used to listen to the current article unlock status.
+
+## Import
+
+```tsx
+import { useArticleUnlockStatus } from "@frak-labs/nexus-sdk/react";
+```
+
+## Usage
+
+```tsx [index.tsx]
+import { useArticleUnlockStatus } from "@frak-labs/nexus-sdk/react";
+import type { Hex } from "viem";
+
+function App({ article }: { id: Hex; }) {
+  const { data: articleUnlockStatus } = useArticleUnlockStatus({
+    articleId: article.id
+  });
+
+  return (
+    <div>
+    </div>
+  );
+}
+```
+
+## Parameters
+
+```ts
+import type {
+  WatchUnlockStatusParams
+} from "@frak-labs/nexus-sdk/react";
+```
+
+### articleId
+
+`Hex`
+
+The article id to watch the unlock status.
+
+## Return type
+
+```ts
+import type {
+  ArticleUnlockStatusQueryReturnType
+} from "@frak-labs/nexus-sdk/react";
+```
+
+### TanStack Query `useQuery` return types.
+
+[See all return types](https://tanstack.com/query/latest/docs/framework/react/reference/useQuery)
+
+### data
+
+- Waiting for the response
+
+`{ key: "waiting-response"; status: "waiting-response"; }`
+
+- When the content is unlocked
+
+`{ key: "valid"; status: "unlocked"; allowedUntil: number; }`
+
+- When the content unlocked was expired or not unlocked
+
+`{ key: "expired"; status: "locked"; expiredAt: number; } | { key: "not-unlocked"; status: "locked"; }`
+
+- When the content unlock is in progress
+
+`{ key: "preparing" | "waiting-user-validation"; status: "in-progress"; } | { key: "waiting-transaction-bundling"; status: "in-progress"; userOpHash: Hex; } | { key: "waiting-transaction-confirmation"; status: "in-progress"; userOpHash: Hex; txHash: Hex; }`
+
+- When the unlock content is in error
+
+`{ key: "error"; status: "locked"; reason: string; }`
+
+The current unlock status.

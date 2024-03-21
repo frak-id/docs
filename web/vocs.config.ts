@@ -29,6 +29,33 @@ export const walletSdkSidebar = [
         ],
     },
     {
+        text: "Hooks",
+        collapsable: true,
+        link: "/wallet-sdk/api/react/hooks",
+        items: [
+            {
+                text: "useNexusConfig",
+                link: "/wallet-sdk/api/react/hooks/useNexusConfig",
+            },
+            {
+                text: "useNexusClient",
+                link: "/wallet-sdk/api/react/hooks/useNexusClient",
+            },
+            {
+                text: "useWalletStatus",
+                link: "/wallet-sdk/api/react/hooks/useWalletStatus",
+            },
+            {
+                text: "useArticleUnlockStatus",
+                link: "/wallet-sdk/api/react/hooks/useArticleUnlockStatus",
+            },
+            {
+                text: "useArticleUnlockOptions",
+                link: "/wallet-sdk/api/react/hooks/useArticleUnlockOptions",
+            },
+        ],
+    },
+    {
         text: "How does it works?",
         link: "/wallet-sdk/under-the-hood",
     },

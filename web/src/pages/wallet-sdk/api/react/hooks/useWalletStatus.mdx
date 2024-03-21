@@ -1,0 +1,64 @@
+# useWalletStatus
+
+Hooks used to listen to the current wallet status.
+
+## Import
+
+```tsx
+import { useWalletStatus } from "@frak-labs/nexus-sdk/react";
+```
+
+## Usage
+
+```tsx [index.tsx]
+import { useWalletStatus } from "@frak-labs/nexus-sdk/react";
+import { formatEther } from "viem";
+
+function App() {
+  const { data: walletStatus } = useWalletStatus();
+
+  return (
+    <div>
+      {walletStatus?.key === "connected" && (
+          <>
+              <p>User connected with wallet {walletStatus.wallet}</p>
+              <p>
+                User has{" "}
+                {formatEther(BigInt(walletStatus.frkBalanceAsHex))}{" "}
+                FRK
+              </p>
+          </>
+      )}
+      {walletStatus?.key === "not-connected" && <p>User not connected</p>}
+    </div>
+  );
+}
+```
+
+## Return type
+
+```tsx
+import type {
+  WalletStatusQueryReturnType
+} from "@frak-labs/nexus-sdk/react";
+```
+
+### TanStack Query `useQuery` return types.
+
+[See all return types](https://tanstack.com/query/latest/docs/framework/react/reference/useQuery)
+
+### data
+
+- Waiting for the response
+
+`{ key: "waiting-response"; }`
+
+- When the wallet is connected
+
+`{ key: "connected"; wallet: Address; frkBalanceAsHex: Hex; }`
+
+- When the wallet is not connected
+
+`{ key: "not-connected"; }`
+
+The current wallet status.
