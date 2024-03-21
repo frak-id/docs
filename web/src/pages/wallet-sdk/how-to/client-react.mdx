@@ -52,7 +52,7 @@ function App() {
 If you need to interact directly with the nexus wallet, within your app (checking gated content access, wallet status or other), you need to add an IFrame client provider:
 
 :::code-group
-```ts [app.tsx]
+```ts [app.tsx] filename="app.tsx"
 import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
 import { nexusConfig } from "./config";
 
@@ -110,4 +110,41 @@ function App() {
 
 Now that the client is setup and available everywhere in your react app, let's check what you can do with it
 
-// TODO: List of the hooks available with permalinks
+:::code-group
+```tsx [wallet.tsx]
+import { useWalletStatus } from "@frak-labs/nexus-sdk/react";
+import { formatEther } from "viem";
+
+function Wallet() {
+  const {
+    data: walletStatus,
+    isLoading,
+    isError,
+    error
+  } = useWalletStatus();
+  if (isLoading) return <div>Loading wallet...</div>;
+  if (isError) return <div>Error {error.message}</div>;
+  return (
+    <div>
+      {walletStatus?.key === "connected" && (
+          <>
+              <p>User connected with wallet {walletStatus.wallet}</p>
+              <p>
+                User has{" "}
+                {formatEther(BigInt(walletStatus.frkBalanceAsHex))}{" "}
+                FRK
+              </p>
+          </>
+      )}
+      {walletStatus?.key === "not-connected" && <p>User not connected</p>}
+    </div>
+  );
+}
+```
+```tsx [app.tsx]
+// [!include app.tsx]
+```
+```tsx [config.ts]
+// [!include ~/snippets/config.ts]
+```
+:::
