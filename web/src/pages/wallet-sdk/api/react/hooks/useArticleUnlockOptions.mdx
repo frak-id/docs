@@ -14,9 +14,10 @@ import { useArticleUnlockOptions } from "@frak-labs/nexus-sdk/react";
 import { useArticleUnlockOptions } from "@frak-labs/nexus-sdk/react";
 import type { Hex } from "viem";
 
-function App({ article }: { id: Hex; }) {
+function App({ article, contentId }: { article: { id: Hex; }, contentId: Hex }) {
   const { data: unlockOptions } = useArticleUnlockOptions({
-    articleId: article.id
+    articleId: article.id,
+    contentId
   });
 
   return (
@@ -40,6 +41,12 @@ import type {
 
 The article id to get the unlock options.
 
+### contentId
+
+`Hex`
+
+The contentId to which this article belongs.
+
 ## Return type
 
 ```ts
@@ -54,6 +61,6 @@ import type {
 
 ### data
 
-`{ prices: { index: number; unlockDurationInSec: number; frkAmount: Hex; isUserAccessible: boolean | null; }[];`
+`{ frkBalanceAsHex?: Hex, prices: { index: number; unlockDurationInSec: number; frkAmount: Hex; isUserAccessible: boolean | null; }[];`
 
-The prices for unlocking the article.
+The current user pFRK balance, and he prices for unlocking the article.

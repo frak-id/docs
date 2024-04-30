@@ -127,14 +127,7 @@ function Wallet() {
   return (
     <div>
       {walletStatus?.key === "connected" && (
-          <>
-              <p>User connected with wallet {walletStatus.wallet}</p>
-              <p>
-                User has{" "}
-                {formatEther(BigInt(walletStatus.frkBalanceAsHex))}{" "}
-                FRK
-              </p>
-          </>
+          <p>User connected with wallet {walletStatus.wallet}</p>
       )}
       {walletStatus?.key === "not-connected" && <p>User not connected</p>}
     </div>

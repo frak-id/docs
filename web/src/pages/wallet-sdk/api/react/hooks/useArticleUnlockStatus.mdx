@@ -14,9 +14,10 @@ import { useArticleUnlockStatus } from "@frak-labs/nexus-sdk/react";
 import { useArticleUnlockStatus } from "@frak-labs/nexus-sdk/react";
 import type { Hex } from "viem";
 
-function App({ article }: { id: Hex; }) {
+function App({ article, contentId }: { article: { id: Hex; }, contentId: Hex }) {
   const { data: articleUnlockStatus } = useArticleUnlockStatus({
-    articleId: article.id
+    articleId: article.id,
+    contentId
   });
 
   return (
@@ -39,6 +40,12 @@ import type {
 `Hex`
 
 The article id to watch the unlock status.
+
+### contentId
+
+`Hex`
+
+The contentId to which this article belongs.
 
 ## Return type
 

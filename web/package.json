@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@types/react": "^18.2.61",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "remark-mermaidjs": "^6.0.0",
-    "vocs": "^1.0.0-alpha.41"
+    "typescript": "^5.4.5",
+    "vocs": "1.0.0-alpha.45"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@frak-labs/nexus-sdk": "^0.0.4"
+    "@frak-labs/nexus-sdk": "^0.0.8"
   }
 }
