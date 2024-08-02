@@ -30,13 +30,6 @@
                 },
                 "useSimplifiedLogicExpression": "error"
             },
-            "nursery": {
-                "useImportType": "error",
-                "useGroupedTypeImport": "error",
-                "useExportType": "error",
-                "noUnusedPrivateClassMembers": "error",
-                "noUselessTernary": "error"
-            },
             "correctness": {
                 "useHookAtTopLevel": "error",
                 "noUnusedVariables": "error",
@@ -58,7 +51,7 @@
         "formatter": {
             "quoteStyle": "double",
             "semicolons": "always",
-            "trailingComma": "es5"
+            "trailingCommas": "es5"
         }
     }
 }

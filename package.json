@@ -1,21 +1,19 @@
 {
-  "name": "frak-docs",
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "lint": "biome lint .",
-    "format:check": "biome check .",
-    "format": "biome check --apply .",
-    "update-deps": "pnpm upgrade -r --latest --interactive",
-    "deploy": "sst deploy --stage prod",
-    "preinstall": "npx only-allow pnpm"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "sst": "^2.40.6",
-    "typescript": "^5.4.5"
-  },
-  "workspaces": [
-    "web/"
-  ]
+    "name": "frak-docs",
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "lint": "biome lint .",
+        "format:check": "biome check .",
+        "format": "biome check --apply .",
+        "update-deps": "pnpm upgrade -r --latest --interactive",
+        "deploy": "sst deploy --stage prod",
+        "preinstall": "npx only-allow pnpm"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "1.8.3",
+        "sst": "2.43.4",
+        "typescript": "^5.5.4"
+    },
+    "workspaces": ["web/"]
 }

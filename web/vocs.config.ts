@@ -46,6 +46,10 @@ export const walletSdkSidebar = [
                 link: "/wallet-sdk/api/react/hooks/useWalletStatus",
             },
             {
+                text: "useDisplayModal",
+                link: "/wallet-sdk/api/react/hooks/useDisplayModal",
+            },
+            {
                 text: "useArticleUnlockStatus",
                 link: "/wallet-sdk/api/react/hooks/useArticleUnlockStatus",
             },
