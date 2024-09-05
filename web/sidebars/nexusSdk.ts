@@ -34,7 +34,10 @@ export const nexusSdkSidebar = [
     {
         text: "Integration Guide",
         items: [
-            { text: "React", link: "/nexus-sdk/integration-guide/react" },
+            {
+                text: "React",
+                link: "/nexus-sdk/integration-guide/react",
+            },
             {
                 text: "Vanilla JS",
                 link: "/nexus-sdk/integration-guide/vanilla-js",
@@ -79,47 +82,47 @@ export const nexusSdkSidebar = [
                 items: [
                     {
                         text: "NexusConfigProvider",
-                        link: "/nexus-sdk/api/react-providers/NexusConfigProvider",
+                        link: "/nexus-sdk/api/react/NexusConfigProvider",
                     },
                     {
                         text: "NexusIFrameClientProvider",
-                        link: "/nexus-sdk/api/react-providers/NexusIFrameClientProvider",
+                        link: "/nexus-sdk/api/react/NexusIFrameClientProvider",
                     },
                     {
                         text: "useNexusConfig",
-                        link: "/nexus-sdk/api/react-hooks/useNexusConfig",
+                        link: "/nexus-sdk/api/react/useNexusConfig",
                     },
                     {
                         text: "useNexusClient",
-                        link: "/nexus-sdk/api/react-hooks/useNexusClient",
+                        link: "/nexus-sdk/api/react/useNexusClient",
                     },
                     {
                         text: "useWalletStatus",
-                        link: "/nexus-sdk/api/react-hooks/useWalletStatus",
+                        link: "/nexus-sdk/api/react/useWalletStatus",
                     },
                     {
                         text: "useDisplayModal",
-                        link: "/nexus-sdk/api/react-hooks/useDisplayModal",
+                        link: "/nexus-sdk/api/react/useDisplayModal",
                     },
                     {
                         text: "useSendInteraction",
-                        link: "/nexus-sdk/api/react-hooks/useSendInteraction",
+                        link: "/nexus-sdk/api/react/useSendInteraction",
                     },
                     {
                         text: "useSendTransaction",
-                        link: "/nexus-sdk/api/react-hooks/useSendTransaction",
+                        link: "/nexus-sdk/api/react/useSendTransaction",
                     },
                     {
                         text: "useSiweAuthenticate",
-                        link: "/nexus-sdk/api/react-hooks/useSiweAuthenticate",
+                        link: "/nexus-sdk/api/react/useSiweAuthenticate",
                     },
                     {
                         text: "useOpenSso",
-                        link: "/nexus-sdk/api/react-hooks/useOpenSso",
+                        link: "/nexus-sdk/api/react/useOpenSso",
                     },
                     {
                         text: "useReferralInteraction",
-                        link: "/nexus-sdk/api/react-hooks/useReferralInteraction",
+                        link: "/nexus-sdk/api/react/useReferralInteraction",
                     },
                 ],
             },

@@ -1,4 +1,3 @@
-import remarkMermaid from "remark-mermaidjs";
 import { defineConfig } from "vocs";
 import { businessSidebar } from "./sidebars/business.ts";
 import { nexusSdkSidebar } from "./sidebars/nexusSdk.ts";
@@ -13,19 +12,6 @@ export default defineConfig({
     // Logo
     logoUrl: "/favicons/icon.svg",
     iconUrl: "/favicons/icon-192.png",
-    // A few plugins
-    markdown: {
-        remarkPlugins: [
-            [
-                remarkMermaid,
-                {
-                    mermaidOptions: {
-                        theme: "forest",
-                    },
-                },
-            ],
-        ],
-    },
     // Social reference
     socials: [
         {
@@ -61,5 +47,5 @@ export default defineConfig({
     },
     // Some global config
     rootDir: "src",
-    baseUrl: "https://docs.frak.id",
+    baseUrl: "https://docs-dev.frak.id",
 });
