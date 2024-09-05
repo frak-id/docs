@@ -1,0 +1,205 @@
+---
+title: DisplayModalType
+description: Types for displaying modals in the Nexus Wallet SDK
+date: 2024-09-05
+---
+
+# DisplayModalType
+
+The `DisplayModalType` encompasses various types used for displaying modals in the Nexus Wallet SDK.
+
+## Generic Modal Step Customization
+
+Each modal step can include generic metadata for customization:
+
+```ts twoslash
+type ModalStepMetadata = {
+  metadata?: {
+    title?: string;
+    description?: string;
+    primaryActionText?: string;
+    secondaryActionText?: string;
+  };
+};
+```
+
+## ModalRpcStepsInput
+
+The `ModalRpcStepsInput` type defines the possible steps for a modal display request.
+
+```ts twoslash
+// @noErrors
+import type {ModalStepTypes, ModalStepMetadata} from "@frak-labs/nexus-sdk/core";
+
+/**
+ * Type for the RPC input of a modal
+ */
+type ModalRpcStepsInput<T extends ModalStepTypes[] = ModalStepTypes[]> = {
+  [K in T[number]["key"]]?: Extract<T[number], { key: K }>["params"];
+};
+
+/**
+ * Type for the result of a modal request
+ */
+export type ModalRpcStepsResultType<
+    T extends ModalStepTypes[] = ModalStepTypes[],
+> = {
+    [K in T[number]["key"]]: Extract<T[number], { key: K }>["returns"];
+};
+
+/**
+ * Represent a generic modal step type
+ */
+type GenericModalStepType<TKey, TParams, TReturns> = {
+  key: TKey;
+  params: TParams extends never
+    ? ModalStepMetadata
+    : ModalStepMetadata & TParams;
+  returns: TReturns;
+};
+```
+
+## Modal Step Types
+
+### LoginModalStepType
+
+```ts twoslash
+// @noErrors
+import type {Address} from "viem";
+
+type LoginModalStepType = GenericModalStepType
+  "login",
+  LoginWithSso | LoginWithoutSso,
+  {
+    wallet: Address;
+  }
+>;
+
+type LoginWithSso = {
+  allowSso: true;
+  ssoMetadata: SsoMetadata;
+};
+
+type LoginWithoutSso = {
+  allowSso?: false;
+  ssoMetadata?: never;
+};
+```
+
+Initiates a login process, optionally allowing SSO.
+
+### SiweAuthenticateModalStepType
+
+```ts twoslash
+// @noErrors
+type SiweAuthenticateModalStepType = GenericModalStepType
+  "siweAuthenticate",
+  { siwe: SiweAuthenticationParams },
+  SiweAuthenticateReturnType
+>;
+
+type SiweAuthenticationParams = Omit
+  SiweMessage,
+  "address" | "chainId" | "expirationTime" | "issuedAt" | "notBefore"
+> & {
+  expirationTimeTimestamp?: number;
+  notBeforeTimestamp?: number;
+};
+
+type SiweAuthenticateReturnType = Readonly<{
+  signature: Hex;
+  message: string;
+}>;
+```
+
+Handles Sign-In with Ethereum (SIWE) authentication.
+
+### SendTransactionModalStepType
+
+```ts twoslash
+// @noErrors
+type SendTransactionModalStepType = GenericModalStepType
+  "sendTransaction",
+  { tx: SendTransactionTxType | SendTransactionTxType[] },
+  SendTransactionReturnType
+>;
+
+type SendTransactionTxType = Readonly<{
+  to: Address;
+  data?: Hex;
+  value?: Hex;
+}>;
+
+type SendTransactionReturnType = Readonly<{
+  hash: Hex;
+}>;
+```
+
+Initiates a transaction or batch of transactions.
+
+### OpenInteractionSessionModalStepType
+
+```ts twoslash
+// @noErrors
+type OpenInteractionSessionModalStepType = GenericModalStepType
+  "openSession",
+  object,
+  OpenInteractionSessionReturnType
+>;
+
+type OpenInteractionSessionReturnType = Readonly<{
+  startTimestamp: number;
+  endTimestamp: number;
+}>;
+```
+
+Opens an interaction session for the user.
+
+### SuccessModalStepType
+
+```ts twoslash
+// @noErrors
+type SuccessModalStepType = GenericModalStepType
+  "success",
+  {
+    sharing?: {
+      popupTitle?: string;
+      text?: string;
+      link?: string;
+    };
+  },
+  object
+>;
+```
+
+Displays a success message, optionally with sharing options.
+
+## Helper Types
+
+### ModalRpcMetadata
+
+```ts twoslash
+type ModalRpcMetadata = Readonly<{
+  header?: {
+    title?: string;
+    icon?: string;
+  };
+  context?: string;
+}>;
+```
+
+Defines additional metadata for the entire modal display request.
+
+### DisplayModalParamsType
+
+```ts twoslash
+// @noErrors
+import types {ModalRpcMetadata, ModalRpcStepsInput, ModalStepTypes} from "@frak-labs/nexus-sdk/core";
+
+type DisplayModalParamsType<T extends ModalStepTypes[]> = {
+  steps: ModalRpcStepsInput<T>;
+  metadata?: ModalRpcMetadata;
+};
+```
+
+Represents the full parameter type for a modal display request.

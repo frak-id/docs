@@ -11,15 +11,15 @@
         "preview": "vocs preview"
     },
     "dependencies": {
-        "@types/react": "^18.3.3",
+        "@types/react": "^18.3.5",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "remark-mermaidjs": "^6.0.0",
         "typescript": "^5.5.4",
-        "vocs": "1.0.0-alpha.55"
+        "vocs": "1.0.0-alpha.58"
     },
     "devDependencies": {
         "@biomejs/biome": "1.8.3",
-        "@frak-labs/nexus-sdk": "^0.0.10"
+        "@frak-labs/nexus-sdk": "^0.0.14"
     }
 }

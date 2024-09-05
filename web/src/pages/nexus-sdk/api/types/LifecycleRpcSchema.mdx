@@ -1,0 +1,57 @@
+---
+title: LifecycleRpcSchema
+description: RPC schema for lifecycle events in the Nexus Wallet SDK
+date: 2024-09-05
+---
+
+# LifecycleRpcSchema
+
+The `LifecycleRpcSchema` type defines the events related to the iframe and client lifecycle in the Nexus Wallet SDK.
+
+## Type Definition
+
+```ts twoslash
+type IFrameLifecycleEvent =
+  | {
+      iframeLifecycle: "connected" | "show" | "hide";
+      data?: never;
+    }
+  | {
+      iframeLifecycle: "do-backup";
+      data: { backup?: string };
+    };
+
+type ClientLifecycleEvent = CustomCssEvent | RestoreBackupEvent;
+
+type CustomCssEvent = {
+  clientLifecycle: "modal-css";
+  data: { cssLink: string };
+};
+
+type RestoreBackupEvent = {
+  clientLifecycle: "restore-backup";
+  data: { backup: string };
+};
+```
+
+## IFrameLifecycleEvent
+
+### Properties
+- `iframeLifecycle`: Specifies the type of iframe lifecycle event.
+- `data`: Additional data associated with the event (only for "do-backup" event).
+
+### Event Types
+- `"connected"`: Indicates that the iframe has connected.
+- `"show"`: Signals that the iframe should be shown.
+- `"hide"`: Signals that the iframe should be hidden.
+- `"do-backup"`: Triggers a backup operation with optional backup data.
+
+## ClientLifecycleEvent
+
+### CustomCssEvent
+- `clientLifecycle`: Always "modal-css"
+- `data.cssLink`: A string containing the CSS link for modal styling.
+
+### RestoreBackupEvent
+- `clientLifecycle`: Always "restore-backup"
+- `data.backup`: A string containing the backup data to be restored.
