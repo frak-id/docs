@@ -62,16 +62,16 @@ export const nexusSdkSidebar = [
                         link: "/nexus-sdk/api/actions/sendInteraction",
                     },
                     {
-                        text: "displayModal",
-                        link: "/nexus-sdk/api/actions/displayModal",
-                    },
-                    {
                         text: "sendTransaction",
                         link: "/nexus-sdk/api/actions/sendTransaction",
                     },
                     {
                         text: "siweAuthenticate",
                         link: "/nexus-sdk/api/actions/siweAuthenticate",
+                    },
+                    {
+                        text: "displayModal",
+                        link: "/nexus-sdk/api/actions/displayModal",
                     },
                 ],
             },

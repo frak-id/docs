@@ -1,0 +1,99 @@
+---
+title: siweAuthenticate
+description: Function to perform Sign-In with Ethereum (SIWE) authentication
+date: 2024-09-05
+---
+
+# siweAuthenticate
+
+## Summary
+The `siweAuthenticate` function initiates a Sign-In with Ethereum (SIWE) authentication process through the Nexus Wallet. This allows users to authenticate using their Ethereum account, providing a secure and decentralized authentication method.
+
+## Requirements
+- An initialized `NexusClient` instance
+- User must have access to the Nexus Wallet
+
+## Function Signature
+
+```ts twoslash
+// @noErrors
+import type { NexusClient, SiweAuthenticateModalParams, SiweAuthenticateReturnType } from '@frak-labs/nexus-sdk/core';
+
+declare function siweAuthenticate(
+  client: NexusClient,
+  params: SiweAuthenticateModalParams
+): Promise<SiweAuthenticateReturnType>;
+```
+
+### Parameters
+- `client`: `NexusClient` - An instance of the Nexus client
+- `params`: `SiweAuthenticateModalParams` - SIWE authentication parameters
+
+### Return Value
+- `Promise<SiweAuthenticateReturnType>`: A promise that resolves with the SIWE authentication result
+
+## SiweAuthenticateModalParams
+
+The `SiweAuthenticateModalParams` type is defined as:
+
+```ts twoslash
+// @noErrors
+type SiweAuthenticateModalParams = {
+  siwe?: Partial<SiweAuthenticationParams>;
+  metadata?: ModalRpcMetadata;
+};
+
+type SiweAuthenticationParams = Omit
+  SiweMessage,
+  "address" | "chainId" | "expirationTime" | "issuedAt" | "notBefore"
+> & {
+  expirationTimeTimestamp?: number;
+  notBeforeTimestamp?: number;
+};
+```
+
+### Properties
+
+- `siwe` (optional): `Partial<SiweAuthenticationParams>`
+    - Partial SIWE message parameters. If not provided, default values will be used.
+    - Includes standard SIWE fields like `domain`, `uri`, `version`, etc.
+- Custom fields:
+    - `expirationTimeTimestamp`: Optional expiration time as a Unix timestamp.
+    - `notBeforeTimestamp`: Optional "not before" time as a Unix timestamp.
+
+- `metadata` (optional): `ModalRpcMetadata`
+    - Additional metadata for customizing the authentication modal.
+
+## SiweAuthenticateReturnType
+
+The `SiweAuthenticateReturnType` type is defined as:
+
+```ts twoslash
+// @noErrors
+type SiweAuthenticateReturnType = Readonly<{
+  signature: Hex;
+  message: string;
+}>;
+```
+
+- `signature`: `Hex` - The Ethereum signature of the SIWE message.
+- `message`: `string` - The full SIWE message that was signed.
+
+## Usage Example
+
+:::code-group
+```ts twoslash [siweAuthenticate.ts]
+// @noErrors
+// [!include ~/snippets/actions/siweAuthenticate.ts]
+```
+```ts twoslash [client.ts]
+// @noErrors
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
+
+In this example, we import the `siweAuthenticate` function and the Nexus client. We then call `siweAuthenticate` with the necessary SIWE parameters, including a custom statement and optional metadata for the modal. The function returns a promise that resolves with the signature and the full SIWE message.
+
+## Related Types
+- [NexusClient](/nexus-sdk/api/types/NexusClient)
+- [IFrameRpcSchema](/nexus-sdk/api/types/IFrameRpcSchema)

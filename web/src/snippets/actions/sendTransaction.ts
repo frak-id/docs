@@ -1,0 +1,20 @@
+import { sendTransaction } from "@frak-labs/nexus-sdk/actions";
+import { formatEther } from "viem";
+import { nexusClient } from "../core/client-full.ts";
+
+/**
+ * Send a transaction
+ */
+const { hash } = await sendTransaction(nexusClient, {
+    tx: {
+        to: "0xdeadbeef",
+        value: formatEther(1),
+    },
+    metadata: {
+        header: {
+            title: "Send 1 ETH",
+        },
+        context: "Send 1 ETH to 0xdeadbeef",
+    },
+});
+console.log("Transaction hash:", hash);
