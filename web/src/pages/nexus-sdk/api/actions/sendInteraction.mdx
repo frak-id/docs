@@ -1,0 +1,105 @@
+---
+title: sendInteraction
+description: Function to send user interactions to the Nexus Wallet
+date: 2024-09-05
+---
+
+# sendInteraction
+
+## Summary
+The `sendInteraction` function sends user interactions to the Nexus Wallet, allowing for on-chain recording of user activities within your application.
+
+For a more in-depth explanation of interactions, please refer to our [Interactions Concept Guide](/nexus-sdk/core-concepts/interactions).
+
+## Requirements
+- An initialized `NexusClient` instance
+- User must be authenticated with the Nexus Wallet
+- User must have an opened session
+
+If the user isn't logged in, or doesn't have an opened session, all the submitted interactions will be cached in the browser storage and will be sent once a user is logged in and have opened a session.
+
+## Function Signature
+
+```ts twoslash
+// @noErrors
+import type { NexusClient, SendInteractionParamsType, SendInteractionReturnType } from '@frak-labs/nexus-sdk/core';
+
+declare function sendInteraction(
+  client: NexusClient,
+  params: SendInteractionParamsType
+): Promise<SendInteractionReturnType>;
+```
+
+### Parameters
+- `client`: `NexusClient` - An instance of the Nexus client
+- `params`: `SendInteractionParamsType` - Interaction parameters
+
+### Return Value
+- `Promise<SendInteractionReturnType>`: A promise that resolves with the interaction result
+
+## SendInteractionParamsType
+
+The `SendInteractionParamsType` type is defined as:
+
+```ts twoslash
+// @noErrors
+type SendInteractionParamsType = {
+  productId?: Hex;
+  interaction: PreparedInteraction;
+  validation?: Hex;
+};
+
+type PreparedInteraction = Readonly<{
+  handlerTypeDenominator: Hex;
+  interactionData: Hex;
+}>;
+```
+
+### Properties
+
+- `productId` (optional): `Hex`
+    - The ID of your product. If not provided, it will be automatically computed from the current domain.
+
+- `interaction`: `PreparedInteraction`
+    - The prepared interaction data, including:
+    - `handlerTypeDenominator`: `Hex` - The type of interaction handler.
+    - `interactionData`: `Hex` - The encoded interaction data.
+
+- `validation` (optional): `Hex`
+    - A signature crafted by an approved InteractionValidator for your product.
+
+:::warning
+If the `validation` parameter is not set, a managed validator needs to be configured in your Business dashboard for the interaction to be pushed on-chain.
+Ensure you have set up the appropriate validators to avoid issues with interaction processing.
+:::
+
+## SendInteractionReturnType
+
+The `SendInteractionReturnType` type is defined as:
+
+```ts twoslash
+type SendInteractionReturnType = Readonly<{
+  delegationId: string;
+}>;
+```
+
+- `delegationId`: `string` - The unique identifier for the interaction delegation.
+
+## Usage Example
+
+:::code-group
+```ts twoslash [sendInteraction.ts]
+// @noErrors
+// [!include ~/snippets/actions/sendInteraction.ts]
+```
+```ts twoslash [client.ts]
+// @noErrors
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
+
+In this example, we import the `sendInteraction` function and the Nexus client. We then call `sendInteraction` with the necessary interaction parameters, including the prepared interaction data and an optional validation signature.
+
+## Related Types
+- [NexusClient](/nexus-sdk/api/types/NexusClient)
+- [IFrameRpcSchema](/nexus-sdk/api/types/IFrameRpcSchema)

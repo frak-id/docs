@@ -1,5 +1,5 @@
 import { sendTransaction } from "@frak-labs/nexus-sdk/actions";
-import { formatEther } from "viem";
+import { toHex } from "viem";
 import { nexusClient } from "../core/client-full.ts";
 
 /**
@@ -8,7 +8,7 @@ import { nexusClient } from "../core/client-full.ts";
 const { hash } = await sendTransaction(nexusClient, {
     tx: {
         to: "0xdeadbeef",
-        value: formatEther(1),
+        value: toHex(100n),
     },
     metadata: {
         header: {

@@ -45,7 +45,7 @@ export default defineConfig({
             match: "/nexus-sdk",
         },
         {
-            text: "Old Wallet SDK",
+            text: "Old doc",
             link: "/wallet-sdk",
         },
         {

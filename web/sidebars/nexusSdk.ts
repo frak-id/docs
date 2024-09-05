@@ -33,7 +33,6 @@ export const nexusSdkSidebar = [
     },
     {
         text: "Integration Guide",
-        link: "/nexus-sdk/integration-guide",
         items: [
             { text: "React", link: "/nexus-sdk/integration-guide/react" },
             {
@@ -160,28 +159,5 @@ export const nexusSdkSidebar = [
             },
         ],
     },
-    {
-        text: "Advanced Topics",
-        link: "/nexus-sdk/advanced-topics",
-        items: [
-            {
-                text: "Complex Modal Chaining",
-                link: "/nexus-sdk/advanced-topics/complex-modal-chaining",
-            },
-            {
-                text: "Custom Interactions",
-                link: "/nexus-sdk/advanced-topics/custom-interactions",
-            },
-            {
-                text: "Error Handling",
-                link: "/nexus-sdk/advanced-topics/error-handling",
-            },
-            {
-                text: "Security Considerations",
-                link: "/nexus-sdk/advanced-topics/security-considerations",
-            },
-        ],
-    },
-    { text: "Troubleshooting", link: "/nexus-sdk/troubleshooting" },
     { text: "Changelog", link: "/nexus-sdk/changelog" },
 ];
