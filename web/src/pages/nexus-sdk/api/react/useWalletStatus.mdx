@@ -1,39 +1,44 @@
 ---
 title: useWalletStatus
-description: React hook to monitor the current wallet status
+description: React hook to monitor the current status of the Nexus Wallet
 date: 2024-09-05
 ---
 
 # useWalletStatus
 
 ## Summary
-The `useWalletStatus` hook allows React components to subscribe to and monitor the current wallet status in real-time. It provides information about the connected wallet and any active interaction sessions.
+The `useWalletStatus` hook provides real-time updates on the current status of the Nexus Wallet. It allows React components to react to changes in wallet connection, user authentication, and interaction session status.
 
 ## Requirements
-- React environment
-- Initialized `NexusIFrameClientProvider` in the component tree
-- `@tanstack/react-query` library
+- Must be used within a component wrapped by `NexusIFrameClientProvider`
+- Requires an initialized Nexus client
 
 ## Hook Signature
 
 ```ts twoslash
 // @noErrors
 import { UseQueryResult } from '@tanstack/react-query';
-import { WalletStatusReturnType } from '@frak-labs/nexus-sdk/core';
+import type { WalletStatusReturnType, FrakRpcError } from '@frak-labs/nexus-sdk/core';
 
-declare function useWalletStatus(): UseQueryResult<WalletStatusReturnType, Error>;
+declare function useWalletStatus(): UseQueryResult<WalletStatusReturnType, FrakRpcError>;
 ```
 
-### Return Type
-The hook returns a `UseQueryResult` object from `@tanstack/react-query` with the following structure:
+### Return Value
+- `UseQueryResult<WalletStatusReturnType, Error>`: A query result object from React Query
+
+## WalletStatusReturnType
+
+The `WalletStatusReturnType` is defined as:
 
 ```ts twoslash
 // @noErrors
+import { Address } from 'viem';
+
 type WalletStatusReturnType = Readonly<WalletConnected | WalletNotConnected>;
 
 type WalletConnected = {
   key: "connected";
-  wallet: `0x${string}`;
+  wallet: Address;
   interactionSession?: {
     startTimestamp: number;
     endTimestamp: number;
@@ -45,10 +50,26 @@ type WalletNotConnected = {
 };
 ```
 
+### Properties
+- When connected:
+    - `key`: `"connected"`
+    - `wallet`: `Address` - The Ethereum address of the connected wallet
+    - `interactionSession` (optional): Object containing session timestamps
+        - `startTimestamp`: `number` - Start time of the current interaction session
+        - `endTimestamp`: `number` - End time of the current interaction session
+
+- When not connected:
+    - `key`: `"not-connected"`
+
+## Notes
+- This hook uses React Query's real-time query functionality, providing automatic updates when the wallet status changes.
+- It internally sets up a listener using the `watchWalletStatus` action.
+- The hook handles connection, disconnection, and interaction session updates automatically.
+
 ## Usage Example
 
 :::code-group
-```tsx twoslash [WalletStatusComponent.tsx]
+```tsx twoslash [WalletStatus.tsx]
 // @noErrors
 // [!include ~/snippets/react/useWalletStatus.tsx]
 ```
@@ -58,13 +79,8 @@ type WalletNotConnected = {
 ```
 :::
 
-In this example, we use the `useWalletStatus` hook within a React component to display the current wallet status. The component shows different information based on whether a wallet is connected or not, and if there's an active interaction session.
+In this example, we create a `WalletStatus` component that uses the `useWalletStatus` hook. It displays different information based on the current wallet status, including the connected address and interaction session details when available.
 
-## Related Types and Actions
-- [NexusClient](/nexus-sdk/api/types/NexusClient)
-- [IFrameRpcSchema](/nexus-sdk/api/types/IFrameRpcSchema)
-- [watchWalletStatus](/nexus-sdk/api/actions/watchWalletStatus) (underlying action)
-
-## Notes
-- This hook automatically handles subscription to wallet status changes and updates the UI accordingly.
-- The hook uses `@tanstack/react-query` internally for efficient data fetching and caching.
+## Related
+- [watchWalletStatus](/nexus-sdk/api/actions/watchWalletStatus) - Core action for monitoring wallet status
+- [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks

@@ -1,0 +1,111 @@
+---
+title: useSendTransaction
+description: React hook to send transactions through the Nexus Wallet
+date: 2024-09-06
+---
+
+# useSendTransaction
+
+## Summary
+The `useSendTransaction` hook provides a convenient way to send transactions through the Nexus Wallet from a React component. This hook is useful for initiating on-chain transactions, such as token transfers or contract interactions, within your application.
+
+## Requirements
+- Must be used within a component wrapped by `NexusIFrameClientProvider`
+- Requires an initialized Nexus client
+- User must be authenticated with the Nexus Wallet
+
+## Hook Signature
+
+```ts twoslash
+// @noErrors
+import { UseMutationResult } from '@tanstack/react-query';
+import { FrakRpcError, SendTransactionReturnType } from '@frak-labs/nexus-sdk/core';
+
+declare function useSendTransactionAction(options?: {
+  mutations?: Omit<
+    UseMutationOptions<SendTransactionReturnType, FrakRpcError, SendTransactionParams>,
+    "mutationFn" | "mutationKey"
+  >;
+}): UseMutationResult<SendTransactionReturnType, FrakRpcError, SendTransactionParams, unknown>;
+```
+
+### Parameters
+- `options` (optional): An object containing mutation options from React Query
+
+### Return Value
+- `UseMutationResult<SendTransactionReturnType, FrakRpcError, SendTransactionParams, unknown>`: A mutation result object from React Query
+
+## SendTransactionParams
+
+The `SendTransactionParams` type is defined as:
+
+```ts twoslash
+// @noErrors
+import { Address, Hex } from 'viem';
+
+type SendTransactionParams = {
+  tx: SendTransactionTxType | SendTransactionTxType[];
+  metadata?: ModalRpcMetadata;
+};
+
+type SendTransactionTxType = Readonly<{
+  to: Address;
+  data?: Hex;
+  value?: Hex;
+}>;
+
+type ModalRpcMetadata = Readonly<{
+  header?: {
+    title?: string;
+    icon?: string;
+  };
+  context?: string;
+}>;
+```
+
+### Properties
+- `tx`: `SendTransactionTxType | SendTransactionTxType[]` - A single transaction or an array of transactions to be sent
+- `to`: `Address` - The recipient's address
+- `data` (optional): `Hex` - The transaction data (e.g., for contract interactions)
+- `value` (optional): `Hex` - The amount of ETH to send (in wei)
+- `metadata` (optional): `ModalRpcMetadata` - Additional metadata for customizing the transaction modal
+
+## SendTransactionReturnType
+
+The `SendTransactionReturnType` type is defined as:
+
+```ts twoslash
+// @noErrors
+import { Hex } from 'viem';
+
+type SendTransactionReturnType = Readonly<{
+  hash: Hex;
+}>;
+```
+
+### Properties
+- `hash`: `Hex` - The transaction hash of the sent transaction
+
+## Notes
+- This hook uses React Query's mutation functionality, providing automatic retry and cache invalidation.
+- The transaction is sent through the Nexus Wallet, which handles signing and submission to the blockchain.
+- You can send a single transaction or batch multiple transactions together.
+
+## Usage Example
+
+:::code-group
+```tsx twoslash [SendTransactionButton.tsx]
+// @noErrors
+// [!include ~/snippets/react/useSendTransaction.tsx]
+```
+```tsx twoslash [Appp.tsx]
+// @noErrors
+// [!include ~/snippets/react/App.tsx]
+```
+:::
+
+In this example, we create a button component that uses the `useSendTransaction` hook to send a transaction when clicked. The component handles loading and error states, and displays the resulting transaction hash on success.
+
+## Related
+- [sendTransaction](/nexus-sdk/api/actions/sendTransaction) - Core action for sending transactions
+- [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
