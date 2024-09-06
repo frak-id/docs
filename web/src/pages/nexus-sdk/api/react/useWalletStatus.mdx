@@ -1,0 +1,70 @@
+---
+title: useWalletStatus
+description: React hook to monitor the current wallet status
+date: 2024-09-05
+---
+
+# useWalletStatus
+
+## Summary
+The `useWalletStatus` hook allows React components to subscribe to and monitor the current wallet status in real-time. It provides information about the connected wallet and any active interaction sessions.
+
+## Requirements
+- React environment
+- Initialized `NexusIFrameClientProvider` in the component tree
+- `@tanstack/react-query` library
+
+## Hook Signature
+
+```ts twoslash
+// @noErrors
+import { UseQueryResult } from '@tanstack/react-query';
+import { WalletStatusReturnType } from '@frak-labs/nexus-sdk/core';
+
+declare function useWalletStatus(): UseQueryResult<WalletStatusReturnType, Error>;
+```
+
+### Return Type
+The hook returns a `UseQueryResult` object from `@tanstack/react-query` with the following structure:
+
+```ts twoslash
+// @noErrors
+type WalletStatusReturnType = Readonly<WalletConnected | WalletNotConnected>;
+
+type WalletConnected = {
+  key: "connected";
+  wallet: `0x${string}`;
+  interactionSession?: {
+    startTimestamp: number;
+    endTimestamp: number;
+  };
+};
+
+type WalletNotConnected = {
+  key: "not-connected";
+};
+```
+
+## Usage Example
+
+:::code-group
+```tsx twoslash [WalletStatusComponent.tsx]
+// @noErrors
+// [!include ~/snippets/react/useWalletStatus.tsx]
+```
+```tsx twoslash [Appp.tsx]
+// @noErrors
+// [!include ~/snippets/react/App.tsx]
+```
+:::
+
+In this example, we use the `useWalletStatus` hook within a React component to display the current wallet status. The component shows different information based on whether a wallet is connected or not, and if there's an active interaction session.
+
+## Related Types and Actions
+- [NexusClient](/nexus-sdk/api/types/NexusClient)
+- [IFrameRpcSchema](/nexus-sdk/api/types/IFrameRpcSchema)
+- [watchWalletStatus](/nexus-sdk/api/actions/watchWalletStatus) (underlying action)
+
+## Notes
+- This hook automatically handles subscription to wallet status changes and updates the UI accordingly.
+- The hook uses `@tanstack/react-query` internally for efficient data fetching and caching.

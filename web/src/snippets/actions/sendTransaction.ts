@@ -12,9 +12,9 @@ const { hash } = await sendTransaction(nexusClient, {
     },
     metadata: {
         header: {
-            title: "Send 1 ETH",
+            title: "Sending eth",
         },
-        context: "Send 1 ETH to 0xdeadbeef",
+        context: "Send 100wei to 0xdeadbeef",
     },
 });
 console.log("Transaction hash:", hash);

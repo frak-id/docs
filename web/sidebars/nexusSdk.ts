@@ -101,8 +101,8 @@ export const nexusSdkSidebar = [
                         link: "/nexus-sdk/api/react/useWalletStatus",
                     },
                     {
-                        text: "useDisplayModal",
-                        link: "/nexus-sdk/api/react/useDisplayModal",
+                        text: "useOpenSso",
+                        link: "/nexus-sdk/api/react/useOpenSso",
                     },
                     {
                         text: "useSendInteraction",
@@ -117,8 +117,8 @@ export const nexusSdkSidebar = [
                         link: "/nexus-sdk/api/react/useSiweAuthenticate",
                     },
                     {
-                        text: "useOpenSso",
-                        link: "/nexus-sdk/api/react/useOpenSso",
+                        text: "useDisplayModal",
+                        link: "/nexus-sdk/api/react/useDisplayModal",
                     },
                     {
                         text: "useReferralInteraction",

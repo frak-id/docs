@@ -30,7 +30,7 @@ Once you got the dependency, you need to create the context and config that will
 First, you need to add the config provider for the Nexus Wallet
 
 :::code-group
-```ts [app.tsx]
+```ts [App.tsx]
 import { NexusConfigProvider } from "@frak-labs/nexus-sdk/react";
 import { nexusConfig } from "./config";
 
@@ -52,7 +52,7 @@ function App() {
 If you need to interact directly with the nexus wallet, within your app (checking gated content access, wallet status or other), you need to add an IFrame client provider:
 
 :::code-group
-```ts [app.tsx] filename="app.tsx"
+```ts [App.tsx] filename="App.tsx"
 import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
 import { nexusConfig } from "./config";
 
@@ -82,7 +82,7 @@ The TanStack query client will help with data fetching, caching, and states.
 Here is a very basic example, using a default query client and provider. For more information, checkout [their documentation](https://tanstack.com/query/v5/docs/react)
 
 :::code-group
-```ts [app.tsx]
+```ts [App.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
 import { nexusConfig } from "./config";
@@ -134,8 +134,8 @@ function Wallet() {
   );
 }
 ```
-```tsx [app.tsx]
-// [!include app.tsx]
+```tsx [App.tsx]
+// [!include App.tsx]
 ```
 ```tsx [config.ts]
 // [!include ~/snippets/config.ts]
