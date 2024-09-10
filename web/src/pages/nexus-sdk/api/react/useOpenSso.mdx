@@ -1,44 +1,72 @@
 ---
 title: useOpenSso
-description: React hook to open the Single Sign-On (SSO) modal in the Nexus Wallet
-date: 2024-09-05
+description: React hook to open the Nexus Wallet SSO (Single Sign-On) interface
+date: 2024-09-06
 ---
 
 # useOpenSso
 
 ## Summary
-The `useOpenSso` hook provides a convenient way to trigger the opening of the Single Sign-On (SSO) modal in the Nexus Wallet from a React component. This hook is useful for initiating the authentication process or allowing users to sign in to your application using the Nexus Wallet.
+The `useOpenSso` hook provides a convenient way to open the Nexus Wallet's Single Sign-On (SSO) interface. This allows users to authenticate or connect their wallet seamlessly within your application.
 
 ## Requirements
-- Must be used within a component wrapped by `NexusIFrameClientProvider`
-- Requires an initialized Nexus client
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
 
-## Hook Signature
+## Hook Import and Parameters
 
 ```ts twoslash
 // @noErrors
-import { UseMutationResult } from '@tanstack/react-query';
-import { FrakRpcError, OpenSsoParamsType } from '@frak-labs/nexus-sdk/core';
+import { useOpenSso } from '@frak-labs/nexus-sdk/react';
 
-declare function useOpenSso(options?: {
-  mutations?: Omit<
-    UseMutationOptions<void, FrakRpcError, OpenSsoParamsType>,
-    "mutationFn" | "mutationKey"
-  >;
-}): UseMutationResult<void, FrakRpcError, OpenSsoParamsType, unknown>;
+const {
+  mutate,
+  mutateAsync,
+  // ... other mutation result properties
+} = useOpenSso(options?: UseOpenSsoParams);
+
+type UseOpenSsoParams = {
+  mutations?: MutationOptions;
+};
+
+type MutationOptions = Omit
+  UseMutationOptions<void, FrakRpcError, OpenSsoParamsType>,
+  "mutationFn" | "mutationKey"
+>;
 ```
 
-### Parameters
-- `options` (optional): An object containing mutation options from React Query
+The hook accepts an optional `options` object that can include custom mutation options.
 
-### Return Value
-- `UseMutationResult<void, FrakRpcError, OpenSsoParamsType, unknown>`: A mutation result object from React Query
+## Hook Return Type
+This hook returns a `UseMutationResult` object from `@tanstack/react-query`, which includes the following key properties:
 
-## OpenSsoParamsType
+- `mutate`: Function to trigger the SSO opening (see below for usage).
+- `mutateAsync`: Promise-based version of `mutate`.
+- `isLoading`: Boolean indicating if the SSO is being opened.
+- `isError`: Boolean indicating if an error occurred.
+- `error`: Error object if an error occurred.
 
-The `OpenSsoParamsType` is defined as:
+Note that this mutation doesn't return any data, as it only opens the SSO interface.
+
+## Mutation Functions
+
+### `mutate`
 
 ```ts twoslash
+// @noErrors
+mutate(params: OpenSsoParamsType, options?: MutateOptions)
+```
+
+### `mutateAsync`
+
+```ts twoslash
+// @noErrors
+mutateAsync(params: OpenSsoParamsType, options?: MutateOptions): Promise<void>
+```
+
+Both functions accept an `OpenSsoParamsType` object:
+
+```ts twoslash
+// @noErrors
 type OpenSsoParamsType = {
   redirectUrl?: string;
   directExit?: boolean;
@@ -56,34 +84,30 @@ type SsoMetadata = {
 };
 ```
 
-### Properties
-- `redirectUrl` (optional): `string` - URL to redirect after SSO completion
-- `directExit` (optional): `boolean` - Whether to exit directly after SSO
-- `metadata`: `SsoMetadata` - Metadata for customizing the SSO modal
-- `logoUrl`: `string` - URL of the logo to display
-- `homepageLink`: `string` - Link to the homepage
-- `links` (optional): Object containing additional link URLs
-
 ## Notes
-- This hook uses React Query's mutation functionality, providing automatic retry and cache invalidation.
-- The SSO process is handled entirely by the Nexus Wallet, simplifying the authentication flow in your application.
+- This hook triggers the opening of the Nexus Wallet SSO interface.
+- The SSO interface allows users to connect their wallet or create a new one.
+- You can customize the SSO interface with your application's branding and links.
+- The `directExit` option, when set to `true`, the SSO interface will close just after the connection process.
 
 ## Usage Example
+
+This example demonstrates how to use the `useOpenSso` hook to create a button that opens the SSO interface:
 
 :::code-group
 ```tsx twoslash [OpenSsoButton.tsx]
 // @noErrors
 // [!include ~/snippets/react/useOpenSso.tsx]
 ```
-```tsx twoslash [Appp.tsx]
+```tsx twoslash [App.tsx]
 // @noErrors
 // [!include ~/snippets/react/App.tsx]
 ```
 :::
 
-In this example, we create a button component that uses the `useOpenSso` hook. When clicked, it opens the SSO modal with the specified metadata. The component also handles loading and error states.
+In this example, we create a button component that uses the `useOpenSso` hook to open the SSO interface when clicked. The component handles loading and error states, and disables the button while the SSO is being opened.
 
 ## Related
-- [openSso](/nexus-sdk/api/actions/openSso) - Core action for opening SSO
+- [openSso](/nexus-sdk/api/actions/openSso) - Core action for opening the SSO interface
 - [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
-
+- [useWalletStatus](/nexus-sdk/api/react/useWalletStatus) - Hook for checking the current wallet connection status

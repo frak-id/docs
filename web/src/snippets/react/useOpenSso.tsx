@@ -4,6 +4,7 @@ import { useOpenSso } from "@frak-labs/nexus-sdk/react";
 /**
  * Build the SSO metadata
  */
+// biome-ignore format: It would move the code focus to the wrong line
 const metadata: SsoMetadata = { // [!code focus]
     logoUrl: "https://my-app.com/logo.png",
     homepageLink: "https://my-app.com",
@@ -17,6 +18,7 @@ const metadata: SsoMetadata = { // [!code focus]
 /**
  * Define your SSO button component
  */
+// biome-ignore format: It would move the code focus to the wrong line
 export function MySsoButton() {
     const { mutate: openSso, isPending, error } = useOpenSso(); // [!code focus]
 
@@ -24,6 +26,7 @@ export function MySsoButton() {
         <>
             {error && <div>{error.message}</div>}
             <button
+                type={"button"}
                 onClick={() =>
                     openSso({
                         metadata,

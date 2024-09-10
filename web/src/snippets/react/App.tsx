@@ -1,9 +1,9 @@
+import type { NexusWalletSdkConfig } from "@frak-labs/nexus-sdk/core";
 import {
     NexusConfigProvider,
     NexusIFrameClientProvider,
 } from "@frak-labs/nexus-sdk/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type {NexusWalletSdkConfig} from "@frak-labs/nexus-sdk/core";
 
 const queryClient = new QueryClient();
 
@@ -19,14 +19,15 @@ const nexusConfig: NexusWalletSdkConfig = {
     domain: "my-app.com",
 };
 
+// biome-ignore format: It would move the code focus to the wrong line
 export function App() {
     return (
         <NexusConfigProvider config={nexusConfig}> // [!code focus]
-            <NexusIFrameClientProvider>  // [!code focus]
+            <NexusIFrameClientProvider> // [!code focus]
                 <QueryClientProvider client={queryClient}>
                     {/** ... */}
-                </QueryClientProvider> // [!code focus]
-            </NexusIFrameClientProvider> // [!code focus]
+                </QueryClientProvider>{" "} // [!code focus]
+            </NexusIFrameClientProvider>{" "} // [!code focus]
         </NexusConfigProvider>
     );
 }

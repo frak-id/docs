@@ -7,42 +7,75 @@ date: 2024-09-06
 # useSendTransaction
 
 ## Summary
-The `useSendTransaction` hook provides a convenient way to send transactions through the Nexus Wallet from a React component. This hook is useful for initiating on-chain transactions, such as token transfers or contract interactions, within your application.
+The `useSendTransaction` hook provides a convenient way to send transactions using the Nexus Wallet. It handles the complexities of transaction submission and provides status updates throughout the process.
 
 ## Requirements
-- Must be used within a component wrapped by `NexusIFrameClientProvider`
-- Requires an initialized Nexus client
-- User must be authenticated with the Nexus Wallet
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
+- A user must be connected to the Nexus Wallet.
 
-## Hook Signature
+## Hook Import and Parameters
 
 ```ts twoslash
 // @noErrors
-import { UseMutationResult } from '@tanstack/react-query';
-import { FrakRpcError, SendTransactionReturnType } from '@frak-labs/nexus-sdk/core';
+import { useSendTransactionAction } from '@frak-labs/nexus-sdk/react';
 
-declare function useSendTransactionAction(options?: {
-  mutations?: Omit<
-    UseMutationOptions<SendTransactionReturnType, FrakRpcError, SendTransactionParams>,
-    "mutationFn" | "mutationKey"
-  >;
-}): UseMutationResult<SendTransactionReturnType, FrakRpcError, SendTransactionParams, unknown>;
+const {
+  mutate,
+  mutateAsync,
+  // ... other mutation result properties
+} = useSendTransactionAction(options?: UseSendTransactionParams);
+
+type UseSendTransactionParams = {
+  mutations?: MutationOptions;
+};
+
+type MutationOptions = Omit<
+  UseMutationOptions<SendTransactionReturnType, FrakRpcError, SendTransactionParams>,
+  "mutationFn" | "mutationKey"
+>;
 ```
 
-### Parameters
-- `options` (optional): An object containing mutation options from React Query
+The hook accepts an optional `options` object that can include custom mutation options.
 
-### Return Value
-- `UseMutationResult<SendTransactionReturnType, FrakRpcError, SendTransactionParams, unknown>`: A mutation result object from React Query
+## Hook Return Type
+This hook returns a `UseMutationResult` object from `@tanstack/react-query`, which includes the following key properties:
 
-## SendTransactionParams
+- `mutate`: Function to trigger the transaction (see below for usage).
+- `mutateAsync`: Promise-based version of `mutate`.
+- `data`: The result of the transaction, of type `SendTransactionReturnType`.
+- `isLoading`: Boolean indicating if the transaction is in progress.
+- `isError`: Boolean indicating if an error occurred.
+- `error`: Error object if an error occurred.
 
-The `SendTransactionParams` type is defined as:
+### `SendTransactionReturnType`
 
 ```ts twoslash
 // @noErrors
-import { Address, Hex } from 'viem';
+type SendTransactionReturnType = Readonly<{
+  hash: Hex;
+}>;
+```
 
+## Mutation Functions
+
+### `mutate`
+
+```ts twoslash
+// @noErrors
+mutate(params: SendTransactionParams, options?: MutateOptions)
+```
+
+### `mutateAsync`
+
+```ts twoslash
+// @noErrors
+mutateAsync(params: SendTransactionParams, options?: MutateOptions): Promise<SendTransactionReturnType>
+```
+
+Both functions accept a `SendTransactionParams` object:
+
+```ts twoslash
+// @noErrors
 type SendTransactionParams = {
   tx: SendTransactionTxType | SendTransactionTxType[];
   metadata?: ModalRpcMetadata;
@@ -53,43 +86,15 @@ type SendTransactionTxType = Readonly<{
   data?: Hex;
   value?: Hex;
 }>;
-
-type ModalRpcMetadata = Readonly<{
-  header?: {
-    title?: string;
-    icon?: string;
-  };
-  context?: string;
-}>;
 ```
-
-### Properties
-- `tx`: `SendTransactionTxType | SendTransactionTxType[]` - A single transaction or an array of transactions to be sent
-- `to`: `Address` - The recipient's address
-- `data` (optional): `Hex` - The transaction data (e.g., for contract interactions)
-- `value` (optional): `Hex` - The amount of ETH to send (in wei)
-- `metadata` (optional): `ModalRpcMetadata` - Additional metadata for customizing the transaction modal
-
-## SendTransactionReturnType
-
-The `SendTransactionReturnType` type is defined as:
-
-```ts twoslash
-// @noErrors
-import { Hex } from 'viem';
-
-type SendTransactionReturnType = Readonly<{
-  hash: Hex;
-}>;
-```
-
-### Properties
-- `hash`: `Hex` - The transaction hash of the sent transaction
 
 ## Notes
-- This hook uses React Query's mutation functionality, providing automatic retry and cache invalidation.
-- The transaction is sent through the Nexus Wallet, which handles signing and submission to the blockchain.
+- This hook automatically handles the display of transaction modals and wallet interactions.
+- It uses the Nexus Wallet for transaction signing and submission.
+- The hook manages the transaction state, including loading and error states.
 - You can send a single transaction or batch multiple transactions together.
+
+## Usage Example
 
 ## Usage Example
 

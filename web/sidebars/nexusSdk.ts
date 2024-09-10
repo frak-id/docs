@@ -136,17 +136,17 @@ export const nexusSdkSidebar = [
                 ],
             },
             {
-              text: "Interactions",
-              items: [
-                  {
-                      text: "PressInteractionEncoder",
-                      link: "/nexus-sdk/api/interactions/PressInteractionEncoder",
-                  },
-                  {
-                      text: "ReferralInteractionEncoder",
-                      link: "/nexus-sdk/api/interactions/ReferralInteractionEncoder",
-                  },
-              ],
+                text: "Interactions",
+                items: [
+                    {
+                        text: "PressInteractionEncoder",
+                        link: "/nexus-sdk/api/interactions/PressInteractionEncoder",
+                    },
+                    {
+                        text: "ReferralInteractionEncoder",
+                        link: "/nexus-sdk/api/interactions/ReferralInteractionEncoder",
+                    },
+                ],
             },
             {
                 text: "Types",

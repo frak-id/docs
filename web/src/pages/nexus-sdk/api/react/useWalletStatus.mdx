@@ -1,39 +1,45 @@
 ---
 title: useWalletStatus
-description: React hook to monitor the current status of the Nexus Wallet
-date: 2024-09-05
+description: React hook to monitor the Nexus Wallet connection status
+date: 2024-09-06
 ---
 
 # useWalletStatus
 
 ## Summary
-The `useWalletStatus` hook provides real-time updates on the current status of the Nexus Wallet. It allows React components to react to changes in wallet connection, user authentication, and interaction session status.
+The `useWalletStatus` hook provides real-time updates on the connection status of the Nexus Wallet. It allows your application to react to changes in the wallet's connection state, including whether a user is connected and if there's an active interaction session.
 
 ## Requirements
-- Must be used within a component wrapped by `NexusIFrameClientProvider`
-- Requires an initialized Nexus client
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
 
-## Hook Signature
+## Hook Import
 
-```ts twoslash
+```tsx twoslash
 // @noErrors
-import { UseQueryResult } from '@tanstack/react-query';
-import type { WalletStatusReturnType, FrakRpcError } from '@frak-labs/nexus-sdk/core';
+import { useWalletStatus } from '@frak-labs/nexus-sdk/react';
 
-declare function useWalletStatus(): UseQueryResult<WalletStatusReturnType, FrakRpcError>;
+const {
+  data,
+  isLoading,
+  error,
+  // ... other query result properties
+} = useWalletStatus();
 ```
 
-### Return Value
-- `UseQueryResult<WalletStatusReturnType, Error>`: A query result object from React Query
+This hook doesn't accept any parameters.
 
-## WalletStatusReturnType
+## Hook Return Type
+This hook returns a `UseQueryResult` object from `@tanstack/react-query`, which includes the following key properties:
 
-The `WalletStatusReturnType` is defined as:
+- `data`: The current wallet status, of type `WalletStatusReturnType`.
+- `isLoading`: Boolean indicating if the wallet status is being fetched.
+- `error`: Error object if an error occurred while fetching the status.
+- `isError`: Boolean indicating if an error occurred.
+
+### `WalletStatusReturnType`
 
 ```ts twoslash
 // @noErrors
-import { Address } from 'viem';
-
 type WalletStatusReturnType = Readonly<WalletConnected | WalletNotConnected>;
 
 type WalletConnected = {
@@ -50,37 +56,29 @@ type WalletNotConnected = {
 };
 ```
 
-### Properties
-- When connected:
-    - `key`: `"connected"`
-    - `wallet`: `Address` - The Ethereum address of the connected wallet
-    - `interactionSession` (optional): Object containing session timestamps
-        - `startTimestamp`: `number` - Start time of the current interaction session
-        - `endTimestamp`: `number` - End time of the current interaction session
-
-- When not connected:
-    - `key`: `"not-connected"`
-
 ## Notes
-- This hook uses React Query's real-time query functionality, providing automatic updates when the wallet status changes.
-- It internally sets up a listener using the `watchWalletStatus` action.
-- The hook handles connection, disconnection, and interaction session updates automatically.
+- This hook automatically updates when the wallet connection status changes.
+- It provides information about the connected wallet address and the current interaction session, if any.
+- The hook uses a WebSocket connection to receive real-time updates from the Nexus Wallet.
 
 ## Usage Example
+
+This example demonstrates how to use the `useWalletStatus` hook to display the current wallet status:
 
 :::code-group
 ```tsx twoslash [WalletStatus.tsx]
 // @noErrors
 // [!include ~/snippets/react/useWalletStatus.tsx]
 ```
-```tsx twoslash [Appp.tsx]
+```tsx twoslash [App.tsx]
 // @noErrors
 // [!include ~/snippets/react/App.tsx]
 ```
 :::
 
-In this example, we create a `WalletStatus` component that uses the `useWalletStatus` hook. It displays different information based on the current wallet status, including the connected address and interaction session details when available.
+In this example, we create a component that uses the `useWalletStatus` hook to display the current wallet connection status. It shows different information based on whether the wallet is connected or not, and includes details about the interaction session if one is active.
 
 ## Related
 - [watchWalletStatus](/nexus-sdk/api/actions/watchWalletStatus) - Core action for monitoring wallet status
 - [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
+- [useOpenSso](/nexus-sdk/api/react/useOpenSso) - Hook for opening the SSO interface to connect a wallet

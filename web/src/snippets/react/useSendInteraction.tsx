@@ -1,33 +1,28 @@
-import {useSendTransactionAction} from "@frak-labs/nexus-sdk/react";
-
+import { ReferralInteractionEncoder } from "@frak-labs/nexus-sdk/interactions";
+import { useSendInteraction } from "@frak-labs/nexus-sdk/react";
 
 /**
- * Define your send tx component
+ * Define your sharing button
  */
-export function SendTxButton() {
-    const { mutate: sendTx, isPending, error, data: result } = useSendTransactionAction(); // [!code focus]
+export function ShareButton() {
+    const { mutate: sendInteraction, isPending, error } = useSendInteraction();
 
     return (
         <>
             {error && <div>{error.message}</div>}
             <button
-                onClick={() =>
-                    sendTx({
-                        tx: {
-                            to: "0xdeadbeef",
-                            value: "0x0",
-                            data: "0x",
-                        },
-                        metadata: {
-                            context: "Send a transaction to 0xdeadbeef",
-                        }
-                    })
-                }
+                type={"button"}
+                onClick={() => {
+                    // Sharing logic ...
+
+                    sendInteraction({
+                        interaction: ReferralInteractionEncoder.createLink(),
+                    });
+                }}
                 disabled={isPending}
             >
-                {isPending ? "Loading..." : "Send transaction"}
+                {isPending ? "Loading..." : "Share me"}
             </button>
-            { result && <div>Transaction hash: {result?.hash}</div> }
         </>
     );
 }
