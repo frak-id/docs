@@ -26,8 +26,8 @@ export function App() {
             <NexusIFrameClientProvider> // [!code focus]
                 <QueryClientProvider client={queryClient}>
                     {/** ... */}
-                </QueryClientProvider>{" "} // [!code focus]
+                </QueryClientProvider>{" "}
             </NexusIFrameClientProvider>{" "} // [!code focus]
-        </NexusConfigProvider>
+        </NexusConfigProvider> // [!code focus]
     );
 }

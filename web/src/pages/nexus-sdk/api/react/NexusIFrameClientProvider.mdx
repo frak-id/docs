@@ -1,7 +1,64 @@
 ---
-title: TODO
-description: TODO
-date: 2024-09-05
+title: NexusIFrameClientProvider
+description: React provider component for Nexus Wallet client instance
+date: 2024-09-06
 ---
 
-## TODO
+# NexusIFrameClientProvider
+
+## Summary
+The `NexusIFrameClientProvider` is a React component that initializes and provides the Nexus Wallet client instance to its child components. It should be placed within the `NexusConfigProvider` to ensure it has access to the necessary configuration.
+
+## Props
+
+```ts twoslash
+// @noErrors
+type NexusIFrameClientProviderProps = {
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+};
+```
+
+- `style` (optional): Custom CSS styles to apply to the iframe element.
+- `children`: Child components that will have access to the Nexus client instance.
+
+## Usage
+
+Here's an example of how to use the `NexusIFrameClientProvider` in your React application:
+
+```tsx twoslash
+// @noErrors
+import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
+const nexusConfig = {
+  walletUrl: "https://nexus.frak.id",
+  metadata: {
+    name: "My App",
+  },
+};
+
+export function App() {
+  return (
+    <NexusConfigProvider config={nexusConfig}>
+      <NexusIFrameClientProvider> // [!code focus]
+        <QueryClientProvider client={queryClient}>
+          {/* Your app components */}
+        </QueryClientProvider>
+      </NexusIFrameClientProvider> // [!code focus]
+    </NexusConfigProvider>
+  );
+}
+```
+
+## Notes
+- The `NexusIFrameClientProvider` should be placed within the `NexusConfigProvider` to ensure it has access to the necessary configuration.
+- This provider creates an invisible iframe that facilitates communication with the Nexus Wallet.
+- The Nexus client instance is initialized asynchronously. Child components should handle potential undefined states when accessing the client through hooks.
+- It's recommended to wrap your entire application (or the parts that need Nexus functionality) with this provider to ensure consistent access to the Nexus client.
+
+## Related
+- [useNexusClient](/nexus-sdk/api/react/useNexusClient) - Hook to access the Nexus client instance
+- [NexusConfigProvider](/nexus-sdk/api/react/NexusConfigProvider) - Provider component for Nexus SDK configuration

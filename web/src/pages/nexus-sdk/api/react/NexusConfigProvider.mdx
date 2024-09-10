@@ -1,0 +1,74 @@
+---
+title: NexusConfigProvider
+description: React provider component for Nexus Wallet SDK configuration
+date: 2024-09-06
+---
+
+# NexusConfigProvider
+
+## Summary
+The `NexusConfigProvider` is a React component that provides the Nexus Wallet SDK configuration to its child components. It should be placed at the root of your React application to ensure that all Nexus SDK hooks and components have access to the necessary configuration.
+
+## Props
+
+```ts twoslash
+// @noErrors
+type NexusConfigProviderProps = {
+  config: Omit<NexusWalletSdkConfig, "domain"> & { domain?: string };
+};
+
+type NexusWalletSdkConfig = Readonly<{
+  walletUrl: string;
+  metadata: {
+    name: string;
+    css?: string;
+  };
+  domain: string;
+}>;
+```
+
+- `config`: An object containing the Nexus Wallet SDK configuration. The `domain` property is optional and will be automatically set to the current domain if not provided.
+
+## Usage
+
+Here's an example of how to use the `NexusConfigProvider` in your React application:
+
+```tsx twoslash
+// @noErrors
+import { NexusConfigProvider, NexusIFrameClientProvider } from "@frak-labs/nexus-sdk/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
+const nexusConfig = {                   // [!code focus]
+  walletUrl: "https://nexus.frak.id",   // [!code focus]
+  metadata: {                           // [!code focus]
+    name: "My App",                     // [!code focus]
+  },                                    // [!code focus]
+  // domain is optional, it will default to the current domain if not provided // [!code focus]
+};                                      // [!code focus]
+
+export function App() {
+  return (
+    <NexusConfigProvider config={nexusConfig}> // [!code focus]
+      <NexusIFrameClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {/* Your app components */}
+        </QueryClientProvider>
+      </NexusIFrameClientProvider>
+    </NexusConfigProvider> // [!code focus]
+  );
+}
+```
+
+## Notes
+- The `NexusConfigProvider` should be placed at the root of your application, typically in your main `App` component.
+- It's recommended to wrap the `NexusConfigProvider` around the `NexusIFrameClientProvider` to ensure proper configuration inheritance.
+- If the `domain` is not provided in the configuration, it will automatically use the current domain of the application.
+- The configuration provided here will be accessible to all Nexus SDK hooks and components within its React subtree.
+
+## Related
+- [useNexusConfig](/nexus-sdk/api/react/useNexusConfig) - Hook to access the Nexus SDK configuration
+- [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component for the Nexus client instance
+
+
