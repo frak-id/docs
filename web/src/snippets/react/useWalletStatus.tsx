@@ -3,13 +3,11 @@ import { useWalletStatus } from "@frak-labs/nexus-sdk/react";
 /**
  * Define a component displaying the current user wallet status
  */
-export function MyWalletStatusComponent() {
-    const { data: walletStatus, isPending, error } = useWalletStatus(); // [!code focus]
+export function WalletStatus() {
+    const { data: walletStatus, isPending } = useWalletStatus(); // [!code focus]
 
     return (
         <>
-            {error && <div>{error.message}</div>}
-
             {(isPending || !walletStatus) && <div>Loading...</div>}
 
             {walletStatus?.key === "connected" && (
@@ -21,6 +19,7 @@ export function MyWalletStatusComponent() {
                     </p>
                 </div>
             )}
+
             {walletStatus?.key === "not-connected" && (
                 <div>
                     <p>Not connected to a nexus wallet</p>

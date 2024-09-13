@@ -1,7 +1,110 @@
 ---
-title: TODO
-description: TODO
-date: 2024-09-05
+title: React Integration Guide
+description: Learn how to integrate the Nexus SDK into your React application for seamless Web3 interactions.
+date: 2024-09-10
 ---
 
-## TODO
+# React Integration Guide
+
+This guide will walk you through the process of integrating the Nexus SDK into your React application. By the end, you'll have a basic setup that allows users to connect their Nexus Wallet and perform simple interactions.
+
+## Prerequisites
+
+Before you begin, ensure that:
+
+1. You have a React project set up.
+2. You have registered your product on the Nexus business dashboard and obtained the necessary configuration details.
+
+If you haven't completed these steps, please refer to the [Getting Started](/nexus-sdk/getting-started) guide.
+
+## Step 1: Install Dependencies
+
+First, install the required packages:
+
+:::code-group
+```bash twoslash [npm]
+npm install @frak-labs/nexus-sdk @tanstack/react-query
+```
+```bash twoslash [yarn]
+yarn add @frak-labs/nexus-sdk @tanstack/react-query
+```
+```bash twoslash [pnpm]
+pnpm add @frak-labs/nexus-sdk @tanstack/react-query
+```
+```bash twoslash [bun]
+bun add @frak-labs/nexus-sdk @tanstack/react-query
+```
+:::
+
+## Step 2: Set Up the Nexus Client
+
+Create a new component to set up the Nexus client and iframe:
+
+```tsx twoslash [NexusProvider.tsx]
+// @noErrors
+// [!include ~/snippets/integration/NexusProvider.tsx]
+```
+
+Wrap your main App component with this provider:
+
+```tsx twoslash [App.tsx]
+// @noErrors
+import { NexusProvider } from './NexusProvider';
+
+function App() {
+  return (
+    <NexusProvider>
+      {/* Your app content */}
+    </NexusProvider>
+  );
+}
+
+export default App;
+```
+
+## Step 3: Check Wallet Status
+
+Create a component to check and display the wallet status:
+
+```tsx twoslash [WalletStatus.tsx]
+// @noErrors
+// [!include ~/snippets/integration/react-app.tsx:wallet-status]
+```
+
+## Step 4: Implement Login Modal
+
+Create a component for the login modal:
+
+```tsx twoslash [LoginButton.tsx]
+// @noErrors
+// [!include ~/snippets/integration/react-app.tsx:login-button]
+```
+
+## Step 5: Put It All Together
+
+Update your main App component to include the wallet status and login button:
+
+:::code-group
+```tsx twoslash [App.tsx]
+// @noErrors
+// [!include ~/snippets/integration/react-app.tsx:app]
+```
+```tsx twoslash [App.tsx (complete)]
+// @noErrors
+// [!include ~/snippets/integration/react-app.tsx]
+```
+```tsx twoslash [NexusProvider.tsx]
+// @noErrors
+// [!include ~/snippets/integration/NexusProvider.tsx]
+```
+:::
+
+## Next Steps
+
+With this setup, you have a basic React application integrated with the Nexus SDK. Users can now connect their Nexus Wallet and log in. From here, you can start implementing more advanced features such as:
+
+- Sending interactions
+- Implementing referral systems
+- Creating reward campaigns
+
+Refer to the specific action and hook documentation for details on implementing these features.

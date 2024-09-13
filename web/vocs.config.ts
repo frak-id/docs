@@ -1,7 +1,6 @@
 import { defineConfig } from "vocs";
 import { businessSidebar } from "./sidebars/business.ts";
 import { nexusSdkSidebar } from "./sidebars/nexusSdk.ts";
-import { walletSdkSidebar } from "./sidebars/walletSdk.ts";
 
 export default defineConfig({
     // Title and wording
@@ -31,17 +30,12 @@ export default defineConfig({
             match: "/nexus-sdk",
         },
         {
-            text: "Old doc",
-            link: "/wallet-sdk",
-        },
-        {
             text: "Business Dashboard",
             link: "/business",
         },
     ],
     // The sidebar per pages
     sidebar: {
-        "/wallet-sdk": walletSdkSidebar,
         "/nexus-sdk": nexusSdkSidebar,
         "/business": businessSidebar,
     },
