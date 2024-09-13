@@ -41,5 +41,5 @@ export default defineConfig({
     },
     // Some global config
     rootDir: "src",
-    baseUrl: "https://docs-dev.frak.id",
+    baseUrl: "https://docs.frak.id",
 });

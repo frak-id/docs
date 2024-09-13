@@ -44,7 +44,7 @@ export default {
             new StaticSite(stack, "DocsSite", {
                 path: "web/",
                 customDomain: {
-                    domainName: "docs-dev.frak.id",
+                    domainName: "docs.frak.id",
                     hostedZone: "frak.id",
                 },
                 buildCommand: "pnpm run build",
