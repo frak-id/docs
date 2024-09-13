@@ -1,0 +1,119 @@
+---
+title: useSendInteraction
+description: React hook to send interactions through the Nexus Wallet
+date: 2024-09-06
+---
+
+# useSendInteraction
+
+## Summary
+The `useSendInteraction` hook facilitates sending interaction data to the blockchain through the Nexus Wallet. It's designed to handle various types of user interactions within your application, including referrals, content engagement, and more.
+
+## Requirements
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
+- A user must be connected to the Nexus Wallet.
+- An active interaction session is required.
+
+## Hook Import and Parameters
+
+```ts twoslash
+// @noErrors
+import { useSendInteraction } from '@frak-labs/nexus-sdk/react';
+
+const {
+  mutate,
+  mutateAsync,
+  // ... other mutation result properties
+} = useSendInteraction(options?: UseSendInteractionParams);
+
+type UseSendInteractionParams = {
+  mutations?: MutationOptions;
+};
+
+type MutationOptions = Omit
+  UseMutationOptions<SendInteractionReturnType, FrakRpcError, SendInteractionParamsType>,
+  "mutationFn" | "mutationKey"
+>;
+```
+
+The hook accepts an optional `options` object that can include custom mutation options.
+
+## Hook Return Type
+This hook returns a `UseMutationResult` object from `@tanstack/react-query`, which includes the following key properties:
+
+- `mutate`: Function to trigger the interaction (see below for usage).
+- `mutateAsync`: Promise-based version of `mutate`.
+- `data`: The result of the interaction, of type `SendInteractionReturnType`.
+- `isLoading`: Boolean indicating if the interaction is in progress.
+- `isError`: Boolean indicating if an error occurred.
+- `error`: Error object if an error occurred.
+
+### `SendInteractionReturnType`
+
+```ts twoslash
+// @noErrors
+type SendInteractionReturnType = Readonly<{
+  delegationId: string;
+}>;
+```
+
+## Mutation Functions
+
+### `mutate`
+
+```ts twoslash
+// @noErrors
+mutate(params: SendInteractionParamsType, options?: MutateOptions)
+```
+
+### `mutateAsync`
+
+```ts twoslash
+// @noErrors
+mutateAsync(params: SendInteractionParamsType, options?: MutateOptions): Promise<SendInteractionReturnType>
+```
+
+Both functions accept a `SendInteractionParamsType` object:
+
+```ts twoslash
+// @noErrors
+type SendInteractionParamsType = {
+  productId?: Hex; // If null, will be recomputed from domain
+  interaction: PreparedInteraction;
+  validation?: Hex;
+};
+
+type PreparedInteraction = Readonly<{
+  handlerTypeDenominator: Hex;
+  interactionData: Hex;
+}>;
+```
+
+## Notes
+- This hook automatically handles the submission of interaction data to the blockchain.
+- It uses the Nexus Wallet for signing and submitting the interaction.
+- The hook manages the interaction state, including loading and error states.
+- Different types of interactions (e.g., referrals, content engagement) can be sent using this hook.
+
+## Usage Example
+
+This example demonstrates how to use the `useSendInteraction` hook to create a referral link:
+
+:::code-group
+```tsx twoslash [CreateReferralLinkButton.tsx]
+// @noErrors
+// [!include ~/snippets/react/useSendInteraction.tsx]
+```
+```tsx twoslash [App.tsx]
+// @noErrors
+// [!include ~/snippets/react/App.tsx]
+```
+:::
+
+In this example, we create a button component that uses the `useSendInteraction` hook to send a "createLink" referral interaction when clicked. The component handles loading and error states, and displays the resulting delegation ID on success.
+
+## Related
+- [sendInteraction](/nexus-sdk/api/actions/sendInteraction) - Core action for sending interactions
+- [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
+- [ReferralInteractionEncoder](/nexus-sdk/api/interactions/ReferralInteractionEncoder) - Utility for encoding referral interactions
+- [PressInteractionEncoder](/nexus-sdk/api/interactions/PressInteractionEncoder) - Encoder for press-related interactions

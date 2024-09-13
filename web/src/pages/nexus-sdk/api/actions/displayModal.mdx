@@ -1,0 +1,78 @@
+---
+title: displayModal
+description: Function to display a modal with configurable steps in the Nexus Wallet
+date: 2024-09-05
+---
+
+# displayModal
+
+## Summary
+The `displayModal` function opens a modal in the Nexus Wallet interface with configurable steps, allowing for complex user interactions such as login, opening sessions, transactions, and more.
+
+## Requirements
+- An initialized `NexusClient` instance
+
+## Function Signature
+
+```ts twoslash
+// @noErrors
+import type { NexusClient, DisplayModalParamsType, ModalRpcStepsResultType, ModalStepTypes } from '@frak-labs/nexus-sdk/core';
+
+declare function displayModal<T extends ModalStepTypes[] = ModalStepTypes[]>(
+  client: NexusClient,
+  params: DisplayModalParamsType<T>
+): Promise<ModalRpcStepsResultType<T>>;
+```
+
+### Parameters
+- `client`: `NexusClient` - An instance of the Nexus client
+- `params`: `DisplayModalParamsType<T>` - Configuration for the modal steps
+
+### Return Value
+- `Promise<ModalRpcStepsResultType<T>>`: A promise that resolves with the results of each step
+
+## Notes
+- The UI of the displayed modal can be configured with the `customCss` property in the `metadata.css` field of the top-level config.
+- The `login` and `openSession` steps will be automatically skipped if the user is already logged in or has an active session. It's safe to include these steps in all cases to ensure proper user state.
+- Steps are automatically reordered in the following sequence:
+    1. `login` (if needed)
+    2. `openSession` (if needed)
+    3. All other steps in the order specified
+    4. `success` (if included, always last)
+
+## Usage Examples
+
+### Simple Sharing Flow
+
+:::code-group
+```ts twoslash [displayModalSimple.ts]
+// @noErrors
+// [!include ~/snippets/actions/displayModalSimple.ts]
+```
+```ts twoslash [client.ts]
+// @noErrors
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
+
+This example demonstrates a simple flow with login, open session, and a success step with sharing options.
+
+### Full Flow
+
+:::code-group
+```ts twoslash [displayModalFull.ts]
+// @noErrors
+// [!include ~/snippets/actions/displayModalFull.ts]
+```
+```ts twoslash [client.ts]
+// @noErrors
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
+
+This example showcases all available steps: login, open session, SIWE authentication, send transaction, and success with sharing options.
+
+## Related Types
+- [NexusClient](/nexus-sdk/api/types/NexusClient)
+- [IFrameRpcSchema](/nexus-sdk/api/types/IFrameRpcSchema)
+- [DisplayModalType](/nexus-sdk/api/types/DisplayModalType)

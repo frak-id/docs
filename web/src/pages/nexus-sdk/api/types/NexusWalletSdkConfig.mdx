@@ -1,0 +1,44 @@
+---
+title: NexusWalletSdkConfig
+description: Configuration type for the Nexus Wallet SDK
+date: 2024-09-05
+---
+
+# NexusWalletSdkConfig
+
+The `NexusWalletSdkConfig` type defines the configuration options for the Nexus Wallet SDK.
+
+## Type Definition
+
+```ts twoslash
+type NexusWalletSdkConfig = Readonly<{
+  walletUrl: string;
+  metadata: {
+    name: string;
+    css?: string;
+  };
+  domain: string;
+}>;
+```
+
+## Properties
+
+### `walletUrl`
+- Type: `string`
+- The URL of the Nexus Wallet service.
+
+### `metadata`
+- Type: `object`
+- Metadata about your application.
+
+#### `metadata.name`
+- Type: `string`
+- The name of your application.
+
+#### `metadata.css`
+- Type: `string | undefined`
+- Optional CSS styles to customize the appearance of modals and SSO interfaces.
+
+### `domain`
+- Type: `string`
+- The domain of your application. (Not required in react context)

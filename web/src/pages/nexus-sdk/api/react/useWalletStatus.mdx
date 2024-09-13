@@ -1,0 +1,84 @@
+---
+title: useWalletStatus
+description: React hook to monitor the Nexus Wallet connection status
+date: 2024-09-06
+---
+
+# useWalletStatus
+
+## Summary
+The `useWalletStatus` hook provides real-time updates on the connection status of the Nexus Wallet. It allows your application to react to changes in the wallet's connection state, including whether a user is connected and if there's an active interaction session.
+
+## Requirements
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
+
+## Hook Import
+
+```tsx twoslash
+// @noErrors
+import { useWalletStatus } from '@frak-labs/nexus-sdk/react';
+
+const {
+  data,
+  isLoading,
+  error,
+  // ... other query result properties
+} = useWalletStatus();
+```
+
+This hook doesn't accept any parameters.
+
+## Hook Return Type
+This hook returns a `UseQueryResult` object from `@tanstack/react-query`, which includes the following key properties:
+
+- `data`: The current wallet status, of type `WalletStatusReturnType`.
+- `isLoading`: Boolean indicating if the wallet status is being fetched.
+- `error`: Error object if an error occurred while fetching the status.
+- `isError`: Boolean indicating if an error occurred.
+
+### `WalletStatusReturnType`
+
+```ts twoslash
+// @noErrors
+type WalletStatusReturnType = Readonly<WalletConnected | WalletNotConnected>;
+
+type WalletConnected = {
+  key: "connected";
+  wallet: Address;
+  interactionSession?: {
+    startTimestamp: number;
+    endTimestamp: number;
+  };
+};
+
+type WalletNotConnected = {
+  key: "not-connected";
+};
+```
+
+## Notes
+- This hook automatically updates when the wallet connection status changes.
+- It provides information about the connected wallet address and the current interaction session, if any.
+- The hook uses a WebSocket connection to receive real-time updates from the Nexus Wallet.
+
+## Usage Example
+
+This example demonstrates how to use the `useWalletStatus` hook to display the current wallet status:
+
+:::code-group
+```tsx twoslash [WalletStatus.tsx]
+// @noErrors
+// [!include ~/snippets/react/useWalletStatus.tsx]
+```
+```tsx twoslash [App.tsx]
+// @noErrors
+// [!include ~/snippets/react/App.tsx]
+```
+:::
+
+In this example, we create a component that uses the `useWalletStatus` hook to display the current wallet connection status. It shows different information based on whether the wallet is connected or not, and includes details about the interaction session if one is active.
+
+## Related
+- [watchWalletStatus](/nexus-sdk/api/actions/watchWalletStatus) - Core action for monitoring wallet status
+- [NexusIFrameClientProvider](/nexus-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
+- [useOpenSso](/nexus-sdk/api/react/useOpenSso) - Hook for opening the SSO interface to connect a wallet

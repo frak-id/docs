@@ -1,0 +1,164 @@
+---
+title: Vanilla JS Integration Guide
+description: Learn how to integrate the Nexus SDK into your Vanilla JavaScript application for seamless Web3 interactions.
+date: 2024-09-10
+---
+
+# Vanilla JS Integration Guide
+
+This guide will walk you through the process of integrating the Nexus SDK into your Vanilla JavaScript application. By the end, you'll have a basic setup that allows users to connect their Nexus Wallet and perform simple interactions.
+
+## Prerequisites
+
+Before you begin, ensure that:
+
+1. You have a basic HTML/JavaScript project set up.
+2. You have registered your product on the Nexus business dashboard and obtained the necessary configuration details.
+
+If you haven't completed these steps, please refer to the [Getting Started](/nexus-sdk/getting-started) guide.
+
+## Step 1: Install Dependencies
+
+For a Vanilla JS project, you can include the Nexus SDK via a CDN. Add the following script tag to your HTML file:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@frak-labs/nexus-sdk@latest/dist/index.umd.js"></script>
+```
+
+## Step 2: Set Up the Nexus Client
+
+Create a new JavaScript file (e.g., `nexus-setup.js`) to set up the Nexus client:
+
+```javascript
+// nexus-setup.js
+const nexusConfig = {
+  walletUrl: 'https://wallet.nexus.com', // Replace with the actual wallet URL
+  metadata: {
+    name: 'Your App Name',
+    // Add any custom CSS if needed
+  },
+  domain: window.location.host
+};
+
+async function setupNexusClient() {
+  const iframe = await NexusSDK.createIframe({ walletBaseUrl: nexusConfig.walletUrl });
+  if (!iframe) {
+    console.error('Failed to create Nexus iframe');
+    return null;
+  }
+
+  return NexusSDK.createIFrameNexusClient({ config: nexusConfig, iframe });
+}
+
+// Export the setup function and config for use in other files
+window.NexusSetup = { setupNexusClient, nexusConfig };
+```
+
+Include this script in your HTML file:
+
+```html
+<script src="nexus-setup.js"></script>
+```
+
+## Step 3: Check Wallet Status
+
+Create a function to check and display the wallet status:
+
+```javascript
+// wallet-status.js
+async function displayWalletStatus() {
+  const client = await window.NexusSetup.setupNexusClient();
+  if (!client) {
+    console.error('Nexus client not initialized');
+    return;
+  }
+
+  const statusElement = document.getElementById('wallet-status');
+  statusElement.textContent = 'Checking wallet status...';
+
+  try {
+    await client.watchWalletStatus((status) => {
+      statusElement.textContent = `Wallet status: ${status.key === 'connected' ? 'Connected' : 'Not connected'}`;
+    });
+  } catch (error) {
+    statusElement.textContent = `Error: ${error.message}`;
+  }
+}
+
+// Call this function when the page loads
+window.addEventListener('load', displayWalletStatus);
+```
+
+## Step 4: Implement Login Modal
+
+Create a function to handle the login process:
+
+```javascript
+// login-button.js
+async function handleLogin() {
+  const client = await window.NexusSetup.setupNexusClient();
+  if (!client) {
+    console.error('Nexus client not initialized');
+    return;
+  }
+
+  const loginButton = document.getElementById('login-button');
+  loginButton.disabled = true;
+  loginButton.textContent = 'Logging in...';
+
+  try {
+    await client.displayModal({
+      steps: {
+        login: {},
+        success: { sharing: { text: 'Successfully logged in!' } }
+      }
+    });
+    loginButton.textContent = 'Logged In';
+  } catch (error) {
+    console.error('Login error:', error);
+    loginButton.textContent = 'Login Failed';
+  } finally {
+    loginButton.disabled = false;
+  }
+}
+
+// Attach the login handler to the button
+window.addEventListener('load', () => {
+  const loginButton = document.getElementById('login-button');
+  loginButton.addEventListener('click', handleLogin);
+});
+```
+
+## Step 5: Put It All Together
+
+Update your HTML file to include all the necessary elements and scripts:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Nexus-Enabled App</title>
+    <script src="https://cdn.jsdelivr.net/npm/@frak-labs/nexus-sdk@latest/dist/core/index.cjs"></script>
+    <script src="nexus-setup.js"></script>
+    <script src="wallet-status.js"></script>
+    <script src="login-button.js"></script>
+</head>
+<body>
+    <h1>My Nexus-Enabled App</h1>
+    <div id="wallet-status">Initializing...</div>
+    <button id="login-button">Login with Nexus</button>
+</body>
+</html>
+```
+
+## Next Steps
+
+With this setup, you have a basic Vanilla JavaScript application integrated with the Nexus SDK. Users can now connect their Nexus Wallet and log in. From here, you can start implementing more advanced features such as:
+
+- Sending interactions
+- Implementing referral systems
+- Creating reward campaigns
+
+Refer to the specific action documentation for details on implementing these features in a Vanilla JS environment.

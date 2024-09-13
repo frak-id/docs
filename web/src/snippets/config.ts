@@ -9,4 +9,6 @@ export const nexusConfig: NexusWalletSdkConfig = {
     metadata: {
         name: "My app title",
     },
+    // Your domain
+    domain: "my-app.com",
 };

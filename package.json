@@ -5,7 +5,7 @@
     "scripts": {
         "lint": "biome lint .",
         "format:check": "biome check .",
-        "format": "biome check --apply .",
+        "format": "biome check --write .",
         "update-deps": "pnpm upgrade -r --latest --interactive",
         "deploy": "sst deploy --stage prod",
         "preinstall": "npx only-allow pnpm"

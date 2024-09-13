@@ -1,0 +1,97 @@
+---
+title: ReferralInteractionEncoder
+description: Interaction encoder for referral related actions
+date: 2024-09-06
+---
+
+# Referral Interactions
+
+Referral interactions enable you to implement and track referral-based campaigns within your application. These interactions are essential for platforms looking to grow their user base through user-to-user referrals and reward systems.
+
+## Product Dashboard Configuration
+
+To properly handle referral interactions, ensure that the "Referral" product type is enabled in your Business dashboard.
+
+## Available Interactions
+
+The `ReferralInteractionEncoder` provides two main interactions:
+
+### Create Link
+
+Records the event of a user creating a referral link. Note that this interaction doesn't actually create the link itself; it only sends an event to track that a link was created.
+
+#### Input Parameters
+
+This interaction doesn't require any input parameters.
+
+#### Usage
+
+```ts twoslash
+// @noErrors
+const interaction = ReferralInteractionEncoder.createLink();
+```
+
+### Referred
+
+Records when a user has been referred by another user.
+
+#### Input Parameters
+
+- `referrer`: `Address`
+- The Ethereum address of the user who made the referral.
+
+#### Usage
+
+```ts twoslash
+// @noErrors
+const interaction = ReferralInteractionEncoder.referred({ referrer: "0x123..." });
+```
+
+## Related Types and Actions
+
+- `PreparedInteraction`: The type returned by both `createLink` and `referred` methods.
+- `sendInteraction`: Action used to send the prepared interaction to the Nexus Wallet.
+- `Address`: A type from the `viem` library representing an Ethereum address.
+
+For more details on sending interactions, refer to the [sendInteraction](/nexus-sdk/api/actions/sendInteraction) documentation.
+
+## Example Workflow
+
+1. User A creates a referral link in your application:
+```ts twoslash
+// @noErrors
+const createLinkInteraction = ReferralInteractionEncoder.createLink();
+// Send this interaction to record that User A created a referral link
+   ```
+
+2. User B joins your platform using User A's referral link:
+```ts twoslash
+// @noErrors
+const referredInteraction = ReferralInteractionEncoder.referred({ referrer: userAAddress });
+// Send this interaction to record that User B was referred by User A
+   ```
+
+3. Use the `sendInteraction` action to send both interactions at the appropriate times.
+
+By implementing these referral interactions, you can create a robust referral system that tracks user acquisitions and enables automatic reward distribution based on successful referrals.
+
+## Automated Referral Handling
+
+For a more streamlined approach to handling referrals, consider using the [useReferralInteraction](/nexus-sdk/api/react/useReferralInteraction) hook in React applications. This hook automates much of the referral process, including:
+
+- Detecting referral information in the URL
+- Handling wallet connections
+- Sending referral interactions
+- Updating the referral context
+
+This can significantly simplify the implementation of a referral system in your application.
+
+```ts twoslash
+// @noErrors
+const referralState = useReferralInteraction({
+  productId: "0x...",
+  modalConfig: { /* ... */ }
+});
+```
+
+The `referralState` returned by this hook provides information about the current state of the referral process, allowing you to update your UI accordingly.

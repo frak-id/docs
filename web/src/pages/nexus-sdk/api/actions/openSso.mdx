@@ -1,0 +1,93 @@
+---
+title: openSso
+description: Function to open the Single Sign-On (SSO) interface
+date: 2024-09-05
+---
+
+# openSso
+
+## Summary
+The `openSso` function initiates the Single Sign-On (SSO) process, allowing users to authenticate with the Nexus Wallet using their preferred method.
+
+## Requirements
+- An initialized `NexusClient` instance
+- Proper SSO configuration in your Frak Business Platform account
+
+## Function Signature
+
+```ts twoslash
+// @noErrors
+import type { NexusClient, OpenSsoParamsType } from '@frak-labs/nexus-sdk/actions';
+
+declare function openSso(
+  client: NexusClient,
+  args: OpenSsoParamsType
+): Promise<void>;
+```
+
+### Parameters
+- `client`: `NexusClient` - An instance of the Nexus client
+- `args`: `OpenSsoParamsType` - Configuration options for the SSO process
+
+## OpenSsoParamsType
+
+The `OpenSsoParamsType` is an object with the following structure:
+
+```ts twoslash
+// @noErrors
+type OpenSsoParamsType = {
+  redirectUrl?: string;
+  directExit?: boolean;
+  metadata: SsoMetadata;
+};
+
+type SsoMetadata = {
+  logoUrl: string;
+  homepageLink: string;
+  links?: {
+    confidentialityLink?: string;
+    helpLink?: string;
+    cguLink?: string;
+  };
+};
+```
+
+### Properties
+
+- `redirectUrl` (optional): `string`
+    - The URL to redirect the user after successful authentication.
+    - If not provided, the user will remain in the Nexus Wallet interface (if `directExit` isn't specified).
+
+- `directExit` (optional): `boolean`
+    - If set to `true`, the SSO will open in a popup and process will exit immediately after authentication.
+    - Default is `false`.
+
+- `metadata`: `SsoMetadata`
+    - `logoUrl`: `string` - URL of your application's logo.
+    - `homepageLink`: `string` - URL of your application's homepage.
+    - `links` (optional): Object containing additional links
+        - `confidentialityLink` (optional): `string` - URL to your privacy policy.
+        - `helpLink` (optional): `string` - URL to your help or support page.
+        - `cguLink` (optional): `string` - URL to your terms of service.
+
+### Return Value
+- `Promise<void>`: A promise that resolves when the SSO process is initiated
+
+## Usage Example
+
+:::code-group
+```ts twoslash [openSso.ts]
+// @noErrors
+// [!include ~/snippets/actions/openSso.ts]
+```
+```ts twoslash [client.ts]
+// @noErrors
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
+
+In this example, we import the `openSso` function and the Nexus client. We then call `openSso` with the necessary SSO configuration, including metadata about the application and optional redirect URL and exit behavior.
+
+## Related Types
+- [NexusClient](/nexus-sdk/api/types/NexusClient)
+- [IFrameRpcSchema](/nexus-sdk/api/types/IFrameRpcSchema)

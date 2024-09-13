@@ -1,0 +1,84 @@
+---
+title: NexusClient
+description: Client type for interacting with the Nexus Wallet SDK
+date: 2024-09-05
+---
+
+# NexusClient
+
+The `NexusClient` type represents the client interface for interacting with the Nexus Wallet SDK.
+
+## Type Definition
+
+```ts twoslash
+// @noErrors
+import type { NexusWalletSdkConfig } from '@frak-labs/nexus-sdk/core';
+import type { IFrameRpcSchema } from '@frak-labs/nexus-sdk/core';
+
+type NexusClient = {
+  config: NexusWalletSdkConfig;
+  waitForConnection: Promise<boolean>;
+  waitForSetup: Promise<void>;
+  request: RequestFn<IFrameRpcSchema>;
+  listenerRequest: ListenerRequestFn<IFrameRpcSchema>;
+  destroy: () => Promise<void>;
+};
+```
+
+## Properties
+
+### `config`
+- Type: `NexusWalletSdkConfig`
+- The configuration used to initialize the client.
+
+### `waitForConnection`
+- Type: `Promise<boolean>`
+- A promise that resolves when the connection to the Nexus Wallet is established.
+
+### `waitForSetup`
+- Type: `Promise<void>`
+- A promise that resolves when the client setup is complete.
+
+### `request`
+- Type: `RequestFn<IFrameRpcSchema>`
+- A function to make single requests to the Nexus Wallet.
+
+### `listenerRequest`
+- Type: `ListenerRequestFn<IFrameRpcSchema>`
+- A function to set up listeners for ongoing requests to the Nexus Wallet.
+
+### `destroy`
+- Type: `() => Promise<void>`
+- A function to clean up and destroy the client.
+
+## Subtypes
+
+### RequestFn
+
+```ts twoslash
+// @noErrors
+type RequestFn<TRpcSchema extends RpcSchema> =
+  TParameters extends ExtractedParametersFromRpc<TRpcSchema> = ExtractedParametersFromRpc<TRpcSchema>,
+  _ReturnType = ExtractedReturnTypeFromRpc<TRpcSchema, TParameters>
+>(
+  args: TParameters
+) => Promise<_ReturnType>;
+```
+
+The `RequestFn` type represents a function for making single requests to the Nexus Wallet.
+
+### ListenerRequestFn
+
+```ts twoslash
+// @noErrors
+type ListenerRequestFn<TRpcSchema extends RpcSchema> =
+  TParameters extends ExtractedParametersFromRpc<TRpcSchema> = ExtractedParametersFromRpc<TRpcSchema>,
+  _ReturnType = ExtractedReturnTypeFromRpc<TRpcSchema, TParameters>
+>(
+  args: TParameters,
+  callback: (result: _ReturnType) => void
+) => Promise<void>;
+```
+
+The `ListenerRequestFn` type represents a function for setting up listeners for ongoing requests to the Nexus Wallet.
+

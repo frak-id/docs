@@ -1,0 +1,91 @@
+---
+title: IFrameRpcSchema
+description: RPC schema for iframe communication with the Nexus Wallet
+date: 2024-09-05
+---
+
+# IFrameRpcSchema
+
+The `IFrameRpcSchema` type defines the RPC schema for iframe communication with the Nexus Wallet.
+
+## Type Definition
+
+```ts twoslash
+// @noErrors
+import type {Hex} from "viem";
+import type {
+    WalletStatusReturnType,
+    ModalRpcStepsInput,
+    ModalRpcMetadata,
+    ModalRpcStepsResultType,
+    PreparedInteraction,
+    SendInteractionReturnType,
+    OpenSsoParamsType
+} from "@frak-labs/nexus-sdk/core";
+
+type IFrameRpcSchema = [
+  {
+    Method: "frak_listenToWalletStatus";
+    Parameters?: undefined;
+    ReturnType: WalletStatusReturnType;
+  },
+  {
+    Method: "frak_displayModal";
+    Parameters: [
+      requests: ModalRpcStepsInput,
+      name: string,
+      metadata?: ModalRpcMetadata
+    ];
+    ReturnType: ModalRpcStepsResultType;
+  },
+  {
+    Method: "frak_sendInteraction";
+    Parameters: [
+      productId: Hex,
+      interaction: PreparedInteraction,
+      signature?: Hex
+    ];
+    ReturnType: SendInteractionReturnType;
+  },
+  {
+    Method: "frak_sso";
+    Parameters: [
+      params: OpenSsoParamsType,
+      name: string,
+      customCss?: string
+    ];
+    ReturnType: undefined;
+  }
+];
+```
+
+## Methods
+
+### `frak_listenToWalletStatus`
+- Parameters: None
+- Return Type: `WalletStatusReturnType`
+- Description: Listens for wallet status updates.
+
+### `frak_displayModal`
+- Parameters:
+- `requests`: `ModalRpcStepsInput`
+- `name`: `string`
+- `metadata`: `ModalRpcMetadata` (optional)
+- Return Type: `ModalRpcStepsResultType`
+- Description: Displays a modal with the specified steps and metadata.
+
+### `frak_sendInteraction`
+- Parameters:
+- `productId`: `Hex`
+- `interaction`: `PreparedInteraction`
+- `signature`: `Hex` (optional)
+- Return Type: `SendInteractionReturnType`
+- Description: Sends an interaction to the Nexus Wallet.
+
+### `frak_sso`
+- Parameters:
+- `params`: `OpenSsoParamsType`
+- `name`: `string`
+- `customCss`: `string` (optional)
+- Return Type: `undefined`
+- Description: Initiates the SSO process.
