@@ -175,5 +175,5 @@ export const nexusSdkSidebar = [
             },
         ],
     },
-    { text: "Changelog", link: "/nexus-sdk/changelog" },
+    { text: "Under the hood", link: "/nexus-sdk/under-the-hood" },
 ];
