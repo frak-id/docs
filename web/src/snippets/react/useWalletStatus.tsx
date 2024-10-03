@@ -22,7 +22,7 @@ export function WalletStatus() {
 
             {walletStatus?.key === "not-connected" && (
                 <div>
-                    <p>Not connected to a nexus wallet</p>
+                    <p>Not connected to a frak wallet</p>
                 </div>
             )}
         </>

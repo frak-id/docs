@@ -15,7 +15,7 @@ const config: NexusWalletSdkConfig = {
 
 // Create the iFrame and the associated FrakClient
 async function createClient(): Promise<NexusClient> {
-    // Create the iFrame that will be used for the communication with the nexus wallet
+    // Create the iFrame that will be used for the communication with the frak wallet
     const iframe = await createIframe({
         walletBaseUrl: config.walletUrl,
     });

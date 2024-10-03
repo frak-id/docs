@@ -1,17 +1,17 @@
 ---
 title: useSendTransaction
-description: React hook to send transactions through the Nexus Wallet
+description: React hook to send transactions through the Frak Wallet
 date: 2024-09-06
 ---
 
 # useSendTransaction
 
 ## Summary
-The `useSendTransaction` hook provides a convenient way to send transactions using the Nexus Wallet. It handles the complexities of transaction submission and provides status updates throughout the process.
+The `useSendTransaction` hook provides a convenient way to send transactions using the Frak Wallet. It handles the complexities of transaction submission and provides status updates throughout the process.
 
 ## Requirements
 - The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
-- A user must be connected to the Nexus Wallet.
+- A user must be connected to the Frak Wallet.
 
 ## Hook Import and Parameters
 
@@ -90,7 +90,7 @@ type SendTransactionTxType = Readonly<{
 
 ## Notes
 - This hook automatically handles the display of transaction modals and wallet interactions.
-- It uses the Nexus Wallet for transaction signing and submission.
+- It uses the Frak Wallet for transaction signing and submission.
 - The hook manages the transaction state, including loading and error states.
 - You can send a single transaction or batch multiple transactions together.
 
@@ -113,4 +113,4 @@ In this example, we create a button component that uses the `useSendTransaction`
 
 ## Related
 - [sendTransaction](/wallet-sdk/api/actions/sendTransaction) - Core action for sending transactions
-- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Frak hooks

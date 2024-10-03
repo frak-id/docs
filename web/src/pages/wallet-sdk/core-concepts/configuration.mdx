@@ -1,16 +1,16 @@
 ---
-title: Nexus SDK Configuration
-description: Learn how to configure the Nexus SDK for your application
+title: Wallet SDK Configuration
+description: Learn how to configure the Wallet SDK for your application
 date: 2024-09-05
 ---
 
 # Configuration
 
-Proper configuration is crucial for the Nexus SDK to function correctly in your application. This guide will walk you through the configuration options and how to set them up.
+Proper configuration is crucial for the Wallet SDK to function correctly in your application. This guide will walk you through the configuration options and how to set them up.
 
 ## Configuration Object
 
-The Nexus SDK uses a configuration object to set up its behavior. Here's the structure of the `NexusWalletSdkConfig` object:
+The Wallet SDK uses a configuration object to set up its behavior. Here's the structure of the `NexusWalletSdkConfig` object:
 
 :::code-group
 
@@ -28,10 +28,10 @@ type NexusWalletSdkConfig = {
 ```js [JavaScript]
 /**
  * @typedef {Object} NexusWalletSdkConfig
- * @property {string} walletUrl - The URL of the Nexus Wallet service
+ * @property {string} walletUrl - The URL of the Frak Wallet service
  * @property {Object} metadata - Metadata about your application
  * @property {string} metadata.name - The name of your application
- * @property {string} [metadata.css] - URL to a CSS file for styling the Nexus Wallet interface
+ * @property {string} [metadata.css] - URL to a CSS file for styling the Frak Wallet interface
  * @property {string} [domain] - The domain of your application
  */
 ```
@@ -42,7 +42,7 @@ Let's break down each property:
 
 ### `walletUrl`
 
-This is the URL of the Nexus Wallet service. Use one of the following values:
+This is the URL of the Frak Wallet service. Use one of the following values:
 
 - Production: `"https://wallet.frak.id"`
 - Development: `"https://wallet-dev.frak.id"`
@@ -51,12 +51,12 @@ This is the URL of the Nexus Wallet service. Use one of the following values:
 
 This object contains metadata about your application:
 
-- `name`: The name of your application. This will be displayed in the Nexus Wallet interface.
-- `css` (optional): A URL to a CSS file that can be used to style the Nexus Wallet interface when it's displayed in your application.
+- `name`: The name of your application. This will be displayed in the Frak Wallet interface.
+- `css` (optional): A URL to a CSS file that can be used to style the Frak Wallet interface when it's displayed in your application.
 
 ### `domain` (optional)
 
-The domain of your application. This is used to identify your application in the Nexus ecosystem.
+The domain of your application. This is used to identify your application in the Frak ecosystem.
 
 :::tip
 For React applications, this property is optional. If not provided, it will be automatically retrieved during the provider initialization.
@@ -112,7 +112,7 @@ function App() {
 
 ### Vanilla JavaScript
 
-In a vanilla JavaScript application, you'll pass this configuration when creating a Nexus client:
+In a vanilla JavaScript application, you'll pass this configuration when creating a Frak client:
 
 ```ts twoslash
 // @noErrors
@@ -132,7 +132,7 @@ const client = await createIFrameNexusClient({ config: nexusConfig, iframe });
 
 ## Best Practices
 
-1. **Environment-based Configuration**: Consider using different configurations for development and production environments. This allows you to use the development Nexus Wallet during testing.
+1. **Environment-based Configuration**: Consider using different configurations for development and production environments. This allows you to use the development Frak Wallet during testing.
 
 2. **Secure CSS**: If you're providing a custom CSS file, ensure it's served over HTTPS to prevent security issues.
 
@@ -144,8 +144,8 @@ const client = await createIFrameNexusClient({ config: nexusConfig, iframe });
 Remember to handle any potential errors when creating the iframe or initializing the client.
 :::
 
-By properly configuring the Nexus SDK, you ensure that it can communicate effectively with the Nexus Wallet and provide a seamless experience for your users.
+By properly configuring the Wallet SDK, you ensure that it can communicate effectively with the Frak Wallet and provide a seamless experience for your users.
 
 ## Next Steps
 
-Now that you've configured the Nexus SDK, you're ready to start implementing its features. Check out our guides on [Tracking User Interactions](/wallet-sdk/core-concepts/interactions) and [Setting Up Rewards](/wallet-sdk/core-concepts/rewards-and-campaigns) to learn more about what you can do with the SDK.
+Now that you've configured the Wallet SDK, you're ready to start implementing its features. Check out our guides on [Tracking User Interactions](/wallet-sdk/core-concepts/interactions) and [Setting Up Rewards](/wallet-sdk/core-concepts/rewards-and-campaigns) to learn more about what you can do with the SDK.

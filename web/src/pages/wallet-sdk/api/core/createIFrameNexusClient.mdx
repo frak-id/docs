@@ -1,18 +1,18 @@
 ---
 title: createIFrameNexusClient
-description: Function to create a Nexus client instance
+description: Function to create a Frak client instance
 date: 2024-09-05
 ---
 
 # createIFrameNexusClient
 
 ## Summary
-The `createIFrameNexusClient` function initializes a new Nexus client instance, setting up the communication channel between your application and the Nexus Wallet.
+The `createIFrameNexusClient` function initializes a new Frak client instance, setting up the communication channel between your application and the Frak Wallet.
 
 ## Requirements
 - A registered product on the Frak Business Platform
 - A valid `NexusWalletSdkConfig` configuration
-- An `HTMLIFrameElement` to host the Nexus Wallet interface
+- An `HTMLIFrameElement` to host the Frak Wallet interface
 
 ## Function Signature
 
@@ -30,11 +30,11 @@ declare function createIFrameNexusClient({
 ```
 
 ### Parameters
-- `config`: `NexusWalletSdkConfig` - Configuration object for the Nexus SDK
-- `iframe`: `HTMLIFrameElement` - An iframe element to host the Nexus Wallet interface
+- `config`: `NexusWalletSdkConfig` - Configuration object for the Wallet SDK
+- `iframe`: `HTMLIFrameElement` - An iframe element to host the Frak Wallet interface
 
 ### Return Value
-- `NexusClient`: An instance of the Nexus client
+- `NexusClient`: An instance of the Frak client
 
 ## Usage Example
 
@@ -49,7 +49,7 @@ declare function createIFrameNexusClient({
 ```
 :::
 
-In this example, we first import the necessary functions and types from the Nexus SDK. We then create a configuration object and an iframe element. Finally, we use these to initialize the Nexus client.
+In this example, we first import the necessary functions and types from the Wallet SDK. We then create a configuration object and an iframe element. Finally, we use these to initialize the Frak client.
 
 ## Related Types
 - [NexusWalletSdkConfig](/wallet-sdk/api/types/NexusWalletSdkConfig)

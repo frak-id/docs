@@ -1,12 +1,12 @@
 ---
 title: NexusClient
-description: Client type for interacting with the Nexus Wallet SDK
+description: Client type for interacting with the Frak Wallet SDK
 date: 2024-09-05
 ---
 
 # NexusClient
 
-The `NexusClient` type represents the client interface for interacting with the Nexus Wallet SDK.
+The `NexusClient` type represents the client interface for interacting with the Frak Wallet SDK.
 
 ## Type Definition
 
@@ -33,7 +33,7 @@ type NexusClient = {
 
 ### `waitForConnection`
 - Type: `Promise<boolean>`
-- A promise that resolves when the connection to the Nexus Wallet is established.
+- A promise that resolves when the connection to the Frak Wallet is established.
 
 ### `waitForSetup`
 - Type: `Promise<void>`
@@ -41,11 +41,11 @@ type NexusClient = {
 
 ### `request`
 - Type: `RequestFn<IFrameRpcSchema>`
-- A function to make single requests to the Nexus Wallet.
+- A function to make single requests to the Frak Wallet.
 
 ### `listenerRequest`
 - Type: `ListenerRequestFn<IFrameRpcSchema>`
-- A function to set up listeners for ongoing requests to the Nexus Wallet.
+- A function to set up listeners for ongoing requests to the Frak Wallet.
 
 ### `destroy`
 - Type: `() => Promise<void>`
@@ -65,7 +65,7 @@ type RequestFn<TRpcSchema extends RpcSchema> =
 ) => Promise<_ReturnType>;
 ```
 
-The `RequestFn` type represents a function for making single requests to the Nexus Wallet.
+The `RequestFn` type represents a function for making single requests to the Frak Wallet.
 
 ### ListenerRequestFn
 
@@ -80,5 +80,5 @@ type ListenerRequestFn<TRpcSchema extends RpcSchema> =
 ) => Promise<void>;
 ```
 
-The `ListenerRequestFn` type represents a function for setting up listeners for ongoing requests to the Nexus Wallet.
+The `ListenerRequestFn` type represents a function for setting up listeners for ongoing requests to the Frak Wallet.
 

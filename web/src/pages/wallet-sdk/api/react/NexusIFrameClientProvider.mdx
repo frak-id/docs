@@ -1,13 +1,13 @@
 ---
 title: NexusIFrameClientProvider
-description: React provider component for Nexus Wallet client instance
+description: React provider component for Frak Wallet client instance
 date: 2024-09-06
 ---
 
 # NexusIFrameClientProvider
 
 ## Summary
-The `NexusIFrameClientProvider` is a React component that initializes and provides the Nexus Wallet client instance to its child components. It should be placed within the `NexusConfigProvider` to ensure it has access to the necessary configuration.
+The `NexusIFrameClientProvider` is a React component that initializes and provides the Frak Wallet client instance to its child components. It should be placed within the `NexusConfigProvider` to ensure it has access to the necessary configuration.
 
 ## Props
 
@@ -20,7 +20,7 @@ type NexusIFrameClientProviderProps = {
 ```
 
 - `style` (optional): Custom CSS styles to apply to the iframe element.
-- `children`: Child components that will have access to the Nexus client instance.
+- `children`: Child components that will have access to the Frak client instance.
 
 ## Usage
 
@@ -55,10 +55,10 @@ export function App() {
 
 ## Notes
 - The `NexusIFrameClientProvider` should be placed within the `NexusConfigProvider` to ensure it has access to the necessary configuration.
-- This provider creates an invisible iframe that facilitates communication with the Nexus Wallet.
-- The Nexus client instance is initialized asynchronously. Child components should handle potential undefined states when accessing the client through hooks.
-- It's recommended to wrap your entire application (or the parts that need Nexus functionality) with this provider to ensure consistent access to the Nexus client.
+- This provider creates an invisible iframe that facilitates communication with the Frak Wallet.
+- The Frak client instance is initialized asynchronously. Child components should handle potential undefined states when accessing the client through hooks.
+- It's recommended to wrap your entire application (or the parts that need Frak functionality) with this provider to ensure consistent access to the Frak client.
 
 ## Related
-- [useNexusClient](/wallet-sdk/api/react/useNexusClient) - Hook to access the Nexus client instance
-- [NexusConfigProvider](/wallet-sdk/api/react/NexusConfigProvider) - Provider component for Nexus SDK configuration
+- [useNexusClient](/wallet-sdk/api/react/useNexusClient) - Hook to access the Frak client instance
+- [NexusConfigProvider](/wallet-sdk/api/react/NexusConfigProvider) - Provider component for Wallet SDK configuration

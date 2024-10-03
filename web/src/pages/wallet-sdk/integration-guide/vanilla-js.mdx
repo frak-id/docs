@@ -1,33 +1,33 @@
 ---
 title: Vanilla JS Integration Guide
-description: Learn how to integrate the Nexus SDK into your Vanilla JavaScript application for seamless Web3 interactions.
+description: Learn how to integrate the Wallet SDK into your Vanilla JavaScript application for seamless Web3 interactions.
 date: 2024-09-10
 ---
 
 # Vanilla JS Integration Guide
 
-This guide will walk you through the process of integrating the Nexus SDK into your Vanilla JavaScript application. By the end, you'll have a basic setup that allows users to connect their Nexus Wallet and perform simple interactions.
+This guide will walk you through the process of integrating the Wallet SDK into your Vanilla JavaScript application. By the end, you'll have a basic setup that allows users to connect their Frak Wallet and perform simple interactions.
 
 ## Prerequisites
 
 Before you begin, ensure that:
 
 1. You have a basic HTML/JavaScript project set up.
-2. You have registered your product on the Nexus business dashboard and obtained the necessary configuration details.
+2. You have registered your product on the Frak business dashboard and obtained the necessary configuration details.
 
 If you haven't completed these steps, please refer to the [Getting Started](/wallet-sdk/getting-started) guide.
 
 ## Step 1: Install Dependencies
 
-For a Vanilla JS project, you can include the Nexus SDK via a CDN. Add the following script tag to your HTML file:
+For a Vanilla JS project, you can include the Wallet SDK via a CDN. Add the following script tag to your HTML file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@frak-labs/nexus-sdk@latest/dist/index.umd.js"></script>
 ```
 
-## Step 2: Set Up the Nexus Client
+## Step 2: Set Up the Frak Client
 
-Create a new JavaScript file (e.g., `nexus-setup.js`) to set up the Nexus client:
+Create a new JavaScript file (e.g., `nexus-setup.js`) to set up the Frak client:
 
 ```javascript
 // nexus-setup.js
@@ -43,7 +43,7 @@ const nexusConfig = {
 async function setupNexusClient() {
   const iframe = await NexusSDK.createIframe({ walletBaseUrl: nexusConfig.walletUrl });
   if (!iframe) {
-    console.error('Failed to create Nexus iframe');
+    console.error('Failed to create Frak iframe');
     return null;
   }
 
@@ -69,7 +69,7 @@ Create a function to check and display the wallet status:
 async function displayWalletStatus() {
   const client = await window.NexusSetup.setupNexusClient();
   if (!client) {
-    console.error('Nexus client not initialized');
+    console.error('Frak client not initialized');
     return;
   }
 
@@ -98,7 +98,7 @@ Create a function to handle the login process:
 async function handleLogin() {
   const client = await window.NexusSetup.setupNexusClient();
   if (!client) {
-    console.error('Nexus client not initialized');
+    console.error('Frak client not initialized');
     return;
   }
 
@@ -155,7 +155,7 @@ Update your HTML file to include all the necessary elements and scripts:
 
 ## Next Steps
 
-With this setup, you have a basic Vanilla JavaScript application integrated with the Nexus SDK. Users can now connect their Nexus Wallet and log in. From here, you can start implementing more advanced features such as:
+With this setup, you have a basic Vanilla JavaScript application integrated with the Wallet SDK. Users can now connect their Frak Wallet and log in. From here, you can start implementing more advanced features such as:
 
 - Sending interactions
 - Implementing referral systems

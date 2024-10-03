@@ -5,7 +5,7 @@ import { NexusProvider } from "./NexusProvider";
 function App() {
     return (
         <NexusProvider>
-            <h1>My Nexus Powered app</h1>
+            <h1>My Frak Powered app</h1>
             <WalletStatus />
             <LoginButton />
         </NexusProvider>
@@ -35,7 +35,7 @@ function WalletStatus() {
 
 // [!region login-button]
 /**
- * Simple login with nexus button
+ * Simple login with frak button
  */
 function LoginButton() {
     const { mutate: displayModal, isPending } = useDisplayModal();

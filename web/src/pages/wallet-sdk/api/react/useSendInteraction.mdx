@@ -1,17 +1,17 @@
 ---
 title: useSendInteraction
-description: React hook to send interactions through the Nexus Wallet
+description: React hook to send interactions through the Frak Wallet
 date: 2024-09-06
 ---
 
 # useSendInteraction
 
 ## Summary
-The `useSendInteraction` hook facilitates sending interaction data to the blockchain through the Nexus Wallet. It's designed to handle various types of user interactions within your application, including referrals, content engagement, and more.
+The `useSendInteraction` hook facilitates sending interaction data to the blockchain through the Frak Wallet. It's designed to handle various types of user interactions within your application, including referrals, content engagement, and more.
 
 ## Requirements
 - The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
-- A user must be connected to the Nexus Wallet.
+- A user must be connected to the Frak Wallet.
 - An active interaction session is required.
 
 ## Hook Import and Parameters
@@ -91,7 +91,7 @@ type PreparedInteraction = Readonly<{
 
 ## Notes
 - This hook automatically handles the submission of interaction data to the blockchain.
-- It uses the Nexus Wallet for signing and submitting the interaction.
+- It uses the Frak Wallet for signing and submitting the interaction.
 - The hook manages the interaction state, including loading and error states.
 - Different types of interactions (e.g., referrals, content engagement) can be sent using this hook.
 
@@ -114,6 +114,6 @@ In this example, we create a button component that uses the `useSendInteraction`
 
 ## Related
 - [sendInteraction](/wallet-sdk/api/actions/sendInteraction) - Core action for sending interactions
-- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Frak hooks
 - [ReferralInteractionEncoder](/wallet-sdk/api/interactions/ReferralInteractionEncoder) - Utility for encoding referral interactions
 - [PressInteractionEncoder](/wallet-sdk/api/interactions/PressInteractionEncoder) - Encoder for press-related interactions

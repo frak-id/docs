@@ -1,19 +1,19 @@
 ---
 title: React Integration Guide
-description: Learn how to integrate the Nexus SDK into your React application for seamless Web3 interactions.
+description: Learn how to integrate the Wallet SDK into your React application for seamless Web3 interactions.
 date: 2024-09-10
 ---
 
 # React Integration Guide
 
-This guide will walk you through the process of integrating the Nexus SDK into your React application. By the end, you'll have a basic setup that allows users to connect their Nexus Wallet and perform simple interactions.
+This guide will walk you through the process of integrating the Wallet SDK into your React application. By the end, you'll have a basic setup that allows users to connect their Frak Wallet and perform simple interactions.
 
 ## Prerequisites
 
 Before you begin, ensure that:
 
 1. You have a React project set up.
-2. You have registered your product on the Nexus business dashboard and obtained the necessary configuration details.
+2. You have registered your product on the Frak business dashboard and obtained the necessary configuration details.
 
 If you haven't completed these steps, please refer to the [Getting Started](/wallet-sdk/getting-started) guide.
 
@@ -36,9 +36,9 @@ bun add @frak-labs/nexus-sdk @tanstack/react-query
 ```
 :::
 
-## Step 2: Set Up the Nexus Client
+## Step 2: Set Up the Frak Client
 
-Create a new component to set up the Nexus client and iframe:
+Create a new component to set up the Frak client and iframe:
 
 ```tsx twoslash [NexusProvider.tsx]
 // @noErrors
@@ -101,7 +101,7 @@ Update your main App component to include the wallet status and login button:
 
 ## Next Steps
 
-With this setup, you have a basic React application integrated with the Nexus SDK. Users can now connect their Nexus Wallet and log in. From here, you can start implementing more advanced features such as:
+With this setup, you have a basic React application integrated with the Wallet SDK. Users can now connect their Frak Wallet and log in. From here, you can start implementing more advanced features such as:
 
 - Sending interactions
 - Implementing referral systems

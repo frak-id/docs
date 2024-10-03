@@ -7,11 +7,11 @@ date: 2024-09-05
 # siweAuthenticate
 
 ## Summary
-The `siweAuthenticate` function initiates a Sign-In with Ethereum (SIWE) authentication process through the Nexus Wallet. This allows users to authenticate using their Ethereum account, providing a secure and decentralized authentication method.
+The `siweAuthenticate` function initiates a Sign-In with Ethereum (SIWE) authentication process through the Frak Wallet. This allows users to authenticate using their Ethereum account, providing a secure and decentralized authentication method.
 
 ## Requirements
 - An initialized `NexusClient` instance
-- User must have access to the Nexus Wallet
+- User must have access to the Frak Wallet
 
 ## Function Signature
 
@@ -26,7 +26,7 @@ declare function siweAuthenticate(
 ```
 
 ### Parameters
-- `client`: `NexusClient` - An instance of the Nexus client
+- `client`: `NexusClient` - An instance of the Frak client
 - `params`: `SiweAuthenticateModalParams` - SIWE authentication parameters
 
 ### Return Value
@@ -92,7 +92,7 @@ type SiweAuthenticateReturnType = Readonly<{
 ```
 :::
 
-In this example, we import the `siweAuthenticate` function and the Nexus client. We then call `siweAuthenticate` with the necessary SIWE parameters, including a custom statement and optional metadata for the modal. The function returns a promise that resolves with the signature and the full SIWE message.
+In this example, we import the `siweAuthenticate` function and the Frak client. We then call `siweAuthenticate` with the necessary SIWE parameters, including a custom statement and optional metadata for the modal. The function returns a promise that resolves with the signature and the full SIWE message.
 
 ## Related Types
 - [NexusClient](/wallet-sdk/api/types/NexusClient)

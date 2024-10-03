@@ -1,13 +1,13 @@
 ---
 title: watchWalletStatus
-description: Function to monitor the Nexus Wallet status
+description: Function to monitor the Frak Wallet status
 date: 2024-09-05
 ---
 
 # watchWalletStatus
 
 ## Summary
-The `watchWalletStatus` function sets up a listener to monitor changes in the Nexus Wallet status, providing real-time updates on the wallet's connection state and interaction session.
+The `watchWalletStatus` function sets up a listener to monitor changes in the Frak Wallet status, providing real-time updates on the wallet's connection state and interaction session.
 
 ## Requirements
 - An initialized `NexusClient` instance
@@ -25,7 +25,7 @@ declare function watchWalletStatus(
 ```
 
 ### Parameters
-- `client`: `NexusClient` - An instance of the Nexus client
+- `client`: `NexusClient` - An instance of the Frak client
 - `callback`: `(status: WalletStatusReturnType) => void` - A function to handle wallet status updates
 
 ### Return Value
@@ -44,7 +44,7 @@ declare function watchWalletStatus(
 ```
 :::
 
-In this example, we import the `watchWalletStatus` function and the previously created Nexus client. We then set up a listener that logs the wallet status whenever it changes. The callback function handles both connected and disconnected states, as well as the presence of an interaction session.
+In this example, we import the `watchWalletStatus` function and the previously created Frak client. We then set up a listener that logs the wallet status whenever it changes. The callback function handles both connected and disconnected states, as well as the presence of an interaction session.
 
 ## Related Types
 - [NexusClient](/wallet-sdk/api/types/NexusClient)

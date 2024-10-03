@@ -1,13 +1,13 @@
 ---
 title: NexusConfigProvider
-description: React provider component for Nexus Wallet SDK configuration
+description: React provider component for Frak Wallet SDK configuration
 date: 2024-09-06
 ---
 
 # NexusConfigProvider
 
 ## Summary
-The `NexusConfigProvider` is a React component that provides the Nexus Wallet SDK configuration to its child components. It should be placed at the root of your React application to ensure that all Nexus SDK hooks and components have access to the necessary configuration.
+The `NexusConfigProvider` is a React component that provides the Frak Wallet SDK configuration to its child components. It should be placed at the root of your React application to ensure that all Wallet SDK hooks and components have access to the necessary configuration.
 
 ## Props
 
@@ -27,7 +27,7 @@ type NexusWalletSdkConfig = Readonly<{
 }>;
 ```
 
-- `config`: An object containing the Nexus Wallet SDK configuration. The `domain` property is optional and will be automatically set to the current domain if not provided.
+- `config`: An object containing the Frak Wallet SDK configuration. The `domain` property is optional and will be automatically set to the current domain if not provided.
 
 ## Usage
 
@@ -65,10 +65,10 @@ export function App() {
 - The `NexusConfigProvider` should be placed at the root of your application, typically in your main `App` component.
 - It's recommended to wrap the `NexusConfigProvider` around the `NexusIFrameClientProvider` to ensure proper configuration inheritance.
 - If the `domain` is not provided in the configuration, it will automatically use the current domain of the application.
-- The configuration provided here will be accessible to all Nexus SDK hooks and components within its React subtree.
+- The configuration provided here will be accessible to all Wallet SDK hooks and components within its React subtree.
 
 ## Related
-- [useNexusConfig](/wallet-sdk/api/react/useNexusConfig) - Hook to access the Nexus SDK configuration
-- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component for the Nexus client instance
+- [useNexusConfig](/wallet-sdk/api/react/useNexusConfig) - Hook to access the Wallet SDK configuration
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component for the Frak client instance
 
 

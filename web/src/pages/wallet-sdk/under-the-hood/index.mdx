@@ -1,6 +1,6 @@
 ---
 title: How does it work?
-description: How the nexus wallet work under the hood?
+description: How the frak wallet work under the hood?
 date: 2024-03-01
 ---
 
@@ -8,15 +8,15 @@ import { Callout } from 'vocs/components'
 
 # How does it work?
 
-In this section, we will go through the different technologies and smart contracts used by the Nexus Wallet, and how they are working together.
+In this section, we will go through the different technologies and smart contracts used by the Frak Wallet, and how they are working together.
 
 ## Knowledge base
 
-Before deep diving into the Nexus Wallet, it is important to understand a few blockchain technologies.
+Before deep diving into the Frak Wallet, it is important to understand a few blockchain technologies.
 
 ### Account Abstraction
 
-The nexus wallet is using the [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337) standard, which is a standard for account abstraction on EVM blockchain.
+The frak wallet is using the [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337) standard, which is a standard for account abstraction on EVM blockchain.
 
 If you are not familiar with this standard, here is a few great resources to get started:
  - [Awesome account abstraction](https://github.com/4337Mafia/awesome-account-abstraction)
@@ -29,7 +29,7 @@ A few key takeaways from the account abstraction standard:
 
 ### WebAuthN
 
-Then, the Nexus wallet is using the [WebAuthN](https://w3c.github.io/webauthn/) standard for the authentication and the signing of the transactions.
+Then, the Frak wallet is using the [WebAuthN](https://w3c.github.io/webauthn/) standard for the authentication and the signing of the transactions.
 
 If you are not familiar with this standard, here is a few great resources to get started:
  - [Awesome WebAuthN](https://github.com/herrjemand/awesome-webauthn)
@@ -56,13 +56,13 @@ For chain that doesn't support this curve, we are using the [FreshCryptoLib](htt
 
 ## SmartWallet side
 
-In this section we will go through the smart contract related to the Smart wallet side of the Nexus Wallet.
+In this section we will go through the smart contract related to the Smart wallet side of the Frak Wallet.
 
 We are using the [Kernel Smart Wallet](https://github.com/zerodevapp/kernel) by the [ZeroDev](https://zerodev.app/) team for core logic of the Smart Wallet.
 
 It's audited, battle tested, and has a lot of features that we can leverage (for example the [ERC-7579](https://erc7579.com/) support)
 
-Since kernel wallet support modular validation, we are mainly using two type of validator for the Nexus Wallet:
+Since kernel wallet support modular validation, we are mainly using two type of validator for the Frak Wallet:
  1. The main one being the [FCL WebAuthN validator](https://github.com/zerodevapp/kernel/blob/dev/src/validator/webauthn/WebAuthnFclValidator.sol), custom validator developed by us, and using the [FreshCryptoLib](https://github.com/rdubois-crypto/FreshCryptoLib) to verify P-256 signature on chain that doesn't support the RIP-7212 standard.
  2. The second one being the [ECDSAValidator](https://github.com/zerodevapp/kernel/blob/dev/src/validator/ECDSAValidator.sol), for user that setup recovery options, they can setup an EOA as recovery wallet, and then it's enabling an ECDSAValidator. This will permit them to execute transaction via either the webAuthN Validator, or the ECDSA one.
 
@@ -75,19 +75,19 @@ If you want to use the smart wallet to sponsor your user transaction, you will n
 ## Communication side
 
 Since the WebAuthN standard is bounded to a specific domain, we are using two principal way of communication:
- 1. An iFrame, to have a bidirectional communication flow between the Nexus Wallet and the implementing website.
+ 1. An iFrame, to have a bidirectional communication flow between the Frak Wallet and the implementing website.
  2. Classical http redirection, with supplementary arguments in the URL, when the user input is required.
 
 Working this way, with a **client first** approach, provide us a few key benefits:
  - We are not relying on third parties cookies (since it will be kill soon by chrome)
  - We don't rely on a centralised server to manage the communication, so you don't have to trust us with up-time, server provisioning, db going down or anything.
  - Your app can communication with the client storage, even if the client is offline (so you can still fetch wallet address, transaction history etc. even if the client is offline)
- - All the nexus related storage is stored on the client storage, in a secure way, and is only accessible by the nexus wallet and allowed dApps.
+ - All the frak related storage is stored on the client storage, in a secure way, and is only accessible by the frak wallet and allowed dApps.
 
 <Callout type="note">
-    On the centralisation side, yeah you are not relying on a centralised server, but you are relying on the nexus website, **how is that different?**
+    On the centralisation side, yeah you are not relying on a centralised server, but you are relying on the frak website, **how is that different?**
 
-    Firstly, the website hosting the Nexus wallet is a PWA, meaning that user can install it on their devices (if compatible), and enjoy it everytime (even if our website come down for whatever reason).
+    Firstly, the website hosting the Frak wallet is a PWA, meaning that user can install it on their devices (if compatible), and enjoy it everytime (even if our website come down for whatever reason).
 
     Secondly, it's all open source, meaning that you can easily redeploy it on your own infrastructure if you want to.
 </Callout>
@@ -98,9 +98,9 @@ The iFrame communication side isn't that complex really. We are basically using 
 
 The init flow is as follows:
  1. The dApp create an iFrame with the right URL (can be built using an SDK helper or react component directly)
- 2. When the iFrame is loaded, it should be loaded on the **Nexus query listener** page no UI, juste handling incoming message request.
- 3. Once the nexus query listener is loaded, and have warmed up a few key storage slots, it will send a `ready` message to the dApp.
- 4. Once the dApp receive the `ready` message, it can start sending message to the Nexus Wallet, and receive message from it.
+ 2. When the iFrame is loaded, it should be loaded on the **Frak query listener** page no UI, juste handling incoming message request.
+ 3. Once the frak query listener is loaded, and have warmed up a few key storage slots, it will send a `ready` message to the dApp.
+ 4. Once the dApp receive the `ready` message, it can start sending message to the Frak Wallet, and receive message from it.
 
 On top of the classical postMessage communication, we added some abstraction around all of that, helping to have:
  - a `createIFrameFrakClient` method, that will build a `transport` (similar to [Viem transports](https://viem.sh/docs/clients/intro.html)) used for the communication
@@ -115,8 +115,8 @@ Under the hood, both `request` and `listenerRequest` are using a small abstracti
 
 When a user action is needed, the flow with redirection is pretty straightforward:
  1. The dApp build the URL with the right arguments using the SDK
- 2. The dApp redirect the user to the Nexus Wallet URL
- 3. The Nexus Wallet handle the user input, ask him to perform the action
+ 2. The dApp redirect the user to the Frak Wallet URL
+ 3. The Frak Wallet handle the user input, ask him to perform the action
  4. Once Ok, or KO, it's redirect the user back to the dApp with the right query arguments in the URL, that can be decoded using the SDK.
 
 ### Embedded flow
@@ -131,7 +131,7 @@ We are currently working to provide a new transport flow using this embedded flo
 
 ### Communication security
 
-Since, some sensitive data can be shared between the dApp and the Nexus Wallet, we built our own secured communication layer.
+Since, some sensitive data can be shared between the dApp and the Frak Wallet, we built our own secured communication layer.
 
 But, how does this double hash mechanism work exactly?
 

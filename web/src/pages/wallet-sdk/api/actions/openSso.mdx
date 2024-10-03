@@ -7,7 +7,7 @@ date: 2024-09-05
 # openSso
 
 ## Summary
-The `openSso` function initiates the Single Sign-On (SSO) process, allowing users to authenticate with the Nexus Wallet using their preferred method.
+The `openSso` function initiates the Single Sign-On (SSO) process, allowing users to authenticate with the Frak Wallet using their preferred method.
 
 ## Requirements
 - An initialized `NexusClient` instance
@@ -26,7 +26,7 @@ declare function openSso(
 ```
 
 ### Parameters
-- `client`: `NexusClient` - An instance of the Nexus client
+- `client`: `NexusClient` - An instance of the Frak client
 - `args`: `OpenSsoParamsType` - Configuration options for the SSO process
 
 ## OpenSsoParamsType
@@ -56,7 +56,7 @@ type SsoMetadata = {
 
 - `redirectUrl` (optional): `string`
     - The URL to redirect the user after successful authentication.
-    - If not provided, the user will remain in the Nexus Wallet interface (if `directExit` isn't specified).
+    - If not provided, the user will remain in the Frak Wallet interface (if `directExit` isn't specified).
 
 - `directExit` (optional): `boolean`
     - If set to `true`, the SSO will open in a popup and process will exit immediately after authentication.
@@ -86,7 +86,7 @@ type SsoMetadata = {
 ```
 :::
 
-In this example, we import the `openSso` function and the Nexus client. We then call `openSso` with the necessary SSO configuration, including metadata about the application and optional redirect URL and exit behavior.
+In this example, we import the `openSso` function and the Frak client. We then call `openSso` with the necessary SSO configuration, including metadata about the application and optional redirect URL and exit behavior.
 
 ## Related Types
 - [NexusClient](/wallet-sdk/api/types/NexusClient)

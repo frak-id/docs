@@ -1,19 +1,19 @@
 ---
 title: sendInteraction
-description: Function to send user interactions to the Nexus Wallet
+description: Function to send user interactions to the Frak Wallet
 date: 2024-09-05
 ---
 
 # sendInteraction
 
 ## Summary
-The `sendInteraction` function sends user interactions to the Nexus Wallet, allowing for on-chain recording of user activities within your application.
+The `sendInteraction` function sends user interactions to the Frak Wallet, allowing for on-chain recording of user activities within your application.
 
 For a more in-depth explanation of interactions, please refer to our [Interactions Concept Guide](/wallet-sdk/core-concepts/interactions).
 
 ## Requirements
 - An initialized `NexusClient` instance
-- User must be authenticated with the Nexus Wallet
+- User must be authenticated with the Frak Wallet
 - User must have an opened session
 
 If the user isn't logged in, or doesn't have an opened session, all the submitted interactions will be cached in the browser storage and will be sent once a user is logged in and have opened a session.
@@ -31,7 +31,7 @@ declare function sendInteraction(
 ```
 
 ### Parameters
-- `client`: `NexusClient` - An instance of the Nexus client
+- `client`: `NexusClient` - An instance of the Frak client
 - `params`: `SendInteractionParamsType` - Interaction parameters
 
 ### Return Value
@@ -98,7 +98,7 @@ type SendInteractionReturnType = Readonly<{
 ```
 :::
 
-In this example, we import the `sendInteraction` function and the Nexus client. We then call `sendInteraction` with the necessary interaction parameters, including the prepared interaction data and an optional validation signature.
+In this example, we import the `sendInteraction` function and the Frak client. We then call `sendInteraction` with the necessary interaction parameters, including the prepared interaction data and an optional validation signature.
 
 ## Related Types
 - [NexusClient](/wallet-sdk/api/types/NexusClient)

@@ -1,17 +1,17 @@
 ---
 title: sendTransaction
-description: Function to send a transaction through the Nexus Wallet
+description: Function to send a transaction through the Frak Wallet
 date: 2024-09-05
 ---
 
 # sendTransaction
 
 ## Summary
-The `sendTransaction` function initiates a transaction or a batch of transactions through the Nexus Wallet. It handles the process of creating, signing, sponsoring, and sending the transactions.
+The `sendTransaction` function initiates a transaction or a batch of transactions through the Frak Wallet. It handles the process of creating, signing, sponsoring, and sending the transactions.
 
 ## Requirements
 - An initialized `NexusClient` instance
-- User must be authenticated with the Nexus Wallet
+- User must be authenticated with the Frak Wallet
 
 ## Function Signature
 
@@ -26,7 +26,7 @@ declare function sendTransaction(
 ```
 
 ### Parameters
-- `client`: `NexusClient` - An instance of the Nexus client
+- `client`: `NexusClient` - An instance of the Frak client
 - `params`: `SendTransactionParams` - Transaction parameters
 
 ### Return Value
@@ -88,7 +88,7 @@ type SendTransactionReturnType = Readonly<{
 ```
 :::
 
-In this example, we import the `sendTransaction` function and the Nexus client. We then call `sendTransaction` with the necessary transaction parameters, including the recipient's address, the amount to send, and optional transaction data.
+In this example, we import the `sendTransaction` function and the Frak client. We then call `sendTransaction` with the necessary transaction parameters, including the recipient's address, the amount to send, and optional transaction data.
 
 ## Related Types
 - [NexusClient](/wallet-sdk/api/types/NexusClient)

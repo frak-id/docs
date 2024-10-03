@@ -1,13 +1,13 @@
 ---
 title: useNexusClient
-description: React hook to access the Nexus Wallet client instance
+description: React hook to access the Frak Wallet client instance
 date: 2024-09-06
 ---
 
 # useNexusClient
 
 ## Summary
-The `useNexusClient` hook provides access to the current Nexus Wallet client instance within your React components. This client instance is used to interact with the Nexus Wallet and perform various operations.
+The `useNexusClient` hook provides access to the current Frak Wallet client instance within your React components. This client instance is used to interact with the Frak Wallet and perform various operations.
 
 ## Requirements
 - The app must be wrapped with `NexusIFrameClientProvider`.
@@ -40,10 +40,10 @@ type NexusClient = {
 
 ## Notes
 - The returned client may be `undefined` if the `NexusIFrameClientProvider` is still initializing the client.
-- This hook is typically used internally by other Nexus SDK hooks, but can be useful for advanced use cases or custom implementations.
-- The client provides low-level methods for interacting with the Nexus Wallet. In most cases, it's recommended to use the higher-level hooks provided by the SDK.
+- This hook is typically used internally by other Wallet SDK hooks, but can be useful for advanced use cases or custom implementations.
+- The client provides low-level methods for interacting with the Frak Wallet. In most cases, it's recommended to use the higher-level hooks provided by the SDK.
 - Use this hook with caution and only when you need direct access to the client for operations not covered by other SDK hooks.
 
 ## Related
-- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component that supplies the Nexus client
-- [NexusClient](/wallet-sdk/api/types/NexusClient) - Type definition for the Nexus Wallet client
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component that supplies the Frak client
+- [NexusClient](/wallet-sdk/api/types/NexusClient) - Type definition for the Frak Wallet client

@@ -35,7 +35,7 @@ export function MySsoButton() {
                 }
                 disabled={isPending}
             >
-                {isPending ? "Loading..." : "Login to Nexus with SSO"}
+                {isPending ? "Loading..." : "Login to Frak with SSO"}
             </button>
         </>
     );

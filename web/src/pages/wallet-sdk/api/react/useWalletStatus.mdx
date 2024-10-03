@@ -1,13 +1,13 @@
 ---
 title: useWalletStatus
-description: React hook to monitor the Nexus Wallet connection status
+description: React hook to monitor the Frak Wallet connection status
 date: 2024-09-06
 ---
 
 # useWalletStatus
 
 ## Summary
-The `useWalletStatus` hook provides real-time updates on the connection status of the Nexus Wallet. It allows your application to react to changes in the wallet's connection state, including whether a user is connected and if there's an active interaction session.
+The `useWalletStatus` hook provides real-time updates on the connection status of the Frak Wallet. It allows your application to react to changes in the wallet's connection state, including whether a user is connected and if there's an active interaction session.
 
 ## Requirements
 - The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
@@ -59,7 +59,7 @@ type WalletNotConnected = {
 ## Notes
 - This hook automatically updates when the wallet connection status changes.
 - It provides information about the connected wallet address and the current interaction session, if any.
-- The hook uses a WebSocket connection to receive real-time updates from the Nexus Wallet.
+- The hook uses a WebSocket connection to receive real-time updates from the Frak Wallet.
 
 ## Usage Example
 
@@ -80,5 +80,5 @@ In this example, we create a component that uses the `useWalletStatus` hook to d
 
 ## Related
 - [watchWalletStatus](/wallet-sdk/api/actions/watchWalletStatus) - Core action for monitoring wallet status
-- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Frak hooks
 - [useOpenSso](/wallet-sdk/api/react/useOpenSso) - Hook for opening the SSO interface to connect a wallet
