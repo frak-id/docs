@@ -1,0 +1,95 @@
+---
+title: sendTransaction
+description: Function to send a transaction through the Nexus Wallet
+date: 2024-09-05
+---
+
+# sendTransaction
+
+## Summary
+The `sendTransaction` function initiates a transaction or a batch of transactions through the Nexus Wallet. It handles the process of creating, signing, sponsoring, and sending the transactions.
+
+## Requirements
+- An initialized `NexusClient` instance
+- User must be authenticated with the Nexus Wallet
+
+## Function Signature
+
+```ts twoslash
+// @noErrors
+import type { NexusClient, SendTransactionParams, SendTransactionReturnType } from '@frak-labs/nexus-sdk/core';
+
+declare function sendTransaction(
+  client: NexusClient,
+  params: SendTransactionParams
+): Promise<SendTransactionReturnType>;
+```
+
+### Parameters
+- `client`: `NexusClient` - An instance of the Nexus client
+- `params`: `SendTransactionParams` - Transaction parameters
+
+### Return Value
+- `Promise<SendTransactionReturnType>`: A promise that resolves with the transaction hash
+
+## SendTransactionParams
+
+The `SendTransactionParams` type is defined as:
+
+```ts twoslash
+// @noErrors
+type SendTransactionParams = {
+  tx: SendTransactionTxType | SendTransactionTxType[];
+  metadata?: ModalRpcMetadata;
+};
+
+type SendTransactionTxType = Readonly<{
+  to: Address;
+  data?: Hex;
+  value?: Hex;
+}>;
+```
+
+### Properties
+
+- `tx`: `SendTransactionTxType | SendTransactionTxType[]`
+    - A single transaction or an array of transactions to be sent.
+    - Each transaction object includes:
+        - `to`: `Address` - The recipient's address.
+        - `data` (optional): `Hex` - The transaction data (e.g., for contract interactions).
+    - `value` (optional): `Hex` - The amount of ETH to send (in wei).
+
+- `metadata` (optional): `ModalRpcMetadata`
+    - Additional metadata for customizing the transaction modal.
+
+## SendTransactionReturnType
+
+The `SendTransactionReturnType` type is defined as:
+
+```ts twoslash
+// @noErrors
+type SendTransactionReturnType = Readonly<{
+  hash: Hex;
+}>;
+```
+
+- `hash`: `Hex` - The transaction hash of the sent transaction.
+
+## Usage Example
+
+:::code-group
+```ts twoslash [sendTransaction.ts]
+// @noErrors
+// [!include ~/snippets/actions/sendTransaction.ts]
+```
+```ts twoslash [client.ts]
+// @noErrors
+// [!include ~/snippets/core/client-full.ts]
+```
+:::
+
+In this example, we import the `sendTransaction` function and the Nexus client. We then call `sendTransaction` with the necessary transaction parameters, including the recipient's address, the amount to send, and optional transaction data.
+
+## Related Types
+- [NexusClient](/wallet-sdk/api/types/NexusClient)
+- [IFrameRpcSchema](/wallet-sdk/api/types/IFrameRpcSchema)

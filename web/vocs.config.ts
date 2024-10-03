@@ -1,13 +1,13 @@
 import { defineConfig } from "vocs";
 import { businessSidebar } from "./sidebars/business.ts";
-import { nexusSdkSidebar } from "./sidebars/nexusSdk.ts";
+import { walletSdkSidebar } from "./sidebars/walletSdk.ts";
 
 export default defineConfig({
     // Title and wording
-    title: "Nexus SDK by Frak",
-    titleTemplate: "%s | Nexus SDK Documentation",
+    title: "Wallet SDK by Frak",
+    titleTemplate: "%s | Wallet SDK Documentation",
     description:
-        "Integrate seamless Web3 interactions and content access with the Nexus SDK by Frak",
+        "Integrate seamless Web3 interactions and content access with the Wallet SDK by Frak",
     // Logo
     logoUrl: "/favicons/icon.svg",
     iconUrl: "/favicons/icon-192.png",
@@ -25,9 +25,9 @@ export default defineConfig({
     // Top navigation
     topNav: [
         {
-            text: "Nexus SDK",
-            link: "/nexus-sdk/overview",
-            match: "/nexus-sdk",
+            text: "Wallet SDK",
+            link: "/wallet-sdk/overview",
+            match: "/wallet-sdk",
         },
         {
             text: "Business Dashboard",
@@ -36,7 +36,7 @@ export default defineConfig({
     ],
     // The sidebar per pages
     sidebar: {
-        "/nexus-sdk": nexusSdkSidebar,
+        "/wallet-sdk": walletSdkSidebar,
         "/business": businessSidebar,
     },
     // Some global config

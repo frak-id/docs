@@ -1,0 +1,116 @@
+---
+title: useSendTransaction
+description: React hook to send transactions through the Nexus Wallet
+date: 2024-09-06
+---
+
+# useSendTransaction
+
+## Summary
+The `useSendTransaction` hook provides a convenient way to send transactions using the Nexus Wallet. It handles the complexities of transaction submission and provides status updates throughout the process.
+
+## Requirements
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
+- A user must be connected to the Nexus Wallet.
+
+## Hook Import and Parameters
+
+```ts twoslash
+// @noErrors
+import { useSendTransactionAction } from '@frak-labs/nexus-sdk/react';
+
+const {
+  mutate,
+  mutateAsync,
+  // ... other mutation result properties
+} = useSendTransactionAction(options?: UseSendTransactionParams);
+
+type UseSendTransactionParams = {
+  mutations?: MutationOptions;
+};
+
+type MutationOptions = Omit<
+  UseMutationOptions<SendTransactionReturnType, FrakRpcError, SendTransactionParams>,
+  "mutationFn" | "mutationKey"
+>;
+```
+
+The hook accepts an optional `options` object that can include custom mutation options.
+
+## Hook Return Type
+This hook returns a `UseMutationResult` object from `@tanstack/react-query`, which includes the following key properties:
+
+- `mutate`: Function to trigger the transaction (see below for usage).
+- `mutateAsync`: Promise-based version of `mutate`.
+- `data`: The result of the transaction, of type `SendTransactionReturnType`.
+- `isLoading`: Boolean indicating if the transaction is in progress.
+- `isError`: Boolean indicating if an error occurred.
+- `error`: Error object if an error occurred.
+
+### `SendTransactionReturnType`
+
+```ts twoslash
+// @noErrors
+type SendTransactionReturnType = Readonly<{
+  hash: Hex;
+}>;
+```
+
+## Mutation Functions
+
+### `mutate`
+
+```ts twoslash
+// @noErrors
+mutate(params: SendTransactionParams, options?: MutateOptions)
+```
+
+### `mutateAsync`
+
+```ts twoslash
+// @noErrors
+mutateAsync(params: SendTransactionParams, options?: MutateOptions): Promise<SendTransactionReturnType>
+```
+
+Both functions accept a `SendTransactionParams` object:
+
+```ts twoslash
+// @noErrors
+type SendTransactionParams = {
+  tx: SendTransactionTxType | SendTransactionTxType[];
+  metadata?: ModalRpcMetadata;
+};
+
+type SendTransactionTxType = Readonly<{
+  to: Address;
+  data?: Hex;
+  value?: Hex;
+}>;
+```
+
+## Notes
+- This hook automatically handles the display of transaction modals and wallet interactions.
+- It uses the Nexus Wallet for transaction signing and submission.
+- The hook manages the transaction state, including loading and error states.
+- You can send a single transaction or batch multiple transactions together.
+
+## Usage Example
+
+## Usage Example
+
+:::code-group
+```tsx twoslash [SendTransactionButton.tsx]
+// @noErrors
+// [!include ~/snippets/react/useSendTransaction.tsx]
+```
+```tsx twoslash [Appp.tsx]
+// @noErrors
+// [!include ~/snippets/react/App.tsx]
+```
+:::
+
+In this example, we create a button component that uses the `useSendTransaction` hook to send a transaction when clicked. The component handles loading and error states, and displays the resulting transaction hash on success.
+
+## Related
+- [sendTransaction](/wallet-sdk/api/actions/sendTransaction) - Core action for sending transactions
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks

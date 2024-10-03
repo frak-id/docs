@@ -8,7 +8,7 @@ import type { PropsWithChildren } from "react";
 const queryClient = new QueryClient();
 
 const nexusConfig = {
-    walletUrl: "https://nexus.frak.id",
+    walletUrl: "https://wallet.frak.id",
     metadata: {
         name: "Your App Name",
         // Add any custom CSS if needed

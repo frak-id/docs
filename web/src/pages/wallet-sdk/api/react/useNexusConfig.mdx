@@ -1,0 +1,49 @@
+---
+title: useNexusConfig
+description: React hook to access the Nexus Wallet SDK configuration
+date: 2024-09-06
+---
+
+# useNexusConfig
+
+## Summary
+The `useNexusConfig` hook provides access to the Nexus Wallet SDK configuration within your React components. It allows you to retrieve the current configuration settings that were provided to the `NexusConfigProvider`.
+
+## Requirements
+- The app must be wrapped with `NexusConfigProvider`.
+
+## Hook Import
+
+```ts twoslash
+// @noErrors
+import { useNexusConfig } from '@frak-labs/nexus-sdk/react';
+
+const config = useNexusConfig();
+```
+
+This hook doesn't accept any parameters.
+
+## Hook Return Type
+This hook returns the `NexusWalletSdkConfig` object:
+
+```ts twoslash
+// @noErrors
+type NexusWalletSdkConfig = Readonly<{
+  walletUrl: string;
+  metadata: {
+    name: string;
+    css?: string;
+  };
+  domain: string;
+}>;
+```
+
+## Notes
+- This hook provides read-only access to the configuration.
+- It throws an error if used outside of a `NexusConfigProvider`.
+- The `domain` property is automatically set to the current domain if not explicitly provided in the configuration.
+- This hook is typically used internally by other Nexus SDK components and hooks, but can be useful when you need to access configuration details in your custom components.
+
+## Related
+- [NexusConfigProvider](/wallet-sdk/api/react/NexusConfigProvider) - Provider component that supplies the configuration
+- [NexusWalletSdkConfig](/wallet-sdk/api/types/NexusWalletSdkConfig) - Type definition for the Nexus Wallet SDK configuration

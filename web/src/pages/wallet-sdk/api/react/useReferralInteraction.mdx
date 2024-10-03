@@ -1,0 +1,91 @@
+---
+title: useReferralInteraction
+description: React hook for automatic handling of referral interactions in the Nexus ecosystem
+date: 2024-09-06
+---
+
+# useReferralInteraction
+
+## Summary
+The `useReferralInteraction` hook provides a comprehensive solution for managing referral interactions within the Nexus ecosystem. It automatically detects referral information from the URL, handles wallet connections, submits referral interactions, and updates the referral context, all while preventing self-referrals.
+
+## Requirements
+- The app must be wrapped with `NexusConfigProvider` and `NexusIFrameClientProvider`.
+- The URL may contain referral information (but it's not strictly required).
+
+## Hook Import and Parameters
+
+```ts twoslash
+// @noErrors
+import { useReferralInteraction } from '@frak-labs/nexus-sdk/react';
+
+const referralState = useReferralInteraction(options?: UseReferralInteractionOptions);
+
+type UseReferralInteractionOptions = {
+    productId?: Hex;
+    modalConfig?: DisplayModalParamsType<ModalStepTypes[]>;
+};
+```
+
+The hook accepts an optional `options` object:
+- `productId`: The product ID for the referral interaction. If not provided, it will be automatically computed from the current domain.
+- `modalConfig`: Configuration for the modal to be displayed if wallet connection is needed. If not provided, no modal will be shown to prompt for login.
+
+## Hook Return Type
+This hook returns a `ReferralState` string, which can be one of the following values:
+
+```ts twoslash
+// @noErrors
+type ReferralState =
+    | "idle"
+    | "processing"
+    | "success"
+    | "no-wallet"
+    | "no-session"
+    | "error"
+    | "no-referrer"
+    | "self-referral";
+```
+
+## Notes
+- This hook automatically manages the entire referral process with minimal input required from the developer.
+- It checks for existing referral information in the URL and handles it appropriately.
+- If `productId` is not provided, it will be automatically calculated based on the current domain. This ensures that the referral is associated with the correct product.
+- If `modalConfig` is not provided, the hook will not automatically prompt for wallet connection. It will instead return a "no-wallet" state if a wallet is required but not connected.
+- If a wallet is not connected and `modalConfig` is provided, it can automatically prompt for connection using the provided modal configuration.
+- It prevents self-referrals by checking if the referrer address matches the current wallet address.
+- The hook updates the URL with new referral information after successful processing.
+- It handles various error states and edge cases, providing clear status information through the returned state.
+
+## Internal Workflow
+1. Detects referral information from the URL context.
+2. Checks the current wallet connection status.
+3. If needed and `modalConfig` is provided, prompts for wallet connection.
+4. Computes the `productId` from the domain if not provided.
+5. Validates that the referral is not a self-referral.
+6. Submits the referral interaction to the blockchain.
+7. Updates the URL context with new referral information.
+8. Returns the current state of the referral process.
+
+## Usage Example
+
+This example demonstrates how to use the `useReferralInteraction` hook to manage referrals in a component:
+
+:::code-group
+```tsx twoslash [ReferralHandler.tsx]
+// @noErrors
+// [!include ~/snippets/react/useReferralInteraction.tsx]
+```
+```tsx twoslash [App.tsx]
+// @noErrors
+// [!include ~/snippets/react/App.tsx]
+```
+:::
+
+In this example, we create a component that uses the `useReferralInteraction` hook to automatically handle referrals. The component displays different messages based on the current referral state, providing feedback to the user about the referral process. Note that we're not providing a `productId` or `modalConfig`, so the product ID will be automatically computed from the domain, and no login modal will be displayed if the wallet is not connected.
+
+## Related
+- [useSendInteraction](/wallet-sdk/api/react/useSendInteraction) - Hook for sending interactions, used internally by useReferralInteraction
+- [useWalletStatus](/wallet-sdk/api/react/useWalletStatus) - Hook for checking wallet status, used internally by useReferralInteraction
+- [ReferralInteractionEncoder](/wallet-sdk/api/interactions/ReferralInteractionEncoder) - Utility for encoding referral interactions
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component required for using Nexus hooks

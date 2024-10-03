@@ -1,0 +1,49 @@
+---
+title: useNexusClient
+description: React hook to access the Nexus Wallet client instance
+date: 2024-09-06
+---
+
+# useNexusClient
+
+## Summary
+The `useNexusClient` hook provides access to the current Nexus Wallet client instance within your React components. This client instance is used to interact with the Nexus Wallet and perform various operations.
+
+## Requirements
+- The app must be wrapped with `NexusIFrameClientProvider`.
+
+## Hook Import
+
+```ts twoslash
+// @noErrors
+import { useNexusClient } from '@frak-labs/nexus-sdk/react';
+
+const client = useNexusClient();
+```
+
+This hook doesn't accept any parameters.
+
+## Hook Return Type
+This hook returns the `NexusClient` object or `undefined` if the client is not yet initialized:
+
+```ts twoslash
+// @noErrors
+type NexusClient = {
+  config: NexusWalletSdkConfig;
+  waitForConnection: Promise<boolean>;
+  waitForSetup: Promise<void>;
+  request: RequestFn<IFrameRpcSchema>;
+  listenerRequest: ListenerRequestFn<IFrameRpcSchema>;
+  destroy: () => Promise<void>;
+};
+```
+
+## Notes
+- The returned client may be `undefined` if the `NexusIFrameClientProvider` is still initializing the client.
+- This hook is typically used internally by other Nexus SDK hooks, but can be useful for advanced use cases or custom implementations.
+- The client provides low-level methods for interacting with the Nexus Wallet. In most cases, it's recommended to use the higher-level hooks provided by the SDK.
+- Use this hook with caution and only when you need direct access to the client for operations not covered by other SDK hooks.
+
+## Related
+- [NexusIFrameClientProvider](/wallet-sdk/api/react/NexusIFrameClientProvider) - Provider component that supplies the Nexus client
+- [NexusClient](/wallet-sdk/api/types/NexusClient) - Type definition for the Nexus Wallet client

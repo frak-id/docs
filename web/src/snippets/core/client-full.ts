@@ -6,7 +6,7 @@ import {
 import type { NexusClient } from "@frak-labs/nexus-sdk/core";
 
 const config: NexusWalletSdkConfig = {
-    walletUrl: "https://nexus.frak.id",
+    walletUrl: "https://wallet.frak.id",
     metadata: {
         name: "My app title",
     },
