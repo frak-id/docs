@@ -44,7 +44,11 @@ export const walletSdkSidebar = [
             },
             {
                 text: "Server-side",
-                link: "/wallet-sdk/integration-guide/server-side",
+                link: "/wallet-sdk/integration-guide/server",
+            },
+            {
+                text: "Shopify",
+                link: "/wallet-sdk/integration-guide/shopify",
             },
         ],
     },

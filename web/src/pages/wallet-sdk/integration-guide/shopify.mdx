@@ -1,0 +1,132 @@
+---
+title: Shopify Integration Guide
+description: Learn how to integrate the Frak SDK into your Shopify store for referral acquisition and blockchain-enabled campaigns.
+date: 2024-10-16
+---
+import { Callout } from 'vocs/components'
+
+# Shopify Integration Guide
+
+This guide will walk you through integrating the Frak SDK into your Shopify store to enable referral acquisition using biometry and blockchain technology. By the end, your store will be set up to track referrals and purchases, and (optionally) run campaigns.
+
+## Prerequisites
+
+Before you begin, ensure that:
+
+1. You have access to the [Frak business dashboard](https://business.frak.id/).
+2. You have admin access to your Shopify store.
+
+## Step 1: Product Registration
+
+The first step in integrating the Frak SDK with your Shopify store is to register your product on the Frak business dashboard. This process enables purchase tracking and referral acquisition for your store.
+
+### 1.1: How to register your product
+
+1. Go to the [Frak Product Registration page](https://docs.frak.id/business/registration).
+2. Fill in your product details, such as product name and description.
+3. **Important:** In the product setup, be sure to check the following product types to enable all necessary features:
+- `webshop` (to enable webshop-related campaigns, like store opening events)
+- `referral` (to enable referral-based campaigns)
+- `purchase` (to enable purchase-related campaigns)
+
+<Callout type="note">
+    These product types are essential to activate purchase and referral tracking in your store. Without them, some features of the Frak SDK may not function properly.
+</Callout>
+
+4. Once your product is registered, go to the product’s settings page.
+
+### 1.2: Verifying the Product Setup
+
+1. On the product's settings page, look for the **Purchase Tracker** section.
+- If you see this section, your product has been set up correctly.
+- If the **Purchase Tracker** section is missing, it means the product types were not configured correctly during registration.
+
+2. To fix this, go to the **Details of the product** section on the edit page:
+- Update the product types to ensure `webshop`, `referral`, and `purchase` are selected.
+- Be sure to save and validate the product modification to apply the changes.
+
+<Callout type="note">
+    If you need further assistance with product setup or modifications, please refer to the [Frak Registration Guide](https://docs.frak.id/business/registration).
+</Callout>
+
+
+## Step 2: Setting Up the Purchase Oracle Link
+
+Now that your product is registered, you need to set up the Purchase Oracle to enable real-time communication between your Shopify store and the Frak platform.
+
+### 2.1: Enabling the Purchase Oracle in the Frak Dashboard
+
+The Purchase Oracle is a feature that allows Frak to track purchases in your Shopify store. You need to ensure it is enabled before proceeding with the Shopify setup.
+
+1. **Log in to the [Frak Business Dashboard](https://business.frak.id).**
+2. Go to the **Product Settings** for the product you just registered.
+3. Scroll down to the **Purchase Tracker** section (the content might be hidden in an accordion; click on the section to expand it).
+4. Under the **Oracle** subsection:
+- Ensure that the Oracle status says `Allowed`.
+- If it says `Not Allowed`, click the button below to allow it.
+
+<Callout type="info">
+    The Oracle is disabled by default after product setup, so you may need to manually enable it. If you cannot enable it, contact the product administrator for assistance.
+</Callout>
+
+---
+
+### 2.2: Finding and Setting the Webhook Signing Key
+
+Now that the Purchase Oracle is enabled, you need to connect it with Shopify by setting up a webhook. But first, you need to set a **Webhook Signing Key**.
+
+1. **Go to your Shopify admin panel.**
+(Log in to your Shopify account, then go to **Settings -> Notifications -> Webhooks**)
+
+2. **Copy the Webhook Signing Key:**
+- In the Webhooks section, find the message that says "Your webhook will be signed with `xxxxxx`".
+- Copy the `xxxxxx` value (the signing key).
+
+3. **Go back to the Frak Business Dashboard.**
+- In the **Purchase Tracker -> Webhook Status** section, paste the signing key into the **Webhook Signing Key** field.
+- Copy the **Webhook URL** from this section before moving to the next step.
+- Click the **Setup Webhook** button to save your changes.
+
+<Callout type="info">
+    Make sure to copy the webhook URL from the Frak dashboard during this step so you can use it in the next step.
+</Callout>
+
+### 2.3: Setting Up the Webhook in Shopify
+
+Finally, you’ll create a webhook in Shopify to send order updates to Frak.
+
+1. **In your Shopify admin panel**, go to **Settings -> Notifications -> Webhooks** again.
+
+2. **Click on "Create Webhook":**
+- **Event type:** Choose **Order updated** (this ensures that any updates to an order are sent to Frak).
+- **Format:** Choose **JSON**.
+- **API version:** Select **2024-10**.
+- **URL:** Paste the URL you copied in Step 2.2 into the URL field in Shopify.
+
+3. **Click "Save"** to create the webhook.
+
+Everything should now be set up. Your Shopify store will automatically send order updates to the Frak platform, allowing it to track and manage purchases for your campaigns.
+
+## Step 3: Initialize the Frak SDK in the Shopify Theme
+
+Next, you need to integrate the Frak SDK into your Shopify theme. This will enable the tracking of purchases and referral data.
+
+### How to install and initialize the SDK
+
+TODO
+
+## Step 4 (Optional): Setup Pixel Tracking for Purchases
+
+TODO
+
+## Step 5 (Optional): Enable Referral Campaigns
+
+To enable referral-based campaigns, you can add a listener for referral URLs and display a sharing button on your website.
+
+### How to listen for referral
+
+TODO
+
+### Adding a sharing button
+
+TODO
