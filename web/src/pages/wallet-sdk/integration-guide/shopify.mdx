@@ -140,9 +140,9 @@ Choose `js` extension and a name for the file (`frak-setup.js`) and paste the fo
 
 // [!include ~/snippets/integration/frak-setup.js:shared-modal-config]
 
-// [!include ~/snippets/integration/frak-setup.js:watch-wallet-status]
-
 // [!include ~/snippets/integration/frak-setup.js:modal-share]
+
+// [!include ~/snippets/integration/frak-setup.js:watch-wallet-status]
 
 // [!include ~/snippets/integration/frak-setup.js:setup-referral]
 
@@ -151,7 +151,9 @@ Choose `js` extension and a name for the file (`frak-setup.js`) and paste the fo
 // [!include ~/snippets/integration/frak-setup.js:DOMContentLoaded]
 ```
 
-You have the possibility to add **metadata** by following this page: [Full Flow](/wallet-sdk/api/actions/displayModal#full-flow).
+You have the possibility to customise the **metadata** of each metadata by following this page: [Full Flow](/wallet-sdk/api/actions/displayModal#full-flow).
+
+You can also check out every possible params for the modal and each steps on the [Type definition](/wallet-sdk/api/types/DisplayModalType).
 
 ## Step 4 (Optional): Setup Pixel Tracking for Purchases
 
@@ -194,23 +196,7 @@ analytics.subscribe('checkout_completed', async (event) => {
 
 ## Step 5 (Optional): Enable Referral Campaigns
 
-To enable referral-based campaigns, you can add a listener for referral URLs and display a sharing button on your website.
-
-### How to listen for referral
-
-In your `frak-setup.js` file, add `rewardModalConfig` object to configure the referral modal:
-
-```tsx twoslash [frak-setup.js]
-// @noErrors
-// [!include ~/snippets/integration/frak-setup.js:reward-modal-config]
-```
-
-Then, add the highlighted following code snippet to listen for referral:
-
-```tsx twoslash [frak-setup.js]
-// @noErrors
-// [!include ~/snippets/integration/frak-setup.js:DOMContentLoaded-referral]
-```
+To enable referral-based campaigns, you can add a sharing button on your website.
 
 ### Adding a sharing button
 
@@ -229,25 +215,11 @@ Then, add the highlighted following code snippet to listen for referral:
 ```html
 <div id="nexus-share-button">
     <button type="button" onClick="window.FrakSetup.modalShare()" class="product-form__submit button button--full-width button--primary">
-        <span>Share and earn</span>
+        <span>
+            Share and earn
+        </span>
     </button>
 </div>
 ```
 
 7. Click on `Save` to save the changes.
-
-8. Go back to edit `frak-setup.js` file and add the following code snippet to handle the sharing button click:
-
-```tsx twoslash [frak-setup.js]
-// @noErrors
-// [!include ~/snippets/integration/frak-setup.js:shared-modal-config]
-
-// [!include ~/snippets/integration/frak-setup.js:modal-share]
-```
-
-9. Modify `window.FrakSetup` to include `modalShare`:
-
-```javascript
-// [!code word:modalShare]
-window.FrakSetup = { frakConfig, modalShare };
-```
