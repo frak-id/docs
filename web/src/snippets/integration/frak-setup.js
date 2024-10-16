@@ -8,16 +8,10 @@ const frakConfig = {
 };
 // [!endregion config]
 
-// [!region modal-config]
-const modalConfig = {
+// [!region reward-modal-config]
+const rewardModalConfig = {
     steps: {
         login: {
-            metadata: {
-                description:
-                    "I want to receive my gains directly in my wallet by sharing this product",
-                primaryActionText: "Create my wallet in 30 sec",
-                secondaryActionText: "I already have a wallet",
-            },
             allowSso: true,
             ssoMetadata: {
                 logoUrl: "https://your-domain.com/assets/logo.svg",
@@ -25,22 +19,45 @@ const modalConfig = {
             },
         },
         openSession: {
-            metadata: {
-                description:
-                    "I want to receive my gains directly in my wallet by sharing this product",
-            },
         },
         final: {
-            metadata: {
-                description:
-                    "Your wallet has been created to receive your reward for purchases.\n" +
-                    "To find your wallet, go to [wallet.frak.id](https://wallet.frak.id).",
-            },
             action: { key: "reward" },
         },
     },
+    metadata: {
+        lang: "fr",
+    },
 };
-// [!endregion modal-config]
+// [!endregion reward-modal-config]
+
+// [!region shared-modal-config]
+const sharedModalConfig = {
+    steps: {
+        login: {
+            allowSso: true,
+            ssoMetadata: {
+                logoUrl: "https://your-domain.com/assets/logo.svg",
+                homepageLink: "https://your-domain.com/",
+            },
+        },
+        openSession: {
+        },
+        final: {
+            action: {
+                key: "sharing",
+                options: {
+                    popupTitle: "Share this with your friends",
+                    text: `Discover this awesome article from ${window.FrakSetup.frakConfig.metadata.name}!`,
+                    link: window.location.href,
+                },
+            },
+        },
+    },
+    metadata: {
+        lang: "fr",
+    },
+};
+// [!endregion shared-modal-config]
 
 // [!region setup-client]
 function setupFrakClient() {
@@ -63,7 +80,7 @@ function setupFrakClient() {
     });
 }
 
-window.FrakSetup = { frakConfig };
+window.FrakSetup = { frakConfig, modalShare };
 // [!endregion setup-client]
 
 // [!region watch-wallet-status]
@@ -83,26 +100,7 @@ function watchWalletStatus() {
 
 // [!region modal-share]
 function modalShare() {
-    const configShare = {
-        ...modalConfig,
-        steps: {
-            ...modalConfig.steps,
-            final: {
-                metadata: {
-                    description: "Get rewarded for sharing with your friends",
-                },
-                action: {
-                    key: "sharing",
-                    options: {
-                        popupTitle: "Share this with your friends",
-                        text: `Discover this awesome article from ${window.FrakSetup.frakConfig.metadata.name}!`,
-                        link: window.location.href,
-                    },
-                },
-            },
-        },
-    };
-    window.NexusSDK.displayModal(window.FrakSetup.frakClient, configShare);
+    window.NexusSDK.displayModal(window.FrakSetup.frakClient, sharedModalConfig);
 }
 // [!endregion modal-share]
 
@@ -117,14 +115,25 @@ document.addEventListener("DOMContentLoaded", () => {
         window.FrakSetup.frakClient = frakClient;
 
         watchWalletStatus();
+        setupReferral();
     });
 });
 // [!endregion DOMContentLoaded]
 
+// [!region setup-referral]
+function setupReferral() {
+    window.NexusSDK.referralInteraction(window.FrakSetup.frakClient, {
+        rewardModalConfig,
+    }).then((referral) => {
+        console.log("referral result", referral);
+    });
+}
+// [!endregion setup-referral]
+
 // [!region DOMContentLoaded-referral]
 function setupReferral() { // [!code focus]
     window.NexusSDK.referralInteraction(window.FrakSetup.frakClient, { // [!code focus]
-        modalConfig, // [!code focus]
+        rewardModalConfig, // [!code focus]
     }).then((referral) => { // [!code focus]
         console.log("referral result", referral); // [!code focus]
     }); // [!code focus]
