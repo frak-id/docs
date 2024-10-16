@@ -157,11 +157,10 @@ Choose `js` extension and a name for the file (`frak-setup.js`) and paste the fo
 
 ```javascript
 analytics.subscribe('checkout_completed', async (event) => {
-  const wallet = await browser.sessionStorage.getItem("frak-wallet-address");
+  const interactionToken = await browser.sessionStorage.getItem("frak-wallet-interaction-token");
   const checkout = event.data.checkout;
 
   const payload = {
-    wallet,
     customerId: checkout.order.customer.id,
     orderId: checkout.order.id,
     token: checkout.token
@@ -171,7 +170,8 @@ analytics.subscribe('checkout_completed', async (event) => {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-wallet-sdk-auth': interactionToken
     },
     body: JSON.stringify(payload)
   });
