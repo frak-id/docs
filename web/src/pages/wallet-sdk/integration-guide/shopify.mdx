@@ -113,11 +113,74 @@ Next, you need to integrate the Frak SDK into your Shopify theme. This will enab
 
 ### How to install and initialize the SDK
 
-TODO
+1. **Go to your Shopify admin panel.**
+
+2. Search for `Theme` in **Search** input on top of the screen and choose `Themes` from the dropdown.
+
+3. On your **Current theme**, click on `...` button and choose `Edit code`.
+
+4. In the `layout` section (in left column), find the `theme.liquid` file and open it.
+
+5. In the `<head>` section, add the following code snippet:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@frak-labs/nexus-sdk@latest/dist/bundle/bundle.js" defer="defer"></script>
+<script src="{{ 'frak-setup.js' | asset_url }}" defer="defer"></script>
+```
+
+6. In the `assets` section (in left column), click on `Add a new asset` and then on `Create a blank file`.
+
+Choose `js` extension and a name for the file (`frak-setup.js`) and paste the following code snippet:
+
+```tsx twoslash [frak-setup.js]
+// @noErrors
+// [!include ~/snippets/integration/frak-setup.js:config]
+
+// [!include ~/snippets/integration/frak-setup.js:setup-client]
+
+// [!include ~/snippets/integration/frak-setup.js:watch-wallet-status]
+
+// [!include ~/snippets/integration/frak-setup.js:DOMContentLoaded]
+```
 
 ## Step 4 (Optional): Setup Pixel Tracking for Purchases
 
-TODO
+1. **In your Shopify admin panel**, go to **Settings -> Customer events**.
+
+2. Click on `Add custom pixel`.
+
+3. In the **Pixel name** field, enter a name that you like (for example `frak_purchase`) and validate by clicking on `Add pixel`.
+
+4. In **Permission** tab, select `Not required` radio button.
+
+5. In **Code** field, add the following code snippet:
+
+```javascript
+analytics.subscribe('checkout_completed', async (event) => {
+  const wallet = await browser.sessionStorage.getItem("frak-wallet-address");
+  const checkout = event.data.checkout;
+
+  const payload = {
+    wallet,
+    customerId: checkout.order.customer.id,
+    orderId: checkout.order.id,
+    token: checkout.token
+  };
+
+  fetch('https://backend.frak.id/interactions/listenForPurchase', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+});
+```
+
+6. Click on `Save` on top of the page to save the pixel.
+
+7. Click on `Connect` to connect the pixel to your store.
 
 ## Step 5 (Optional): Enable Referral Campaigns
 
@@ -125,8 +188,54 @@ To enable referral-based campaigns, you can add a listener for referral URLs and
 
 ### How to listen for referral
 
-TODO
+In your `frak-setup.js` file, add `modalConfig` object to configure the referral modal:
+
+```tsx twoslash [frak-setup.js]
+// @noErrors
+// [!include ~/snippets/integration/frak-setup.js:modal-config]
+```
+
+Then, add the highlighted following code snippet to listen for referral:
+
+```tsx twoslash [frak-setup.js]
+// @noErrors
+// [!include ~/snippets/integration/frak-setup.js:DOMContentLoaded-referral]
+```
 
 ### Adding a sharing button
 
-TODO
+1. **Go to your Shopify admin panel.**
+
+2. Search for `Theme` in **Search** input on top of the screen and choose `Themes` from the dropdown.
+
+3. On your **Current theme**, click on `Customize` button.
+
+4. On top of the screen, click on `Home page` dropdown and go to **Products -> Default product**.
+
+5. On left column, below `Description` click on `Add block` and choose `Custom Liquid`.
+
+6. Paste the following code snippet into **Liquid code** field on the right:
+
+```html
+<div id="nexus-share-button">
+    <button type="button" onClick="window.FrakSetup.modalShare()" class="product-form__submit button button--full-width button--primary">
+        <span>Share with Frak</span>
+    </button>
+</div>
+```
+
+7. Click on `Save` to save the changes.
+
+8. Go back to edit `frak-setup.js` file and add the following code snippet to handle the sharing button click:
+
+```tsx twoslash [frak-setup.js]
+// @noErrors
+// [!include ~/snippets/integration/frak-setup.js:modal-share]
+```
+
+9. Modify `window.FrakSetup` to include `modalShare`:
+
+```javascript
+// [!code word:modalShare]
+window.FrakSetup = { frakConfig, modalShare };
+```
