@@ -47,7 +47,7 @@ const sharedModalConfig = {
                 key: "sharing",
                 options: {
                     popupTitle: "Share this with your friends",
-                    text: `Discover this awesome article from ${window.FrakSetup.frakConfig.metadata.name}!`,
+                    text: `Discover this awesome article from ${frakConfig.metadata.name}!`,
                     link: window.location.href,
                 },
             },
