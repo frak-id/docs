@@ -22,9 +22,8 @@ The first step in integrating the Frak SDK with your Shopify store is to registe
 
 ### 1.1: How to register your product
 
-1. Go to the [Frak Product Registration page](https://docs.frak.id/business/registration).
-2. Fill in your product details, such as product name and description.
-3. **Important:** In the product setup, be sure to check the following product types to enable all necessary features:
+1. Follow the [Frak Product Registration documentation](/business/product/list).
+2. **Important:** In the product setup, be sure to check the following product types to enable all necessary features:
 - `webshop` (to enable webshop-related campaigns, like store opening events)
 - `referral` (to enable referral-based campaigns)
 - `purchase` (to enable purchase-related campaigns)
@@ -167,7 +166,7 @@ You can also check out every possible params for the modal and each steps on the
 
 5. In **Code** field, add the following code snippet:
 
-```javascript
+```javascript [Custom Pixel]
 analytics.subscribe('checkout_completed', async (event) => {
   const interactionToken = await browser.sessionStorage.getItem("frak-wallet-interaction-token");
   const checkout = event.data.checkout;
