@@ -166,7 +166,7 @@ You can also check out every possible params for the modal and each steps on the
 
 5. In **Code** field, add the following code snippet:
 
-```javascript
+```javascript [Custom Pixel]
 analytics.subscribe('checkout_completed', async (event) => {
   const interactionToken = await browser.sessionStorage.getItem("frak-wallet-interaction-token");
   const checkout = event.data.checkout;
