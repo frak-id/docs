@@ -3,15 +3,33 @@
  */
 export const businessSidebar = [
     {
-        text: "Introduction ad manager",
-        link: "/business"
+        text: "Introduction",
+        link: "/business",
+        items: [
+            { text: "Getting Started", link: "/business/getting-started" },
+            { text: "Keywords", link: "/business/keywords" },
+        ],
     },
     {
-        text: "Getting started",
-        link: "/business/getting-started"
+        text: "Product",
+        items: [
+            {
+                text: "List new product",
+                link: "/business/product/list",
+            },
+            {
+                text: "Verify domain name",
+                link: "/business/product/verify",
+            },
+        ],
     },
     {
-        text: "Keywords",
-        link: "/business/keywords"
-    }
+        text: "Campaign",
+        items: [
+            {
+                text: "Create",
+                link: "/business/campaign/create",
+            },
+        ],
+    },
 ];
