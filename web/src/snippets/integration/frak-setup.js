@@ -99,7 +99,7 @@ function watchWalletStatus() {
 // Setup the referral listener on the Frak client
 function setupReferral() {
     window.NexusSDK.referralInteraction(window.FrakSetup.frakClient, {
-        rewardModalConfig,
+        modalConfig: rewardModalConfig,
     }).then((referral) => {
         console.log("referral result", referral);
     });
