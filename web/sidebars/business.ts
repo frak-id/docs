@@ -21,6 +21,10 @@ export const businessSidebar = [
                 text: "Verify domain name",
                 link: "/business/product/verify",
             },
+            {
+                text: "Configure your product",
+                link: "/business/product/config",
+            },
         ],
     },
     {

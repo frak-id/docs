@@ -15,7 +15,5 @@
         "sst": "2.43.4",
         "typescript": "^5.6.3"
     },
-    "workspaces": [
-        "web/"
-    ]
+    "workspaces": ["web/"]
 }

@@ -1,0 +1,157 @@
+---
+title: How to Configure Your Product in Frak Ads Manager
+description: A guide to managing your product configuration in Frak Ads Manager.
+date: 2024-10-24
+---
+import { Callout } from 'vocs/components'
+
+# How to Configure Your Product
+
+To effectively run advertising campaigns, you need to have your product properly configured. This page will guide you through the steps to manage product funds, add or remove team members, and edit your product's configuration.
+
+## Product Configuration Card
+
+On your Frak Ads Manager dashboard, you'll see a product card representing your product's current configuration. This card contains the product name and quick-access icons for configuration management.
+
+<img src="/img/business/product/config/product-card.png" alt="Product Card" height="400"/>
+
+From this card, you can access the three main configuration areas by clicking the corresponding icons:
+
+1. **Manage Product Funds**: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14h.01"></path><path d="M7 7h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14"></path></svg>
+2. **Manage Product Members**: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+3. **Edit Product Configuration**: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+
+Clicking on any of these icons will take you to the respective section, where you can perform detailed configurations for your product.
+
+## Accessing the Configuration Sections
+
+You can also access these sections directly from the product card in the dashboard. Continue reading to learn how to manage each aspect of your product.
+
+## Manage Product Funds
+
+In this section, you can manage the funds associated with your product's advertising campaigns. You’ll find key information about your product’s balance, its funding status, and options to add more funds when needed.
+
+### Balance Information
+
+Under the funding status toggle, you’ll find detailed **Balance information**, which includes:
+- **Current balance**: This shows the remaining funds available for your product's campaigns, both in EUR and USDC.
+- **Total distributed**: The total amount of funds that have been distributed across campaigns.
+- **Total claimed**: The total funds that have been claimed by the end users to date.
+
+Here’s an example of what this section looks like:
+<img src="/img/business/product/config/product-funding.png" alt="Product Balance Information" width="500"/>
+
+### Campaigns Funding Status
+
+At the top, you'll see the **Campaigns funding status**, which indicates whether the campaigns linked to your product are actively using funds or not. There are two possible states:
+
+1. **Active**: If the toggle is switched on, your campaigns will continue to run using the available balance.
+<img src="/img/business/product/config/product-funding-toggle-active.png" alt="Campaigns Funding Active" width="200"/>
+
+2. **Inactive**: If the toggle is switched off, the campaigns will stop using the product's balance, pausing all associated advertising activities.
+<img src="/img/business/product/config/product-funding-toggle-inactive.png" alt="Campaigns Funding Inactive" width="200"/>
+
+
+### Adding Funds
+
+If you need to add more funds to your product’s balance, simply click on the **Add funds** link. This will redirect you to the checkout page, where you can complete the transaction.
+<Callout type="info">
+    After you add funds, the payment may take up to **5 business days** to appear in your balance information.
+</Callout>
+
+## Manage Product Members
+
+In this section, you can manage your team by adding new members, updating their permissions, or removing them. To ensure security, all member-related actions require biometric confirmation using the **Frak Wallet**.
+
+### Team Management Overview
+
+Your product team consists of multiple roles, each with different permissions. The roles available are:
+
+- **Owner**: The initial owner of the product. Can perform all actions on the product.
+- **Administrator**: Can do everything except updating the product's name and types.
+- **Campaign Manager**: Responsible for managing advertising campaigns (create, pause, delete campaigns).
+- **Interaction Manager**: Handles interactions contracts.
+- **Purchase Oracle Updater**: An internal role that can be configured through the "Purchase Oracle" section. This role requires synchronization and pre-signed interactions for purchase-related operations.
+
+
+### Team Overview
+
+Below is an example of how the **Team Overview** looks:
+<img src="/img/business/product/config/product-members.png" alt="Manage Your Team" width="500"/>
+
+In this view, you can see:
+- **Wallet Address**: The Frak Wallet address of each member.
+- **Permissions**: The roles assigned to each member.
+- **Actions**: The edit and delete icons to update permissions or remove a member.
+
+### Adding a New Member
+
+To add a new team member:
+
+1. **Enter the Member Wallet**: This must be a valid Frak Wallet address, which can be found on the [Frak Wallet settings page](https://wallet.frak.id/settings).
+
+2. **Verify the Wallet**: After entering the wallet address, click **Verify** to ensure it’s valid.
+
+3. **Choose Permissions**: Assign the appropriate permissions to the new member by selecting one or more roles.
+
+4. **Confirm Addition**: Once all details are correct, confirm the action using your biometric authentication.
+
+Here’s what the member addition form looks like:
+<img src="/img/business/product/config/product-members-add.png" alt="Add Member" width="500"/>
+
+### Updating Member Permissions
+
+If you need to change a member's permissions, click the edit icon next to the member's entry in the team list. You can then adjust their roles and permissions by selecting or deselecting options. Again, biometric authentication is required to confirm changes.
+
+Example of updating a member's permissions:
+<img src="/img/business/product/config/product-members-update.png" alt="Update Member Permissions" width="500"/>
+
+### Removing a Member
+
+To remove a team member, click the trash icon next to their entry in the team list. After confirming the removal and authenticating with your biometrics, the member will be removed from the team.
+
+## Edit Product Configuration
+
+This section allows you to modify your product's name and types, manage purchase-related settings (if applicable), and configure interactions.
+
+### Editing Product Name and Types
+
+To edit your product's **name** or **types**, follow these steps:
+
+1. Click on the pencil icon next to the field you want to edit (either the product name or the product type).
+2. Make the necessary changes in the input fields.
+3. Click **Validate** to confirm the changes or **Discard Changes** to cancel the update.
+
+<img src="/img/business/product/config/product-edit-section-details.png" alt="Edit Product Details" width="500"/>
+
+### Purchase Tracker (Optional)
+
+This section is only displayed if the **Purchase** type is selected for your product.
+
+1. **Oracle Status**: This shows the status of your managed oracle validator, which is linked to your payment provider API (e.g., Shopify or Stripe).
+ - If the oracle is **not allowed**, we cannot validate purchases on your behalf.
+ - Changing the oracle status requires biometric validation for security.
+
+2. **Webhook Setup**: The webhook ensures that purchases made on your website are tracked and validated.
+ - **Webhook URL**: Copy this URL and configure it in your payment provider’s webhook settings (e.g., Shopify or Stripe).
+ - **Webhook Signing Key**: Once the webhook is configured, enter the signing key provided by your payment provider to verify that the data we receive is secure and signed.
+
+Once both the Oracle and Webhook sections are set up, purchases made by users on your website will be validated and tracked on the blockchain.
+
+<img src="/img/business/product/config/product-edit-section-purchase.png" alt="Purchase Tracker" width="500"/>
+
+### Interaction Settings
+
+This section contains information about user interaction validation on-chain.
+
+1. **Interaction Contract**: If a contract is already deployed, its status and address will be displayed. If no contract is deployed, you will have the option to deploy one. This contract receives and validates user interactions on-chain.
+
+2. **Managed Interaction Validator**: This simplifies integration by allowing us to handle the validation of user interactions without requiring you to generate signatures.
+ - If the validator is **not allowed**, you'll need to submit signed interactions via the SDK.
+ - If the validator is **allowed**, we handle validation, anti-cheat mechanisms, and signing on your behalf, ensuring secure user interactions.
+
+All actions in this section also require biometric verification for security.
+
+<img src="/img/business/product/config/product-edit-section-interaction.png" alt="Interaction Settings" width="500"/>
+
+
