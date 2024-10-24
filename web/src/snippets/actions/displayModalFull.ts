@@ -25,17 +25,18 @@ const results = await displayModal(nexusClient, {
                 },
             },
             metadata: {
+                // Modal title on desktop
                 title: "Login on My-App",
-                description: "Please login to continue",
+                // Modal description (and yep it accept markdown)
+                description: "## Please login to continue",
+                // Primary button text
+                primaryActionText: "Register",
+                // Secondary button text
+                secondaryActionText: "Login",
             },
         },
         // Simple session opening, with no customisation
-        openSession: {
-            metadata: {
-                title: "Open a session",
-                description: "Please open a session to continue",
-            },
-        },
+        openSession: {},
         // Siwe authentication
         siweAuthenticate: {
             siwe: {
@@ -47,6 +48,7 @@ const results = await displayModal(nexusClient, {
             metadata: {
                 title: "Authenticate with SIWE",
                 description: "Please authenticate with SIWE to continue",
+                primaryActionText: "Authenticate",
             },
         },
         // Send batched transaction
@@ -61,19 +63,31 @@ const results = await displayModal(nexusClient, {
             },
         },
         // Success message with sharing options
-        success: {
-            sharing: {
-                text: "Discover my super app website",
-                link: "https://my-app.com",
+        final: {
+            action: {
+                key: "sharing",
+                options: {
+                    popupTitle: "Share the app",
+                    text: "Discover my super app website",
+                    link: "https://my-app.com",
+                },
+            },
+            dismissedMetadata: {
+                title: "Dismiss",
+                description: "You won't be rewarded for this sharing action",
             },
         },
     },
     metadata: {
-        context: "My-app overkill flow",
+        // Header of desktop modals
         header: {
             title: "My-App",
             icon: "https://my-app.com/logo.png",
         },
+        // Context that will be present in every modal steps
+        context: "My-app overkill flow",
+        // Language of the modal
+        lang: "fr",
     },
 });
 

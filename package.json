@@ -11,9 +11,9 @@
         "preinstall": "npx only-allow pnpm"
     },
     "devDependencies": {
-        "@biomejs/biome": "1.8.3",
+        "@biomejs/biome": "1.9.3",
         "sst": "2.43.4",
-        "typescript": "^5.5.4"
+        "typescript": "^5.6.3"
     },
     "workspaces": ["web/"]
 }

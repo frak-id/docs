@@ -1,0 +1,49 @@
+---
+title: Product Edition in Frak Ads Manager
+description: Update product configuration
+date: 2024-10-24
+---
+
+# Edit Product Configuration
+
+This section allows you to modify your product's name and types, manage purchase-related settings (if applicable), and configure interactions.
+
+## Editing Product Name and Types
+
+To edit your product's **name** or **types**, follow these steps:
+
+1. Click on the pencil icon next to the field you want to edit (either the product name or the product type).
+2. Make the necessary changes in the input fields.
+3. Click **Validate** to confirm the changes or **Discard Changes** to cancel the update.
+
+<img src="/img/business/product/config/product-edit-section-details.png" alt="Edit Product Details" width="500"/>
+
+## Purchase Tracker (Optional)
+
+This section is only displayed if the **Purchase** type is selected for your product.
+
+1. **Oracle Status**: This shows the status of your managed oracle validator, which is linked to your payment provider API (e.g., Shopify or Stripe).
+ - If the oracle is **not allowed**, we cannot validate purchases on your behalf.
+ - Changing the oracle status requires biometric validation for security.
+
+2. **Webhook Setup**: The webhook ensures that purchases made on your website are tracked and validated.
+ - **Webhook URL**: Copy this URL and configure it in your payment provider’s webhook settings (e.g., Shopify or Stripe).
+ - **Webhook Signing Key**: Once the webhook is configured, enter the signing key provided by your payment provider to verify that the data we receive is secure and signed.
+
+Once both the Oracle and Webhook sections are set up, purchases made by users on your website will be validated and tracked on the blockchain.
+
+<img src="/img/business/product/config/product-edit-section-purchase.png" alt="Purchase Tracker" width="500"/>
+
+## Interaction Settings
+
+This section contains information about user interaction validation on-chain.
+
+1. **Interaction Contract**: If a contract is already deployed, its status and address will be displayed. If no contract is deployed, you will have the option to deploy one. This contract receives and validates user interactions on-chain.
+
+2. **Managed Interaction Validator**: This simplifies integration by allowing us to handle the validation of user interactions without requiring you to generate signatures.
+ - If the validator is **not allowed**, you'll need to submit signed interactions via the SDK.
+ - If the validator is **allowed**, we handle validation, anti-cheat mechanisms, and signing on your behalf, ensuring secure user interactions.
+
+All actions in this section also require biometric verification for security.
+
+<img src="/img/business/product/config/product-edit-section-interaction.png" alt="Interaction Settings" width="500"/>

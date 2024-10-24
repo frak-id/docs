@@ -13,12 +13,11 @@ const results = await displayModal(nexusClient, {
         login: { allowSso: false },
         // Simple session opening, with no customisation
         openSession: {},
-        // Success message with sharing options
-        success: {
-            sharing: {
-                text: "Discover my super app website",
-                link: "https://my-app.com",
-            },
+        // Success message
+        final: {
+            action: { key: "reward" },
+            // Skip this step, it will be only displayed in the stepper within the modal
+            autoSkip: true,
         },
     },
 });

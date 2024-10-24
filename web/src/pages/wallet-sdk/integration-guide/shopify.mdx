@@ -1,0 +1,224 @@
+---
+title: Shopify Integration Guide
+description: Learn how to integrate the Frak SDK into your Shopify store for referral acquisition and blockchain-enabled campaigns.
+date: 2024-10-16
+---
+import { Callout } from 'vocs/components'
+
+# Shopify Integration Guide
+
+This guide will walk you through integrating the Frak SDK into your Shopify store to enable referral acquisition using biometry and blockchain technology. By the end, your store will be set up to track referrals and purchases, and (optionally) run campaigns.
+
+## Prerequisites
+
+Before you begin, ensure that:
+
+1. You have access to the [Frak business dashboard](https://business.frak.id/).
+2. You have admin access to your Shopify store.
+
+## Step 1: Product Registration
+
+The first step in integrating the Frak SDK with your Shopify store is to register your product on the Frak business dashboard. This process enables purchase tracking and referral acquisition for your store.
+
+### 1.1: How to register your product
+
+1. Follow the [Frak Product Registration documentation](/business/product/list).
+2. **Important:** In the product setup, be sure to check the following product types to enable all necessary features:
+- `webshop` (to enable webshop-related campaigns, like store opening events)
+- `referral` (to enable referral-based campaigns)
+- `purchase` (to enable purchase-related campaigns)
+
+<Callout type="note">
+    These product types are essential to activate purchase and referral tracking in your store. Without them, some features of the Frak SDK may not function properly.
+</Callout>
+
+4. Once your product is registered, go to the product’s settings page.
+
+### 1.2: Verifying the Product Setup
+
+1. On the product's settings page, look for the **Purchase Tracker** section.
+- If you see this section, your product has been set up correctly.
+- If the **Purchase Tracker** section is missing, it means the product types were not configured correctly during registration.
+
+2. To fix this, go to the **Details of the product** section on the edit page:
+- Update the product types to ensure `webshop`, `referral`, and `purchase` are selected.
+- Be sure to save and validate the product modification to apply the changes.
+
+<Callout type="note">
+    If you need further assistance with product setup or modifications, please refer to the [Frak Registration Guide](https://docs.frak.id/business/registration).
+</Callout>
+
+
+## Step 2: Setting Up the Purchase Oracle Link
+
+Now that your product is registered, you need to set up the Purchase Oracle to enable real-time communication between your Shopify store and the Frak platform.
+
+### 2.1: Enabling the Purchase Oracle in the Frak Dashboard
+
+The Purchase Oracle is a feature that allows Frak to track purchases in your Shopify store. You need to ensure it is enabled before proceeding with the Shopify setup.
+
+1. **Log in to the [Frak Business Dashboard](https://business.frak.id).**
+2. Go to the **Product Settings** for the product you just registered.
+3. Scroll down to the **Purchase Tracker** section (the content might be hidden in an accordion; click on the section to expand it).
+4. Under the **Oracle** subsection:
+- Ensure that the Oracle status says `Allowed`.
+- If it says `Not Allowed`, click the button below to allow it.
+
+<Callout type="info">
+    The Oracle is disabled by default after product setup, so you may need to manually enable it. If you cannot enable it, contact the product administrator for assistance.
+</Callout>
+
+---
+
+### 2.2: Finding and Setting the Webhook Signing Key
+
+Now that the Purchase Oracle is enabled, you need to connect it with Shopify by setting up a webhook. But first, you need to set a **Webhook Signing Key**.
+
+1. **Go to your Shopify admin panel.**
+(Log in to your Shopify account, then go to **Settings -> Notifications -> Webhooks**)
+
+2. **Copy the Webhook Signing Key:**
+- In the Webhooks section, find the message that says "Your webhook will be signed with `xxxxxx`".
+- Copy the `xxxxxx` value (the signing key).
+
+3. **Go back to the Frak Business Dashboard.**
+- In the **Purchase Tracker -> Webhook Status** section, paste the signing key into the **Webhook Signing Key** field.
+- Copy the **Webhook URL** from this section before moving to the next step.
+- Click the **Setup Webhook** button to save your changes.
+
+<Callout type="info">
+    Make sure to copy the webhook URL from the Frak dashboard during this step so you can use it in the next step.
+</Callout>
+
+### 2.3: Setting Up the Webhook in Shopify
+
+Finally, you’ll create a webhook in Shopify to send order updates to Frak.
+
+1. **In your Shopify admin panel**, go to **Settings -> Notifications -> Webhooks** again.
+
+2. **Click on "Create Webhook":**
+- **Event type:** Choose **Order updated** (this ensures that any updates to an order are sent to Frak).
+- **Format:** Choose **JSON**.
+- **API version:** Select **2024-10**.
+- **URL:** Paste the URL you copied in Step 2.2 into the URL field in Shopify.
+
+3. **Click "Save"** to create the webhook.
+
+Everything should now be set up. Your Shopify store will automatically send order updates to the Frak platform, allowing it to track and manage purchases for your campaigns.
+
+## Step 3: Initialize the Frak SDK in the Shopify Theme
+
+Next, you need to integrate the Frak SDK into your Shopify theme. This will enable the tracking of purchases and referral data.
+
+### How to install and initialize the SDK
+
+1. **Go to your Shopify admin panel.**
+
+2. Search for `Theme` in **Search** input on top of the screen and choose `Themes` from the dropdown.
+
+3. On your **Current theme**, click on `...` button and choose `Edit code`.
+
+4. In the `layout` section (in left column), find the `theme.liquid` file and open it.
+
+5. In the `<head>` section, add the following code snippet:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@frak-labs/nexus-sdk@latest/dist/bundle/bundle.js" defer="defer"></script>
+<script src="{{ 'frak-setup.js' | asset_url }}" defer="defer"></script>
+```
+
+6. In the `assets` section (in left column), click on `Add a new asset` and then on `Create a blank file`.
+
+Choose `js` extension and a name for the file (`frak-setup.js`) and paste the following code snippet:
+
+```tsx twoslash [frak-setup.js]
+// @noErrors
+// [!include ~/snippets/integration/frak-setup.js:config]
+
+// [!include ~/snippets/integration/frak-setup.js:reward-modal-config]
+
+// [!include ~/snippets/integration/frak-setup.js:shared-modal-config]
+
+// [!include ~/snippets/integration/frak-setup.js:modal-share]
+
+// [!include ~/snippets/integration/frak-setup.js:watch-wallet-status]
+
+// [!include ~/snippets/integration/frak-setup.js:setup-referral]
+
+// [!include ~/snippets/integration/frak-setup.js:setup-client]
+
+// [!include ~/snippets/integration/frak-setup.js:DOMContentLoaded]
+```
+
+You have the possibility to customise the **metadata** of each metadata by following this page: [Full Flow](/wallet-sdk/api/actions/displayModal#full-flow).
+
+You can also check out every possible params for the modal and each steps on the [Type definition](/wallet-sdk/api/types/DisplayModalType).
+
+## Step 4 (Optional): Setup Pixel Tracking for Purchases
+
+1. **In your Shopify admin panel**, go to **Settings -> Customer events**.
+
+2. Click on `Add custom pixel`.
+
+3. In the **Pixel name** field, enter a name that you like (for example `frak_purchase`) and validate by clicking on `Add pixel`.
+
+4. In **Permission** tab, select `Not required` radio button.
+
+5. In **Code** field, add the following code snippet:
+
+```javascript [Custom Pixel]
+analytics.subscribe('checkout_completed', async (event) => {
+  const interactionToken = await browser.sessionStorage.getItem("frak-wallet-interaction-token");
+  const checkout = event.data.checkout;
+
+  const payload = {
+    customerId: checkout.order.customer.id,
+    orderId: checkout.order.id,
+    token: checkout.token
+  };
+
+  fetch('https://backend.frak.id/interactions/listenForPurchase', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'x-wallet-sdk-auth': interactionToken
+    },
+    body: JSON.stringify(payload)
+  });
+});
+```
+
+6. Click on `Save` on top of the page to save the pixel.
+
+7. Click on `Connect` to connect the pixel to your store.
+
+## Step 5 (Optional): Enable Referral Campaigns
+
+To enable referral-based campaigns, you can add a sharing button on your website.
+
+### Adding a sharing button
+
+1. **Go to your Shopify admin panel.**
+
+2. Search for `Theme` in **Search** input on top of the screen and choose `Themes` from the dropdown.
+
+3. On your **Current theme**, click on `Customize` button.
+
+4. On top of the screen, click on `Home page` dropdown and go to **Products -> Default product**.
+
+5. On left column, below `Description` click on `Add block` and choose `Custom Liquid`.
+
+6. Paste the following code snippet into **Liquid code** field:
+
+```html
+<div id="nexus-share-button">
+    <button type="button" onClick="window.FrakSetup.modalShare()" class="product-form__submit button button--full-width button--primary">
+        <span>
+            Share and earn
+        </span>
+    </button>
+</div>
+```
+
+7. Click on `Save` to save the changes.

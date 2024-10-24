@@ -28,10 +28,13 @@ export function MyCustomModalOpenButton() {
                                 tx: { to: "0xdeadbeef", data: "0xdeadbeef" },
                             },
                             // Success message with sharing options
-                            success: {
-                                sharing: {
-                                    text: "Discover my super app website",
-                                    link: "https://my-app.com",
+                            final: {
+                                action: {
+                                    key: "sharing",
+                                    options: {
+                                        text: "Discover my super app website",
+                                        link: "https://my-app.com",
+                                    },
                                 },
                             },
                         },
