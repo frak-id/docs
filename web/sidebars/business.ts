@@ -24,6 +24,11 @@ export const businessSidebar = [
             {
                 text: "Configure your product",
                 link: "/business/product/config",
+                items: [
+                    { text: "Funds", link: "/business/product/config/funds" },
+                    { text: "Edit", link: "/business/product/config/edit" },
+                    { text: "Team", link: "/business/product/config/team" },
+                ],
             },
         ],
     },
