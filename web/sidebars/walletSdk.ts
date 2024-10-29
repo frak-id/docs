@@ -50,6 +50,10 @@ export const walletSdkSidebar = [
                 text: "Shopify",
                 link: "/wallet-sdk/integration-guide/shopify",
             },
+            {
+                text: "WordPress",
+                link: "/wallet-sdk/integration-guide/wordpress",
+            },
         ],
     },
     {
