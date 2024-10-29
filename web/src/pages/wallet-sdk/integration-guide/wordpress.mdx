@@ -147,44 +147,51 @@ You have the possibility to customise the **metadata** of each metadata by follo
 
 You can also check out every possible params for the modal and each steps on the [Type definition](/wallet-sdk/api/types/DisplayModalType).
 
-## Step 4 (Optional): Setup Pixel Tracking for Purchases
+## Step 4 (Optional): Setup Tracking for Purchases
 
-1. **In your Shopify admin panel**, go to **Settings -> Customer events**.
+1. **In your WordPress admin panel**, go to **Code Snippets -> Add Snippet**.
 
-2. Click on `Add custom pixel`.
+2. Click on `Add Your Custom Code (New Snippet)` then select `PHP Snippet`.
 
-3. In the **Pixel name** field, enter a name that you like (for example `frak_purchase`) and validate by clicking on `Add pixel`.
+3. In the **Snippet title** field, enter a name that you like (for example `frak_purchase`).
 
-4. In **Permission** tab, select `Not required` radio button.
+5. In **Code Preview** field, add the following code snippet:
 
-5. In **Code** field, add the following code snippet:
+```php [Custom Snippet]
+add_action('woocommerce_thankyou', 'custom_purchase_tracking_function', 10, 1);
 
-```javascript [Custom Pixel]
-analytics.subscribe('checkout_completed', async (event) => {
-  const interactionToken = await browser.sessionStorage.getItem("frak-wallet-interaction-token");
-  const checkout = event.data.checkout;
+function custom_purchase_tracking_function($order_id) {
+    if (!$order_id) return;
 
-  const payload = {
-    customerId: checkout.order.customer.id,
-    orderId: checkout.order.id,
-    token: checkout.token
-  };
+    $order = wc_get_order($order_id);
 
-  fetch('https://backend.frak.id/interactions/listenForPurchase', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'x-wallet-sdk-auth': interactionToken
-    },
-    body: JSON.stringify(payload)
-  });
-});
+	$customer_id = $order->get_user_id();
+	$order_key = $order->get_order_key();
+	$transaction_id = $order->get_transaction_id();
+
+    echo "<script>
+            const interactionToken = sessionStorage.getItem('frak-wallet-interaction-token');
+
+            const payload = {
+                customerId: " . json_encode($customer_id) . ",
+                orderId: " . json_encode($order_id) . ",
+                token: " . json_encode($order_key) . "
+            };
+
+            fetch('https://backend.frak.id/interactions/listenForPurchase', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-wallet-sdk-auth': interactionToken
+                    },
+                body: JSON.stringify(payload)
+            });
+    </script>";
+}
 ```
 
-6. Click on `Save` on top of the page to save the pixel.
-
-7. Click on `Connect` to connect the pixel to your store.
+6. Click on the toggle on left side of `Save snippet` button to **Activate** and click on `Save snippet` button.
 
 ## Step 5 (Optional): Enable Referral Campaigns
 
