@@ -70,41 +70,31 @@ The Purchase Oracle is a feature that allows Frak to track purchases in your Wor
 
 ---
 
-### 2.2: Finding and Setting the Webhook Signing Key
+### 2.2: Set up on the Frak Side
 
-Now that the Purchase Oracle is enabled, you need to connect it with Shopify by setting up a webhook. But first, you need to set a **Webhook Signing Key**.
+1. Still in the **Purchase Tracker** section, click on the **WooCommerce** button just under "Purchase Platform".
 
-1. **Go to your Shopify admin panel.**
-(Log in to your Shopify account, then go to **Settings -> Notifications -> Webhooks**)
+2. Click on the **Register WebHook** button to save this webhook in the Frak system.
 
-2. **Copy the Webhook Signing Key:**
-- In the Webhooks section, find the message that says "Your webhook will be signed with `xxxxxx`".
-- Copy the `xxxxxx` value (the signing key).
+3. Keep this page open, the URL and secret will be used for the next step.
 
-3. **Go back to the Frak Business Dashboard.**
-- In the **Purchase Tracker -> Webhook Status** section, paste the signing key into the **Webhook Signing Key** field.
-- Copy the **Webhook URL** from this section before moving to the next step.
-- Click the **Setup Webhook** button to save your changes.
+### 2.3: Set up on the WooCommerce side
 
-<Callout type="info">
-    Make sure to copy the webhook URL from the Frak dashboard during this step so you can use it in the next step.
-</Callout>
+Finally, you’ll create a webhook in WooCommerce to send order updates to Frak.
 
-### 2.3: Setting Up the Webhook in Shopify
+1. **In your WordPress panel**, go to **WooCommerce -> Settings -> Advanced -> Webhooks**.
 
-Finally, you’ll create a webhook in Shopify to send order updates to Frak.
+2. **Click on "Add Webhook":**
+- **Topic type:** Choose **Order updated** (this ensures that any updates to an order are sent to Frak).
+- **API version:** Select **WP REST API Integration v3**.
+- **URL:** Paste the URL field from the **Purchase Tracker** section of the Frak Dashboard.
+- **Secret:** Paste the Secret from the **Purchase Tracker** section of the  Frak Dashboard.
 
-1. **In your Shopify admin panel**, go to **Settings -> Notifications -> Webhooks** again.
+3. **Click "Save webhook"** to create the webhook in WooCommerce.
 
-2. **Click on "Create Webhook":**
-- **Event type:** Choose **Order updated** (this ensures that any updates to an order are sent to Frak).
-- **Format:** Choose **JSON**.
-- **API version:** Select **2024-10**.
-- **URL:** Paste the URL you copied in Step 2.2 into the URL field in Shopify.
+4. **Click "Register webhook"** in the Frak Dashboard.
 
-3. **Click "Save"** to create the webhook.
-
-Everything should now be set up. Your Shopify store will automatically send order updates to the Frak platform, allowing it to track and manage purchases for your campaigns.
+Everything should now be set up. Your WooCommerce store will automatically send order updates to the Frak platform, allowing it to track and manage purchases for your campaigns.
 
 ## Step 3: Initialize the Frak SDK in the WordPress Admin Panel
 
