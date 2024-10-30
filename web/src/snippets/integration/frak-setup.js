@@ -85,7 +85,7 @@ function watchWalletStatus() {
     const SESSION_STORAGE_KEY = "frak-wallet-interaction-token";
     window.NexusSDK.watchWalletStatus(window.FrakSetup.frakClient, (status) => {
         if (status.key === "connected") {
-            sessionStorage.setItem(SESSION_STORAGE_KEY, status.wallet);
+            sessionStorage.setItem(SESSION_STORAGE_KEY, status.interactionToken);
         } else {
             sessionStorage.removeItem(SESSION_STORAGE_KEY);
         }

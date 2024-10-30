@@ -1,0 +1,209 @@
+---
+title: WordPress Integration Guide
+description: Learn how to integrate the Frak SDK into your WordPress store for referral acquisition and blockchain-enabled campaigns.
+date: 2024-10-29
+---
+import { Callout } from 'vocs/components'
+
+# WordPress Integration Guide
+
+This guide will walk you through integrating the Frak SDK into your WordPress store to enable referral acquisition using biometry and blockchain technology. By the end, your store will be set up to track referrals and purchases, and (optionally) run campaigns.
+
+## Prerequisites
+
+Before you begin, ensure that:
+
+1. You have access to the [Frak business dashboard](https://business.frak.id/).
+2. You have admin access to your WordPress store.
+
+## Step 1: Product Registration
+
+The first step in integrating the Frak SDK with your WordPress store is to register your product on the Frak business dashboard. This process enables purchase tracking and referral acquisition for your store.
+
+### 1.1: How to register your product
+
+1. Follow the [Frak Product Registration documentation](/business/product/list).
+2. **Important:** In the product setup, be sure to check the following product types to enable all necessary features:
+- `webshop` (to enable webshop-related campaigns, like store opening events)
+- `referral` (to enable referral-based campaigns)
+- `purchase` (to enable purchase-related campaigns)
+
+<Callout type="note">
+    These product types are essential to activate purchase and referral tracking in your store. Without them, some features of the Frak SDK may not function properly.
+</Callout>
+
+4. Once your product is registered, go to the product’s settings page.
+
+### 1.2: Verifying the Product Setup
+
+1. On the product's settings page, look for the **Purchase Tracker** section.
+- If you see this section, your product has been set up correctly.
+- If the **Purchase Tracker** section is missing, it means the product types were not configured correctly during registration.
+
+2. To fix this, go to the **Details of the product** section on the edit page:
+- Update the product types to ensure `webshop`, `referral`, and `purchase` are selected.
+- Be sure to save and validate the product modification to apply the changes.
+
+<Callout type="note">
+    If you need further assistance with product setup or modifications, please refer to the [Frak Registration Guide](https://docs.frak.id/business/registration).
+</Callout>
+
+
+## Step 2: Setting Up the Purchase Oracle Link
+
+Now that your product is registered, you need to set up the Purchase Oracle to enable real-time communication between your WordPress store and the Frak platform.
+
+### 2.1: Enabling the Purchase Oracle in the Frak Dashboard
+
+The Purchase Oracle is a feature that allows Frak to track purchases in your WordPress store. You need to ensure it is enabled before proceeding with the WordPress setup.
+
+1. **Log in to the [Frak Business Dashboard](https://business.frak.id).**
+2. Go to the **Product Settings** for the product you just registered.
+3. Scroll down to the **Purchase Tracker** section (the content might be hidden in an accordion; click on the section to expand it).
+4. Under the **Oracle** subsection:
+- Ensure that the Oracle status says `Allowed`.
+- If it says `Not Allowed`, click the button below to allow it.
+
+<Callout type="info">
+    The Oracle is disabled by default after product setup, so you may need to manually enable it. If you cannot enable it, contact the product administrator for assistance.
+</Callout>
+
+---
+
+### 2.2: Set up on the Frak Side
+
+1. Still in the **Purchase Tracker** section, click on the **WooCommerce** button just under "Purchase Platform".
+
+2. Click on the **Register WebHook** button to save this webhook in the Frak system.
+
+3. Keep this page open, the URL and secret will be used for the next step.
+
+### 2.3: Set up on the WooCommerce side
+
+Finally, you’ll create a webhook in WooCommerce to send order updates to Frak.
+
+1. **In your WordPress panel**, go to **WooCommerce -> Settings -> Advanced -> Webhooks**.
+
+2. **Click on "Add Webhook":**
+- **Topic type:** Choose **Order updated** (this ensures that any updates to an order are sent to Frak).
+- **API version:** Select **WP REST API Integration v3**.
+- **URL:** Paste the URL field from the **Purchase Tracker** section of the Frak Dashboard.
+- **Secret:** Paste the Secret from the **Purchase Tracker** section of the  Frak Dashboard.
+
+3. **Click "Save webhook"** to create the webhook in WooCommerce.
+
+4. **Click "Register webhook"** in the Frak Dashboard.
+
+Everything should now be set up. Your WooCommerce store will automatically send order updates to the Frak platform, allowing it to track and manage purchases for your campaigns.
+
+## Step 3: Initialize the Frak SDK in the WordPress Admin Panel
+
+Next, you need to integrate the Frak SDK into your WordPress admin panel. This will enable the tracking of purchases and referral data.
+
+### How to install and initialize the SDK
+
+1. **Go to your WordPress admin panel.**
+(Log in to your WordPress account, then go to **Plugins -> Add New Plugin**)
+
+2. Search for `WPCode` in **Search Plugins** input and click on `Install Now` then `Activate`.
+
+3. Go to **Code Snippets -> Header & Footer** navigation menu.
+
+4. In `Footer` html input, add the following code snippet:
+
+```tsx twoslash
+<script src="https://cdn.jsdelivr.net/npm/@frak-labs/nexus-sdk@latest/dist/bundle/bundle.js" defer="defer"></script>
+<script>
+// @noErrors
+// [!include ~/snippets/integration/frak-setup.js:config]
+
+// [!include ~/snippets/integration/frak-setup.js:reward-modal-config]
+
+// [!include ~/snippets/integration/frak-setup.js:shared-modal-config]
+
+// [!include ~/snippets/integration/frak-setup.js:modal-share]
+
+// [!include ~/snippets/integration/frak-setup.js:watch-wallet-status]
+
+// [!include ~/snippets/integration/frak-setup.js:setup-referral]
+
+// [!include ~/snippets/integration/frak-setup.js:setup-client]
+
+// [!include ~/snippets/integration/frak-setup.js:DOMContentLoaded]
+</script>
+```
+
+You have the possibility to customise the **metadata** of each metadata by following this page: [Full Flow](/wallet-sdk/api/actions/displayModal#full-flow).
+
+You can also check out every possible params for the modal and each steps on the [Type definition](/wallet-sdk/api/types/DisplayModalType).
+
+## Step 4 (Optional): Setup Tracking for Purchases
+
+1. **In your WordPress admin panel**, go to **Code Snippets -> Add Snippet**.
+
+2. Click on `Add Your Custom Code (New Snippet)` then select `PHP Snippet`.
+
+3. In the **Snippet title** field, enter a name that you like (for example `frak_purchase`).
+
+5. In **Code Preview** field, add the following code snippet:
+
+```php [Custom Snippet]
+add_action('woocommerce_thankyou', 'custom_purchase_tracking_function', 10, 1);
+
+function custom_purchase_tracking_function($order_id) {
+    if (!$order_id) return;
+
+    $order = wc_get_order($order_id);
+
+	$customer_id = $order->get_user_id();
+	$order_key = $order->get_order_key();
+	$transaction_id = $order->get_transaction_id();
+
+    echo "<script>
+            const interactionToken = sessionStorage.getItem('frak-wallet-interaction-token');
+
+            const payload = {
+                customerId: " . json_encode($customer_id) . ",
+                orderId: " . json_encode($order_id) . ",
+                token: " . json_encode($order_key) . "
+            };
+
+            fetch('https://backend.frak.id/interactions/listenForPurchase', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-wallet-sdk-auth': interactionToken
+                    },
+                body: JSON.stringify(payload)
+            });
+    </script>";
+}
+```
+
+6. Click on the toggle on left side of `Save snippet` button to **Activate** and click on `Save snippet` button.
+
+## Step 5 (Optional): Enable Referral Campaigns
+
+To enable referral-based campaigns, you can add a sharing button on your website.
+
+### Adding a sharing button
+
+1. **Go to your WordPress admin panel.**
+(Log in to your WordPress account, then go to **Appearance -> Themes**)
+
+2. Hover on your **Current theme**, then click on `Customize`.
+
+3. Click on `Templates` then choose your **Product** template (with WooCommerce it's `Single Product`).
+
+4. With your mouse cursor, hover where you want to add the button and click on the small `+` button and choose `Buttons`.
+
+5. Click on three dots to open up a navigation and choose `Edit as HTML` then paste the following code snippet:
+
+```html
+<div class="wp-block-button" id="nexus-share-button">
+    <button type="button" onClick="window.FrakSetup.modalShare()" disabled="disabled" class="wp-block-button__link wp-element-button">Share and earn!</button>
+</div>
+```
+
+7. Click on `Save` to save the changes.
