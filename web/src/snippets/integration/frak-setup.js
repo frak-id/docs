@@ -11,100 +11,46 @@ const frakConfig = {
 };
 // [!endregion config]
 
-// [!region reward-modal-config]
-// Configure the modal that will be displayed when a user can receive a reward and isn't logged with Frak
+// [!region modal-config]
+// Configure base modal info that will be displayed when a user can receive a reward or want to share
 // All the modal customisation options can be found here: https://docs.frak.id/wallet-sdk/api/types/DisplayModalType
-//  The `login` and `openSession` steps are required
-const rewardModalConfig = {
-    steps: {
-        login: {
-            allowSso: true,
-            ssoMetadata: {
-                logoUrl: "https://your-domain.com/assets/logo.svg",
-                homepageLink: "https://your-domain.com/",
-            },
-        },
-        openSession: {},
-        final: {
-            action: { key: "reward" },
+const baseModalConfig = {
+    login: {
+        allowSso: true,
+        ssoMetadata: {
+            logoUrl: "https://your-domain.com/assets/logo.svg",
+            homepageLink: "https://your-domain.com/",
         },
     },
     metadata: {
         lang: "en",
     },
 };
-// [!endregion reward-modal-config]
+// [!endregion modal-config]
 
-// [!region shared-modal-config]
-// Configure the modal that will be displayed when a user can want to share your product
+// [!region sharing-config]
+// Configure the info that will be sent via the sharing link
 // All the modal customisation options can be found here: https://docs.frak.id/wallet-sdk/api/actions/displayModal#full-flow
-//  The `login`, `openSession` and `final` with `sharing` action steps are required
-const sharedModalConfig = {
-    steps: {
-        login: {
-            allowSso: true,
-            ssoMetadata: {
-                logoUrl: "https://your-domain.com/assets/logo.svg",
-                homepageLink: "https://your-domain.com/",
-            },
-        },
-        openSession: {},
-        final: {
-            action: {
-                key: "sharing",
-                options: {
-                    // Title that will be displayed on the system sharing modal  (optional)
-                    popupTitle: "Share this with your friends",
-                    // The text that will be shared with the link (optional)
-                    text: `Discover this awesome article from ${frakConfig.metadata.name}!`,
-                    // The link that will be shared (optional, default to the current page)
-                    link: window.location.href,
-                },
-            },
-        },
-    },
-    metadata: {
-        lang: "fr",
-    },
+const sharingConfig = {
+    // Title that will be displayed on the system sharing modal  (optional)
+    popupTitle: "Share this with your friends",
+    // The text that will be shared with the link (optional)
+    text: "Discover our product!",
+    // The link that will be shared (optional, default to the current page)
+    link: window.location.href,
 };
-// [!endregion shared-modal-config]
+// [!endregion sharing-config]
 
 // [!region modal-share]
 // Helper function to display the shared modal
 function modalShare() {
-    window.NexusSDK.displayModal(
-        window.FrakSetup.frakClient,
-        sharedModalConfig
-    );
+    if (!window.FrakSetup.modalBuilder) {
+        console.error("Frak modal builder not ready yet");
+        return;
+    }
+    window.FrakSetup.modalBuilder.sharing(sharingConfig).display();
 }
 // [!endregion modal-share]
-
-// [!region watch-wallet-status]
-// Watch the wallet status, and store the wallet token in the session storage, to ensure proper purchase tracking
-function watchWalletStatus() {
-    const SESSION_STORAGE_KEY = "frak-wallet-interaction-token";
-    window.NexusSDK.watchWalletStatus(window.FrakSetup.frakClient, (status) => {
-        if (status.key === "connected") {
-            sessionStorage.setItem(SESSION_STORAGE_KEY, status.interactionToken);
-        } else {
-            sessionStorage.removeItem(SESSION_STORAGE_KEY);
-        }
-    }).catch(() => {
-        sessionStorage.removeItem(SESSION_STORAGE_KEY);
-    });
-}
-// [!endregion watch-wallet-status]
-
-// [!region setup-referral]
-// Setup the referral listener on the Frak client
-function setupReferral() {
-    window.NexusSDK.referralInteraction(window.FrakSetup.frakClient, {
-        modalConfig: rewardModalConfig,
-    }).then((referral) => {
-        console.log("referral result", referral);
-    });
-}
-// [!endregion setup-referral]
 
 // [!region setup-client]
 // Function that will setup the Frak client
@@ -141,11 +87,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        window.FrakSetup.frakClient = frakClient;
+        // Create our modal builder
+        const modalBuilder = window.NexusSDK.modalBuilder(
+            frakClient,
+            baseModalConfig
+        );
 
-        // Once loaded, watch the wallet status and the referral state
-        watchWalletStatus();
-        setupReferral();
+        // Save the Frak client and modal builder to the window object
+        window.FrakSetup.frakClient = frakClient;
+        window.FrakSetup.modalBuilder = modalBuilder;
+
+        // Once loaded, listen to the referral state
+        window.NexusSDK.referralInteraction(frakClient, {
+            modalConfig: modalBuilder.reward().params,
+        }).then((referral) => {
+            console.log("referral result", referral);
+        });
     });
 });
 // [!endregion DOMContentLoaded]
